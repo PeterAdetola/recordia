@@ -19,7 +19,11 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+<<<<<<< HEAD
     return view('admin.index');
+=======
+    return view('admin.dashboard/index');
+>>>>>>> sub-branch
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
