@@ -1,4 +1,12 @@
  @extends('admin.admin_master')
+  @section('vendor_styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/data-tables/css/jquery.dataTables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/data-tables/css/select.dataTables.min.css') }}">
+  @endsection
+  @section('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/data-tables.css') }}">
+  @endsection
  @section('admin')
     <!-- BEGIN: Page Main-->
     <div id="main">
@@ -75,7 +83,9 @@
 <div class="divider"></div>
 
     <!-- Add Table Here -->
+    <div class="section section-data-tables">
     @include('admin.dashboard.unverified-donation-table')
+    </div>
       </div>
     </div>
   </div>
@@ -88,4 +98,27 @@
       </div>
     </div>
     <!-- END: Page Main-->
+  @endsection
+  @section('vendor_scripts')
+    <script src="{{ asset('backend/assets/vendors/data-tables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/vendors/data-tables/js/dataTables.select.min.js') }}"></script>
+  @endsection
+  @section('scripts')
+    <!-- <script src="{{ asset('backend/assets/js/scripts/data-tables.js') }}"></script> -->
+    <script type="text/javascript">
+       $('#multi-select').DataTable({
+    responsive: true,
+    "paging": false,
+    "ordering": false,
+    "info": false,
+    "columnDefs": [{
+      "visible": true,
+      "targets": 2
+    }],
+
+
+  });
+
+    </script>
   @endsection

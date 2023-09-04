@@ -1,120 +1,136 @@
-<!-- Table Starts Here -->
 
-  <section id="unverified" class="users-list-wrapper section">
-   <div class="users-list-table">
-    <div class="card pt-1">
-      <div class="card-content">
-      <h4 class="card-title">Unverified Donations</h4>
-      <div class="divider"></div>
-        <!-- datatable start -->
-        <div class="responsive-table mt-5">
-          <table id="users-list-datatable" class="table" style="white-space: nowrap;">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Record ID</th>
-                <th>Fullname</th>
-                <th>Amount (&#8358;)</th>
-                <th>Purpose</th>
-                <th>Mode</th>
-                <th>Date</th>
-                <th>Phone No.</th>
-                <th>Verify</th>
-              </tr>
-            </thead>
-            <tbody>
-
-<!-- Codes -->
-
-              <tr>
-                <td></td>
-                <td>PAC0001032023</td>
-                <td>
-                  Dr. John Alfred
-                </td>
-                <td>5,000,000.00</td>
-                <td>Charity Foundation</td>
-                <td>
-                  <span class="chip lighten-5 green green-text">
-                    Transfer
-                  </span>
-                </td>
-                <td>02/11/2023</td>
-                <td><a href="page-users-view.html">08059616260</a>
-                </td>
-                <td><a href="#!" class="sidenav-trigger"  data-target="#!"><i class="material-icons green-text small-ico-bg">check_box_outline_blank</i></a>
-                </td>
-              </tr>
-
-
-  <div class="slide-out-right-sidenav sidenav rightside-navigation" id="PAC0001032023">
-
+<div class="row">
     <div class="col s12">
-      <div id="placeholder" class="">
+      <div id="button-trigger2" class="card card card-default scrollspy">
         <div class="card-content">
-        <form  method="POST" id="update" action="">
-                  @csrf
-            <input type="hidden" name="id" value="">
-            <input type="hidden" name="transaction" value="">
-            <div class="row">
-      <h4 style="padding-bottom: 2px" class="card-title center chip"></h4>
-      <div class="divider"></div>
-            </div>
-      <div class="collection">
-            <div class="collection-item">
-              Phone Number:<b>08059616260</b>
-            </div>
-            <div class="collection-item">
-              Amount paid: <b>5,000,000.00</b>
-            </div>
-            <div class="collection-item">
-              For: <b>Charity</b>
-            </div>
-
-        </div>
-            <div class="row">
-                <div class="collection" style="padding: 1em;">
-                    <p>
+          <h4 class="card-title">Unverified Donations
+          </h4>
+          <div class="row">
+            <div class="col s12">
+              <table id="multi-select" class="display">
+                <thead>
+                  <tr>
+                    <th>
                       <label>
-                        <input name="verified" type="checkbox" value="1"  />
-                        <span>Check to Verify</span>
+                        <!-- <input type="checkbox" class="select-all" /> -->
+                        <span></span>
                       </label>
-                    </p>
-                </div>
+                    </th>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Office</th>
+                    <th>Age</th>
+                    <th>Start date</th>
+                    <th>Salary</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <label>
+                        <input type="checkbox" class="filled-in" />
+                        <span></span>
+                      </label>
+                    </td>
+                    <td>Tiger Nixon</td>
+                    <td>System Architect</td>
+                    <td>Edinburgh</td>
+                    <td>61</td>
+                    <td>2011/04/25</td>
+                    <td>$320,800</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>
+                        <input type="checkbox" class="filled-in" />
+                        <span></span>
+                      </label>
+                    </td>
+                    <td>Garrett Winters</td>
+                    <td>Accountant</td>
+                    <td>Tokyo</td>
+                    <td>63</td>
+                    <td>2011/07/25</td>
+                    <td>$170,750</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>
+                        <input type="checkbox" class="filled-in" />
+                        <span></span>
+                      </label>
+                    </td>
+                    <td>Ashton Cox</td>
+                    <td>Junior Technical Author</td>
+                    <td>San Francisco</td>
+                    <td>66</td>
+                    <td>2009/01/12</td>
+                    <td>$86,000</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>
+                        <input type="checkbox" class="filled-in" />
+                        <span></span>
+                      </label>
+                    </td>
+                    <td>Cedric Kelly</td>
+                    <td>Senior Javascript Developer</td>
+                    <td>Edinburgh</td>
+                    <td>22</td>
+                    <td>2012/03/29</td>
+                    <td>$433,060</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>
+                        <input type="checkbox" class="filled-in" />
+                        <span></span>
+                      </label>
+                    </td>
+                    <td>Airi Satou</td>
+                    <td>Accountant</td>
+                    <td>Tokyo</td>
+                    <td>33</td>
+                    <td>2008/11/28</td>
+                    <td>$162,700</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>
+                        <input type="checkbox" class="filled-in" />
+                        <span></span>
+                      </label>
+                    </td>
+                    <td>Brielle Williamson</td>
+                    <td>Integration Specialist</td>
+                    <td>New York</td>
+                    <td>61</td>
+                    <td>2012/12/02</td>
+                    <td>$372,000</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label>
+                        <input type="checkbox" class="filled-in" />
+                        <span></span>
+                      </label>
+                    </td>
+                    <td>Herrod Chandler</td>
+                    <td>Sales Assistant</td>
+                    <td>San Francisco</td>
+                    <td>59</td>
+                    <td>2012/08/06</td>
+                    <td>$137,500</td>
+                  </tr>
+              </table>
               <div class="row">
-                <div class="input-field col s12">
-                  <button class="btn-large waves-effect waves-light right" type="submit">Verify Payment
-                    <i class="material-icons right">check</i>
-                  </button>
-                </div>
+                <span class="btn mt-1 ml-1">Verify<i class="material-icons left">check_circle</i> </span>
+                <span class="mt-2 mr-3 right">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">2,500,000.00</span></span>
               </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
-    </div>        
-</div>
-
-            </tbody>
-              <tfoot>
-                <tr>
-                  <th></th>
-                  <th>Unverified Donation Total</th>
-                  <th colspan="5">&#8358; 6,000,000.00 
-                    <span class="light" style="opacity:0.5"> | Unverified donations</span>
-                  </th> 
-                  <!-- <th></th> -->
-                  <!-- <th></th> -->
-                  <!-- <th></th> -->
-                  <!-- <th></th> -->
-                  <th></th>
-                  <th colspan="3"><a class="btn box-shadow-none border-round mb-1 btn waves-effect waves-light mr-1">
-                    <i class="material-icons">check</i>
-                  </a> </th>
-                  <!-- <th></th> -->
-                  <!-- <th></th> -->
-                </tr>
-              </tfoot>
-          </table>
-        </div>
-        <!-- datatable ends -->
+    </div>
+  </div>

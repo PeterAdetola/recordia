@@ -10,12 +10,12 @@
             </div>
             <ul class="navbar-list right">
 
-              <li class="hide-on-med-and-down pt-4"><a class="mt-2 btn-floating waves-effect tooltipped waves-block waves-light" href="{{ ('/create/year') }}" data-position="bottom" data-tooltip="Create a new year"><i class="material-icons">add_circle</i></a></li>
+              <li class="hide-on-med-and-down pt-4"><a class="  btn-large waves-effect tooltipped waves-block waves-light" href="{{ ('/create/year') }}" data-position="bottom" data-tooltip="Create a new year"><i class="material-icons">date_range</i></a></li>
 
 
               <li class="hide-on-large-only search-input-wrapper"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search</i></a></li>
               
-              <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="avatar-status avatar-online"><img src="{{ asset('backend/assets/images/avatar/avatar-7.png') }}" alt="avatar"><i></i></span></a></li>
+              <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="btn-floating  center waves-effect waves-light gradient-45deg-purple-deep-orange">PA</span></a></li>
             </ul>
             <!-- notifications-dropdown-->
             <ul class="dropdown-content" id="notifications-dropdown">

@@ -1,4 +1,7 @@
 @extends('admin.admin_master')
+  @section('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/page-account-settings.css') }}">
+  @endsection
  @section('admin')
 @php
 $pageTitle = 'User Profile';
@@ -54,4 +57,8 @@ $pageTitle = 'User Profile';
 
 
 </script>
+@endsection
+@section('scripts')
+  <!-- <script src="{{ asset('backend/assets/js/scripts/page-users.js') }}"></script> -->
+  <script src="{{ asset('backend/assets/js/scripts/page-account-settings.js') }}"></script>
 @endsection

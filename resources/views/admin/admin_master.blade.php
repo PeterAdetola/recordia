@@ -20,23 +20,20 @@ $route = Route::current()->getName()
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- BEGIN: VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/vendors.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/animate-css/animate.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/animate-css/animate.css') }}"> -->
+    @yield('vendor_styles')
    
-    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/data-tables/css/jquery.dataTables.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/data-tables/css/dataTables.checkboxes.css') }}">
     <!-- END: VENDOR CSS-->
     <!-- BEGIN: Page Level CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/themes/vertical-modern-menu-template/materialize.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/themes/vertical-modern-menu-template/style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/dashboard-modern.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/app-invoice.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/page-users.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/page-account-settings.css') }}">
+    @yield('styles')
+    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/dashboard-modern.css') }}"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/app-invoice.css') }}"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/page-users.css') }}"> -->
     <!-- END: Page Level CSS-->
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/custom/custom.css') }}">
-    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/custom/toast.css') }}" > -->
     <!-- END: Custom CSS-->
 <style type="text/css">
   form:invalid button {
@@ -70,10 +67,8 @@ $route = Route::current()->getName()
     <script src="{{ asset('backend/assets/js/vendors.min.js') }}"></script>
     <!-- BEGIN VENDOR JS-->
     <!-- BEGIN PAGE VENDOR JS-->
-    <script src="{{ asset('backend/assets/vendors/data-tables/js/jquery.dataTables.min.js') }}"></script>
-    <!-- <script src="{{ asset('backend/assets/vendors/jquery-validation/jquery.validate.min.js') }}"></script> -->
-    <script src="{{ asset('backend/assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/vendors/data-tables/js/datatables.checkboxes.min.js') }}"></script>
+   @yield('vendor_scripts')
+    <!-- <script src="{{ asset('backend/assets/vendors/data-tables/js/datatables.checkboxes.min.js') }}"></script> -->
     <!-- END PAGE VENDOR JS-->
     <!-- BEGIN THEME  JS-->
     <script src="{{ asset('backend/assets/js/plugins.js') }}"></script>
@@ -83,10 +78,11 @@ $route = Route::current()->getName()
     <script src="{{ asset('backend/assets/js/custom/sweetalert_init.js') }}"></script>
     <!-- END THEME  JS-->
     <!-- BEGIN PAGE LEVEL JS-->
+   @yield('scripts')
     <script src="{{ asset('backend/assets/js/scripts/dashboard-modern.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/scripts/page-users.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/scripts/app-invoice.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/scripts/page-account-settings.js') }}"></script>
+    <!-- <script src="{{ asset('backend/assets/js/scripts/page-users.js') }}"></script> -->
+    <!-- <script src="{{ asset('backend/assets/js/scripts/app-invoice.js') }}"></script> -->
+    <!-- <script src="{{ asset('backend/assets/js/scripts/page-account-settings.js') }}"></script> -->
     <script src="{{ asset('backend/assets/js/scripts/advance-ui-modals.js') }}"></script>
     <script src="{{ asset('backend/assets/js/scripts/ui-alerts.js') }}"></script>
     <!-- END PAGE LEVEL JS-->
