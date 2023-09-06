@@ -16,12 +16,12 @@
                         <span></span>
                       </label>
                     </th>
-                    <th>Name</th>
-                    <th>Position</th>
+                    <th>Full name</th>
+                    <th>Donation ID</th>
                     <th>Office</th>
                     <th>Age</th>
                     <th>Start date</th>
-                    <th>Salary</th>
+                    <th>Amount(&#8358;)</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -33,7 +33,7 @@
                       </label>
                     </td>
                     <td>Tiger Nixon</td>
-                    <td>System Architect</td>
+                    <td>INS00010323</td>
                     <td>Edinburgh</td>
                     <td>61</td>
                     <td>2011/04/25</td>
@@ -47,7 +47,7 @@
                       </label>
                     </td>
                     <td>Garrett Winters</td>
-                    <td>Accountant</td>
+                    <td>INS00010323</td>
                     <td>Tokyo</td>
                     <td>63</td>
                     <td>2011/07/25</td>
@@ -61,7 +61,7 @@
                       </label>
                     </td>
                     <td>Ashton Cox</td>
-                    <td>Junior Technical Author</td>
+                    <td>INS00010323</td>
                     <td>San Francisco</td>
                     <td>66</td>
                     <td>2009/01/12</td>
@@ -75,7 +75,7 @@
                       </label>
                     </td>
                     <td>Cedric Kelly</td>
-                    <td>Senior Javascript Developer</td>
+                    <td>INS00010323</td>
                     <td>Edinburgh</td>
                     <td>22</td>
                     <td>2012/03/29</td>
@@ -89,7 +89,7 @@
                       </label>
                     </td>
                     <td>Airi Satou</td>
-                    <td>Accountant</td>
+                    <td>INS00010323</td>
                     <td>Tokyo</td>
                     <td>33</td>
                     <td>2008/11/28</td>
@@ -103,7 +103,7 @@
                       </label>
                     </td>
                     <td>Brielle Williamson</td>
-                    <td>Integration Specialist</td>
+                    <td>INS00010323</td>
                     <td>New York</td>
                     <td>61</td>
                     <td>2012/12/02</td>
@@ -117,7 +117,7 @@
                       </label>
                     </td>
                     <td>Herrod Chandler</td>
-                    <td>Sales Assistant</td>
+                    <td>INS00010323</td>
                     <td>San Francisco</td>
                     <td>59</td>
                     <td>2012/08/06</td>
@@ -126,7 +126,7 @@
               </table>
               <div class="row">
                 <span class="btn mt-1 ml-1">Verify<i class="material-icons left">check_circle</i> </span>
-                <span class="mt-2 mr-3 right">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">2,500,000.00</span></span>
+                <span class="mt-2 mr-4 right">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">2,500,000.00</span></span>
               </div>
             </div>
           </div>

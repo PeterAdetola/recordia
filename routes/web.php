@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\InstantRecordController;
+use App\Http\Controllers\yearEventController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,4 +30,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+// --------------| Instant Records |----------------------------------------
+
+Route::post('/save/donation', [InstantRecordController::class, 'saveDonation'])->name('save.donation');
+
 require __DIR__.'/auth.php';
+
+
+// --------------| Create Year |----------------------------------------
+
+Route::get('/create/year/event', [yearEventController::class, 'create'])->name('create.year.event');
+
+Route::post('/save/year', [yearEventController::class, 'saveYear'])->name('save.year');
+Route::post('activate/year', [yearEventController::class, 'activateYear'])->name('activate.year');

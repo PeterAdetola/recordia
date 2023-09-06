@@ -43,7 +43,7 @@
                 <div class="card row gradient-45deg-purple-deep-orange gradient-shadow white-text padding-4 mt-5">
                   <div class="col s7 m7">
                     <i class="material-icons background-round mt-5 mb-5">insert_chart</i>
-                    <p>Gross Total</p>
+                    <p>Expected Total</p>
                   </div>
                   <div class="col s5 m5 right-align mt-5">
                     <h5 class="mb-0 white-text">10,000,000.00</h5>

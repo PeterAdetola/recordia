@@ -28,9 +28,6 @@ $route = Route::current()->getName()
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/themes/vertical-modern-menu-template/materialize.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/themes/vertical-modern-menu-template/style.css') }}">
     @yield('styles')
-    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/dashboard-modern.css') }}"> -->
-    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/app-invoice.css') }}"> -->
-    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/page-users.css') }}"> -->
     <!-- END: Page Level CSS-->
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/custom/custom.css') }}">
@@ -38,7 +35,7 @@ $route = Route::current()->getName()
 <style type="text/css">
   form:invalid button {
    pointer-events: none;
-   /*opacity: .2;*/
+   opacity: 0.5;
 }
 </style>
   </head>
@@ -68,7 +65,6 @@ $route = Route::current()->getName()
     <!-- BEGIN VENDOR JS-->
     <!-- BEGIN PAGE VENDOR JS-->
    @yield('vendor_scripts')
-    <!-- <script src="{{ asset('backend/assets/vendors/data-tables/js/datatables.checkboxes.min.js') }}"></script> -->
     <!-- END PAGE VENDOR JS-->
     <!-- BEGIN THEME  JS-->
     <script src="{{ asset('backend/assets/js/plugins.js') }}"></script>
@@ -80,9 +76,6 @@ $route = Route::current()->getName()
     <!-- BEGIN PAGE LEVEL JS-->
    @yield('scripts')
     <script src="{{ asset('backend/assets/js/scripts/dashboard-modern.js') }}"></script>
-    <!-- <script src="{{ asset('backend/assets/js/scripts/page-users.js') }}"></script> -->
-    <!-- <script src="{{ asset('backend/assets/js/scripts/app-invoice.js') }}"></script> -->
-    <!-- <script src="{{ asset('backend/assets/js/scripts/page-account-settings.js') }}"></script> -->
     <script src="{{ asset('backend/assets/js/scripts/advance-ui-modals.js') }}"></script>
     <script src="{{ asset('backend/assets/js/scripts/ui-alerts.js') }}"></script>
     <!-- END PAGE LEVEL JS-->

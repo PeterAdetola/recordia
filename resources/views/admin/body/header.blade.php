@@ -10,18 +10,19 @@
             </div>
             <ul class="navbar-list right">
 
-              <li class="hide-on-med-and-down pt-4"><a class="  btn-large waves-effect tooltipped waves-block waves-light" href="{{ ('/create/year') }}" data-position="bottom" data-tooltip="Create a new year"><i class="material-icons">date_range</i></a></li>
+              <!-- <li class="hide-on-med-and-down pt-4"><a class="  btn-large waves-effect tooltipped waves-block waves-light" href="{{ ('/create/year') }}" data-position="bottom" data-tooltip="Create a new year"><i class="material-icons">date_range</i></a></li> -->
+              <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="dropdown"><i class="material-icons">date_range</i></a></li>
 
 
               <li class="hide-on-large-only search-input-wrapper"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search</i></a></li>
               
-              <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><span class="btn-floating  center waves-effect waves-light gradient-45deg-purple-deep-orange">PA</span></a></li>
+              <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><b class="btn-floating  center waves-effect waves-light gradient-45deg-purple-deep-orange" >PA</b></a></li>
             </ul>
             <!-- notifications-dropdown-->
-            <ul class="dropdown-content" id="notifications-dropdown">
+            <ul class="dropdown-content" id="dropdown">
               
-              <li class="divider"></li>
-              <li><a class="black-text"><span class="material-icons icon-bg-circle cyan small">indeterminate_check_box</span> Unverified Name</a>
+              <!-- <li class="divider"></li> -->
+              <li><a href="{{ ('/create/year/event') }}" class="black-text"><span class="material-icons icon-bg-circle grey small">add</span> Create Year/Events</a>
                 
               </li>
 
