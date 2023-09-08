@@ -24,7 +24,7 @@
                   @csrf
     <input type="hidden" value="0" name="status">
     <div class="modal-content">
-      <h5 class="card-title">You are about to create a new financial year</h5>
+      <h6 class="card-title">You are about to create a new financial year</h6>
 
     <input id="year" type="text" name="year" placeholder="2023" required autofocus />
     <input id="title" type="text" name="title" placeholder="(Optional) Thanksgiving of ...."  />

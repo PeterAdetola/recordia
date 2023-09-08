@@ -20,43 +20,36 @@ $existing_years = App\Models\YearRecord::orderBy('year', 'desc')->get();
               @foreach($existing_years as $year)
             <form  method="POST" action="{{ route('activate.year', $year->id) }}">
                   @csrf
-                <!-- <div class="chip mb-2 gradient-45deg-purple-light-blue gradient-shadow white-text">
-                    <label>
-                      <input class="with-gap" name="group3" type="radio" checked />
-                      <span class="white-text">Year 2023</span>
-                    </label>
-                </div> -->
-                <a href="{{$year->id}}" class="{{ ($year->status == '1')? 'gradient-45deg-purple-light-blue gradient-shadow white-text' : 'chip mb-2 grey lighten-2' }} chip mb-2">
-                      <!-- <input name="id" type="hidden" /> -->
+                <a href="{{$year->id}}" class="{{ ($year->status == '1')? 'gradient-45deg-purple-light-blue gradient-shadow white-text' : 'chip mb-2 grey lighten-2' }} chip mb-2"
+                style="{{ ($year->status == '1')? '' : 'border-top:1px solid #bdbdbd; border-right:1px solid #bdbdbd' }}" 
+                  >
+
                     <label>
                       <input class="with-gap" name="status" type="radio"  value="{{ $year->id }}" required {{ ($year->status == '1')? 'checked' : '' }}/>
                       <span class="{{ ($year->status == '1')? 'white-text' : 'grey-text' }}">Year {{ $year->year }}</span>
                     </label>
                 </a>
+
                 @endforeach
               @else
-                <div class="chip mb-2 grey lighten-2">
+                <div class="chip mb-2 grey lighten-2"
+                style="border-top:1px solid #bdbdbd; border-right:1px solid #bdbdbd">
                     <span class="grey-text">No available year</span>                      
                 </div>
               @endif
-                <!-- <div class="chip mb-2 grey lighten-2">
-                    <label>
-                      <input class="with-gap" name="group3" type="radio" />
-                      <span class="grey-text">Year 2021</span>
-                    </label>
-                </div> -->
+
              </div>
-             <!-- <div class="divider"></div> -->
              <button id="activate" class="btn-large modal-trigger"  href="#activate-year" disabled >Activate Year</button>
             </div>
         </div>
         </div>
       </div>
+
 <!-- Modal Structure -->
 
     <div id="activate-year" class="modal border-radius-10" style="padding:2em;">
         <div class="modal-content">
-          <h5 class="card-title">You are about to activate the selected financial year</h5>
+          <h6 class="card-title">You are about to activate the selected financial year</h6>
 
         <p>Do you want to proceed with the activation?</p>
         </div>
@@ -86,11 +79,5 @@ $existing_years = App\Models\YearRecord::orderBy('year', 'desc')->get();
         }
       });
     });
-
-    function reload() {
-      window.location.reload();
-    }
-
-    document.querySelector('#reload').onclick = reload;
 
   </script>

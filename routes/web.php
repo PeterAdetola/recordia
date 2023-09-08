@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InstantRecordController;
-use App\Http\Controllers\yearEventController;
+use App\Http\Controllers\configsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,7 +40,10 @@ require __DIR__.'/auth.php';
 
 // --------------| Create Year |----------------------------------------
 
-Route::get('/create/year/event', [yearEventController::class, 'create'])->name('create.year.event');
+// Route::get('/create/year/event', [yearEventController::class, 'create'])->name('create.year.event');
+Route::get('/manage/configs', [configsController::class, 'manageConfigs'])->name('manage.configs');
 
-Route::post('/save/year', [yearEventController::class, 'saveYear'])->name('save.year');
-Route::post('activate/year', [yearEventController::class, 'activateYear'])->name('activate.year');
+Route::post('/save/year', [configsController::class, 'saveYear'])->name('save.year');
+Route::post('activate/year', [configsController::class, 'activateYear'])->name('activate.year');
+Route::get('edit/year/{id}', [configsController::class, 'editYear'])->name('edit.year');
+Route::post('update/year', [configsController::class, 'updateYear'])->name('update.year');

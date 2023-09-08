@@ -19,7 +19,10 @@
               <div class="col s10 m6 l6">
                 <h5 class="breadcrumbs-title mt-0 mb-0"><span>Hi, John Doe</span></h5>
                 <ol class="breadcrumbs mb-0">
-                  <li class="breadcrumb-item"><a href="#!">Here is the financial overview/activities for the year 2023</a>
+                  {{-- @php
+                  $currentYear = App\Models\YearRecord::where('status', 1)->first();
+                  @endphp --}}
+                  <li class="breadcrumb-item"><a href="#!">Here is the financial overview/activities for the year {{ getCurrentYear() }}</a>
                   </li>
                 </ol>
               </div>
@@ -119,14 +122,6 @@
 
 
   });
-       
-
-      // Preloader Script
-      function ShowPreloader() {
-        document.getElementById('preloader').style.display = "block";
-        document.getElementById('preloader2').style.display = "block";
-        document.getElementById('preloader3').style.display = "block";
-      }
 
     </script>
   @endsection

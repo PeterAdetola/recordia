@@ -6,16 +6,18 @@ use Illuminate\Http\Request;
 use App\Models\YearRecord;
 use App\Models\EventRecord;
 
-class yearEventController extends Controller
+use Helpers\AppHelpers;
+
+class configsController extends Controller
 {
 
     /**
      * Path to create year and/or event.
      */
-    public function create(Request $request)
+    public function manageConfigs(Request $request)
     {
 
-        return view('admin.year_event.createYearEvent');
+        return view('admin.configs.configPage');
         
     }
 
@@ -44,7 +46,7 @@ class yearEventController extends Controller
             'message' => 'Activate newly created year'
         );
 
-        return redirect()->route('create.year.event')->with($notification);
+        return redirect()->route('manage.configs')->with($notification);
     }
 
     /**
@@ -54,23 +56,21 @@ class yearEventController extends Controller
     {
         $selectedYearId = $request->input('status');
 
-
-        // echo $selectedYearId;
-        // exit();
-
         $existing_years = YearRecord::get();
         $active_year = $existing_years->where('status', '=', '1');
 
         if (count($active_year)){
 
             foreach ($active_year as $active_year){
+
             if ($active_year->id == $selectedYearId) {
 
             $notification = array(
                 'message' => 'Year is already activated'
             );
 
-            return redirect()->route('create.year.event')->with($notification);
+            return redirect()->route('manage.configs')->with($notification);
+
             } else {
 
                 // Update the selected row's status to active
@@ -83,11 +83,12 @@ class yearEventController extends Controller
                         'message' => 'Selected year activated'
                     );
 
-                return redirect()->route('create.year.event')->with($notification);
+                return redirect()->route('manage.configs')->with($notification);
 
                 }
 
             }
+
         } else {
 
             // Update the selected row's status to active
@@ -97,8 +98,28 @@ class yearEventController extends Controller
                         'message' => 'Selected year activated'
                     );
 
-            return redirect()->route('create.year.event')->with($notification);
-            
+            return redirect()->route('manage.configs')->with($notification);
+
         }
+    }
+
+
+    /**
+     * Update year details.
+     */
+    public function updateYear(Request $request)
+    {
+        $id = $request->id;        
+
+        YearRecord::findOrFail($id)->update([
+        'year' => $request->year,
+        'title' => $request->title,
+    ]);
+
+        $notification = array(
+            'message' => 'Year details updated'
+        );
+
+        return redirect()->route('manage.configs')->with($notification);
     }
 }

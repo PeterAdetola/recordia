@@ -4,7 +4,7 @@
   @endsection
  @section('admin')
 @php
-$pageTitle = 'User Profile';
+$pageTitle = 'Configuration Page';
 
 @endphp
     <div id="main">
@@ -32,13 +32,14 @@ $pageTitle = 'User Profile';
             <section class="tabs-vertical mt-1 section">
               <div class="row">
                 <div class="col l4 s12">
-                    @include('admin.year_event.partials.yearEvent-navigation')
+                    @include('admin.configs.partials.config_navigation')
                 </div>
                 <div class="col l8 s12">
                   <!-- tabs content -->
-                    @include('admin.year_event.partials.create_year')           
-                    @include('admin.year_event.partials.activate_year')           
-                    @include('admin.year_event.partials.create_event')           
+                    @include('admin.configs.partials.create_year')           
+                    @include('admin.configs.partials.activate_year')           
+                    @include('admin.configs.partials.edit_year')           
+                    @include('admin.configs.partials.events')           
                 </div>
               </div>
             </section>
@@ -61,4 +62,21 @@ $pageTitle = 'User Profile';
 @section('scripts')
   <!-- <script src="{{ asset('backend/assets/js/scripts/page-users.js') }}"></script> -->
   <script src="{{ asset('backend/assets/js/scripts/page-account-settings.js') }}"></script>
+
+  <script type="text/javascript">
+    var radioButtons = document.querySelectorAll('input[type="radio"]');
+    var submitButton = document.getElementById('activate');
+
+    radioButtons.forEach(function(radioButton) {
+      radioButton.addEventListener('change', function() {
+        if (radioButton.checked) {
+          submitButton.removeAttribute('disabled');
+        } else {
+          submitButton.setAttribute('disabled', 'disabled');
+        }
+      });
+    });
+
+
+  </script>
 @endsection

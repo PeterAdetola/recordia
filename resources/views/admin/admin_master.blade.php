@@ -82,17 +82,34 @@ $route = Route::current()->getName()
     
 <script>
 
-
-
     
- @if(Session::has('message'))
+       @if(Session::has('message'))
 
-  setTimeout(function () {
-    var toastHTML = "{{ Session::get('message') }}";
-    M.toast({html: toastHTML})
-  }, 2000);
+        setTimeout(function () {
+          var toastHTML = "{{ Session::get('message') }}";
+          M.toast({html: toastHTML})
+        }, 500);
 
- @endif 
+       @endif 
+
+       
+
+      // Preloader Script
+      function ShowPreloader() {
+        document.getElementById('preloader').style.display = "block";
+        document.getElementById('preloader2').style.display = "block";
+        document.getElementById('preloader3').style.display = "block";
+        document.getElementById('preloader4').style.display = "block";
+      }
+
+      // Reload Page
+
+    function reload() {
+      window.location.reload();
+    }
+
+    document.querySelector('#reload').onclick = reload;
+    document.querySelector('#reload2').onclick = reload;
  
 </script>
   </body>
