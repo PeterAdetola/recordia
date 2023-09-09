@@ -11,6 +11,13 @@ use Helpers\AppHelpers;
 class configsController extends Controller
 {
 
+     public function __invoke()
+    {
+        if (auth()->user()->can('create-user')) {
+            return view('admin.configs.configPage');
+        }
+    }
+
     /**
      * Path to create year and/or event.
      */

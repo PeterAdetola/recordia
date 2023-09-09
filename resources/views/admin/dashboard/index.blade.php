@@ -19,9 +19,6 @@
               <div class="col s10 m6 l6">
                 <h5 class="breadcrumbs-title mt-0 mb-0"><span>Hi, John Doe</span></h5>
                 <ol class="breadcrumbs mb-0">
-                  {{-- @php
-                  $currentYear = App\Models\YearRecord::where('status', 1)->first();
-                  @endphp --}}
                   <li class="breadcrumb-item"><a href="#!">Here is the financial overview/activities for the year {{ getCurrentYear() }}</a>
                   </li>
                 </ol>
@@ -67,6 +64,7 @@
 
     <!-- Add Modal Here -->
 
+      @role('admin')
       <a class="modal-trigger" href="#add-expense-modal">
       <div class="col s12 m6 l4 card-width">
         <div class="card border-radius-6">
@@ -77,6 +75,7 @@
         </div>
       </div>
     </a>
+      @endrole
 
     <!-- Add Modal Here -->
     @include('admin.dashboard.modals.add-expense-form')

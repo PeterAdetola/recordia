@@ -15,6 +15,7 @@
                   </div>
                 </div>
               </div>
+            @role('admin')
               <div class="col s12 m6 card-width">
                 <div class="card row gradient-45deg-blue-indigo gradient-shadow white-text padding-4 mt-5">
                   <div class="col s7 m7">
@@ -27,6 +28,7 @@
                   </div>
                 </div>
               </div>
+            @endrole
               <div class="col s12 m6 card-width">
                 <div class="card row gradient-45deg-deep-orange-orange gradient-shadow white-text padding-4 mt-5">
                   <div class="col s7 m7">
@@ -39,6 +41,7 @@
                   </div>
                 </div>
               </div>
+            @role('admin')
               <div class="col s12 m6 card-width">
                 <div class="card row gradient-45deg-purple-deep-orange gradient-shadow white-text padding-4 mt-5">
                   <div class="col s7 m7">
@@ -51,6 +54,7 @@
                   </div>
                 </div>
               </div>
+            @endrole
             </div>
             </div>
     </div>
