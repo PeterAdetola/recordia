@@ -87,7 +87,7 @@
               </div>
             </div>
           <button type="submit" onclick="ShowPreloader()" class="modal-action waves-effect waves-green btn-large">Add Recorder</button>
-          <a href="javascript:void(0)" class="btn-large btn-flat modal-close">Cancel</a>
+          <a id="reload2" href="javascript:void(0)" class="btn-large btn-flat modal-close">Cancel</a>
         </div>
             </form>
 

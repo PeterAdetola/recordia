@@ -31,19 +31,22 @@ Route::middleware('auth')->group(function () {
 });
 
 
+// --------------| Configuration Page |----------------------------------------
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/manage/configs', [configsController::class, 'manageConfigs'])->name('manage.configs');
+    Route::post('/save/year', [configsController::class, 'saveYear'])->name('save.year');
+    Route::post('activate/year', [configsController::class, 'activateYear'])->name('activate.year');
+    Route::get('edit/year/{id}', [configsController::class, 'editYear'])->name('edit.year');
+    Route::get('update/year', [configsController::class, 'updateYear'])->name('update.year');
+});
+
+
+
 // --------------| Instant Records |----------------------------------------
 
 Route::post('/save/donation', [InstantRecordController::class, 'saveDonation'])->name('save.donation');
+Route::post('/save/expense', [InstantRecordController::class, 'saveExpense'])->name('save.expense');
+Route::post('/verify/donation', [InstantRecordController::class, 'verifyDonation'])->name('verify.donation');
 
 require __DIR__.'/auth.php';
-
-
-// --------------| Create Year |----------------------------------------
-
-// Route::get('/create/year/event', [yearEventController::class, 'create'])->name('create.year.event');
-Route::get('/manage/configs', [configsController::class, 'manageConfigs'])->name('manage.configs');
-
-Route::post('/save/year', [configsController::class, 'saveYear'])->name('save.year');
-Route::post('activate/year', [configsController::class, 'activateYear'])->name('activate.year');
-Route::get('edit/year/{id}', [configsController::class, 'editYear'])->name('edit.year');
-Route::post('update/year', [configsController::class, 'updateYear'])->name('update.year');

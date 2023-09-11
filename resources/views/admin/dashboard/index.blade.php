@@ -17,9 +17,12 @@
           <div class="container">
             <div class="row">
               <div class="col s10 m6 l6">
-                <h5 class="breadcrumbs-title mt-0 mb-0"><span>Hi, John Doe</span></h5>
+                <h5 class="breadcrumbs-title mt-0 mb-0"><span>Hi, {{ getUserName() }}</span></h5>
                 <ol class="breadcrumbs mb-0">
-                  <li class="breadcrumb-item"><a href="#!">Here is the financial overview/activities for the year {{ getCurrentYear() }}</a>
+                  <li class="breadcrumb-item"><a href="#!">Here is 
+                  @role('admin') the @endrole 
+                  @role('recorder') your @endrole
+                financial overview/activities for the year {{ getCurrentYear() }}</a>
                   </li>
                 </ol>
               </div>
@@ -37,6 +40,7 @@
 <div class="divider"></div>
 
     <div class="row">
+
       <a class="modal-trigger" href="#add-donation-modal">
       <div class="col s12 m6 l4 card-width">
         <div class="card border-radius-6">
@@ -65,7 +69,7 @@
     <!-- Add Modal Here -->
 
       @role('admin')
-      <a class="modal-trigger" href="#add-expense-modal">
+    <a class="modal-trigger" href="#add-expense-modal">
       <div class="col s12 m6 l4 card-width">
         <div class="card border-radius-6">
           <div class="card-content center-align">
@@ -109,18 +113,43 @@
   @section('scripts')
     <!-- <script src="{{ asset('backend/assets/js/scripts/data-tables.js') }}"></script> -->
     <script type="text/javascript">
-       $('#multi-select').DataTable({
+
+// Initialize datatable
+    $('#multi-select').DataTable({
     responsive: true,
     "paging": false,
     "ordering": false,
     "info": false,
     "columnDefs": [{
-      "visible": true,
-      "targets": 2
+      "visible": false,
+      "targets": 1
     }],
-
-
   });
+
+
+// Multiselect checkboxes
+  var table = document.getElementById('multi-select');
+  var headerCheckbox = table.querySelector('thead input[type="checkbox"]');
+  var checkboxes = table.querySelectorAll('tbody input[type="checkbox"]');
+
+  headerCheckbox.addEventListener('change', function() {
+    checkboxes.forEach(function(checkbox) {
+      checkbox.checked = headerCheckbox.checked;
+    });
+  });
+
+// Validate checkbox submit
+const checkboxes2 = document.querySelectorAll('table input[type="checkbox"]');
+const submitBtn = document.getElementById('submitBtn');
+const submitBtn2 = document.getElementById('submitBtn2');
+
+checkboxes2.forEach(function (checkbox) {
+    checkbox.addEventListener('change', function () {
+        const checkedCheckboxes = document.querySelectorAll('table input[type="checkbox"]:checked');
+        submitBtn.disabled = checkedCheckboxes.length === 0;
+        submitBtn2.disabled = checkedCheckboxes.length === 0;
+    });
+});
 
     </script>
   @endsection

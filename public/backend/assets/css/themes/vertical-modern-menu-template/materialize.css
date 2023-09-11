@@ -7317,7 +7317,7 @@ body.keyboard-focused .dropdown-content li:focus
     overflow-y: auto;
 
     width: 55%;
-    max-height: 70%;
+    max-height: 90%;
     margin: auto;
     padding: 0;
 

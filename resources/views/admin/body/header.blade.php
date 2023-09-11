@@ -14,13 +14,13 @@
 
 
               <!-- <li><a class="waves-effect waves-block waves-light notification-button  modal-trigger" href="#add-recorder"><i class="material-icons">person_add</i></a></li> -->
-          {{-- @role('admin') --}}   
+          @role('admin')
               <li><a class="waves-effect waves-block waves-light notification-button" href="javascript:void(0);" data-target="dropdown"><i class="material-icons">settings</i></a></li>
-          {{-- @endrole --}}
+          @endrole 
 
               <li class="hide-on-large-only search-input-wrapper"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search</i></a></li>
               
-              <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><b class="btn-floating  center waves-effect waves-light gradient-45deg-purple-deep-orange" >PA</b></a></li>
+              <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><b class="btn-floating  center waves-effect waves-light gradient-45deg-purple-deep-orange" >{{ getUserInitial() }}</b></a></li>
             </ul>
 
             <!-- recorder-dropdown-->

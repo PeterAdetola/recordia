@@ -14,13 +14,14 @@ $route = Route::current()->getName()
     <meta name="description" content="Recordia is a portfolio project for Holberton School which is meant for financial secretaries who want to give almost instant financial reports to the organization they work with and give instant invoice to the donors.">
     <meta name="keywords" content="balance, payments, expenses, accountind dashboard, analytic dashboard">
     <meta name="author" content="Pacmedia Creatives">
-    <title>Recordia | Financial recording for transparency </title>
+    <title>Recordia | Financial recording for transparency</title>
     <link rel="apple-touch-icon" href="{{ asset('backend/assets/images/favicon/recordia-apple-touch-icon-152x152.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/assets/images/favicon/favicon_r-32x32.png') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- BEGIN: VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/vendors.min.css') }}">
-    <!-- <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/animate-css/animate.css') }}"> -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/select2/select2-materialize.css') }}">
+
     @yield('vendor_styles')
    
     <!-- END: VENDOR CSS-->
@@ -78,6 +79,8 @@ $route = Route::current()->getName()
     <script src="{{ asset('backend/assets/js/scripts/dashboard-modern.js') }}"></script>
     <script src="{{ asset('backend/assets/js/scripts/advance-ui-modals.js') }}"></script>
     <script src="{{ asset('backend/assets/js/scripts/ui-alerts.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/scripts/form-select2.js') }}"></script>
+    
     <!-- END PAGE LEVEL JS-->
     
 <script>

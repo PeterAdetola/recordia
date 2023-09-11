@@ -6,6 +6,8 @@
       <h6 class="card-title">Add Donation</h6>
       <form id="donationForm" method="POST" action="{{ route('save.donation') }}">
         @csrf
+      <input type="hidden" value="{{ getCurrentUser() }}" name="recorder_id">
+      <input type="hidden" value="{{ getCurrentYear() }}" name="year">
       <input type="hidden" value="1" name="transaction">
       <div class="row">
 

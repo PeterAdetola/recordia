@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+ <!DOCTYPE html>
 <html class="loading" lang="en" data-textdirection="ltr">
   <!-- BEGIN: Head-->
   <head>
@@ -27,10 +27,33 @@
    pointer-events: none;
    /*opacity: .8;*/
 }
+
+
+        #loader {
+          background: linear-gradient(45deg, #E91376, #9429D8, #CEC5D4);
+          background-size: 600% 600%;
+          animation: GradientBackground 10s ease infinite;
+        }
+
+        @keyframes GradientBackground {
+          0% {
+            background-position: 0% 50%;
+          }
+
+          50% {
+            background-position: 100% 50%;
+          }
+
+          100% {
+            background-position: 0% 50%;
+          }
+        };
 </style>
   </head>
   <!-- END: Head-->
-  <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu preload-transitions 1-column    blank-page blank-page" data-open="click" data-menu="vertical-modern-menu" data-col="1-column">
+  <body>
+  <div id="loader" class="center"></div>
+  <div class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu preload-transitions 1-column  login-bg  blank-page blank-page" data-open="click" data-menu="vertical-modern-menu" data-col="1-column">
     <div class="row">
       <div class="col s12">
         <div class="container">
@@ -116,6 +139,7 @@
         <div class="content-overlay"></div>
       </div>
     </div>
+    </div>
 
     <!-- BEGIN VENDOR JS-->
     <script src="{{ asset('backend/assets/js/vendors.min.js') }}"></script>
@@ -131,6 +155,22 @@
     <!-- END PAGE LEVEL JS-->
     
     <script type='text/javascript'>
+
+
+         document.onreadystatechange = function () {
+            if (document.readyState !== "complete") {
+                document.querySelector(
+                    "body").style.visibility = "hidden";
+                document.querySelector(
+                    "#loader").style.visibility = "visible";
+            } else {
+                document.querySelector(
+                    "#loader").style.display = "none";
+                document.querySelector(
+                    "body").style.visibility = "visible";
+            }
+        };
+      
       function ShowPreloader() {
         document.getElementById('preloader').style.display = "block";
       }
