@@ -124,7 +124,7 @@ class InstantRecordController extends Controller
     }
 
     /**
-     * Display the unverified records.
+     * Verify unverified donations.
      */
     public function verifyDonation(Request $request)
     {

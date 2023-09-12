@@ -1,7 +1,7 @@
 
 
 <!-- Start Modal -->
-<div id="add-donation-modal" class="modal border-radius-10" style="padding:1em;">
+<div id="add-donation-modal" class="modal" style="padding:1em;">
     <div class="modal-content">
       <h6 class="card-title">Add Donation</h6>
       <form id="donationForm" method="POST" action="{{ route('save.donation') }}">
@@ -48,7 +48,7 @@
         </div>
 
       </div>
-
+<div id="message" class="chip center" style="display:none;">Please provide phone number for pledge</div>
       <div class="row">
 
                 <fieldset class="collection">
@@ -100,7 +100,7 @@
       </div>
 
     <div class="modal-footer">
-      <button type="submit" onclick="ShowPreloader()" class="modal-action waves-effect waves-green btn-large">Add Donation</button>
+      <button id="submitBtn" type="submit" onclick="ShowPreloader()" class="modal-action waves-effect waves-green btn-large" >Add Donation</button>
       <a href="javascript:void(0)" class="btn-large btn-flat modal-close">Cancel</a>
     </div>
 </form>

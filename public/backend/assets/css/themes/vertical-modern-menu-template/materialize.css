@@ -7317,11 +7317,11 @@ body.keyboard-focused .dropdown-content li:focus
     overflow-y: auto;
 
     width: 55%;
-    max-height: 90%;
+    max-height: 95%;
     margin: auto;
     padding: 0;
 
-    border-radius: 2px;
+    border-radius: 10px;
     background-color: #fafafa;
 
     will-change: top, opacity;

@@ -53,14 +53,6 @@ if (!function_exists('getUserName')) {
     }
 }
 
-// Format Amount
-// if (!function_exists('formatAmount')) {
-//     function formatAmount($amount)
-//     {
-//         $totalUnverified = number_format($amount, 2, '.', ',');
-//      return $name;
-//     }
-// }
 
 // UNVERIFIED DONATION
 

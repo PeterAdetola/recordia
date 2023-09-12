@@ -1,6 +1,7 @@
 @php
           $unverifiedDonations = getUnverifiedDonations();
-          $recordersUnverifiedDonations = getUnverifiedDonations()->where('recorder_id', '=', getCurrentUser());
+          $recordersUnverifiedDonations = getUnverifiedDonations()->where('recorder_id', '=', getCurrentUser())
+
 @endphp
 <div class="row">
     <div class="col s12">
@@ -40,7 +41,7 @@
                   <tr>
                     <td>
                       <label>
-                        <input type="checkbox" name="verification[]" value="{{ $unverifiedDonation->id }}" class="filled-in" />
+                        <input type="checkbox" name="verification[]" value="{{ $unverifiedDonation->id }}" class="data-checkbox filled-in" />
                         <span></span>
                       </label>
                     </td>
@@ -61,7 +62,7 @@
                   <tr>
                     <td>
                       <label>
-                        <input type="checkbox" name="verification[]" value="{{ $unverifiedDonation->id }}" class="filled-in" />
+                        <input type="checkbox" name="verification[]" value="{{ $unverifiedDonation->id }}" class="data-checkbox filled-in" />
                         <span></span>
                       </label>
                     </td>
@@ -93,7 +94,7 @@
 
     <div id="verify-donation-modal" class="modal border-radius-10" style="padding:2em;">
         <div class="modal-content">
-          <h6 class="card-title">You are about to verify these donors</h6>
+          <h6 class="card-title">You are about to verify <span id="checkbox-count">0</span></h6>
 
         <p>Do you want to proceed with the verification?</p>
         </div>

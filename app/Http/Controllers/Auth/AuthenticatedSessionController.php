@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $notification = array(
-            'message' => 'Welcome Admin'
+            'message' => 'Hi '.getUserName()
         );
 
         return redirect()->intended(RouteServiceProvider::HOME)->with($notification);
