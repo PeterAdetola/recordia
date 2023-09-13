@@ -53,10 +53,39 @@ if (!function_exists('getUserName')) {
     }
 }
 
+// Make ID Characters
+if (!function_exists('makeIdNumber')) {
+        function makeIdNumber($sn, $numberOfZeros) {
+            $idStr = str_pad($sn, $numberOfZeros, "0", STR_PAD_LEFT);
+            return $idStr;
+        }    
+}
 
-// UNVERIFIED DONATION
+// Format amount
+if (!function_exists('formatAmount')) {
+        function formatAmount($amt) {
+            $amt = number_format($amt, 2, '.', ',');
+            return $amt;
+        }
+}
 
-// Get unverified donation records
+// Sanitize amount
+if (!function_exists('sanitizeAmount')) {
+        function sanitizeAmount($amt) {
+        $amt = filter_var($amt, FILTER_SANITIZE_NUMBER_INT);
+        $amt = intval($amt);
+        return $amt;
+        }
+}
+
+
+
+/**
+ * Get list of records
+ */
+
+// Get list of unverified donation records
+// -----------------------------------------
 if (!function_exists('getUnverifiedDonations')) {
     function getUnverifiedDonations()
     {
@@ -70,7 +99,14 @@ if (!function_exists('getUnverifiedDonations')) {
 }
 
 
-// Get unverified payment total (for Admin)
+
+/**
+ * Record summations (Totals)
+ */
+
+// --- Admin ---
+// Get unverified payment total
+// -----------------------------------------
 if (!function_exists('sumUnverifiedDonations')) {
     function sumUnverifiedDonations()
     {
@@ -78,17 +114,127 @@ if (!function_exists('sumUnverifiedDonations')) {
      $totalUnverified = $allRecords->where('year', '=', getCurrentYear())
                            ->where('transaction', '=', 1)
                            ->where('payment_status', '=', 1)
-                           ->where('verification', '=', '0');
+                           ->where('verification', '=', '0');             
 // Sum Amount
-        $totalUnverified_r = $totalUnverified->sum('amount');
+        $totalUnverified = $totalUnverified->sum('amount');
 // Format Amount
-        $totalUnverified = number_format($totalUnverified_r, 2, '.', ',');
+        $amt = $totalUnverified;
+        $totalUnverified = formatAmount($amt);
      return $totalUnverified;
 
     }
 }
 
-// Get unverified payment total (for Recorder)
+
+// Get the total of all donation excluding pledges
+// -----------------------------------------
+if (!function_exists('sumAllInstantDonations')) {
+    function sumAllInstantDonations()
+    {
+    $allRecords = App\Models\InstantRecord::all();
+     $totalInsDonation = $allRecords->where('year', '=', getCurrentYear())
+                           ->where('transaction', '=', 1)
+                           ->where('payment_mode', '!=', 4);
+// Sanitize Amount
+        // $amt =  $totalInsDonation;
+        // $totalInsDonation = sanitizeAmount($amt);  
+// Sum Amount
+        $totalInsDonation = $totalInsDonation->sum('amount');
+// Format Amount
+        $amt = $totalInsDonation;
+        $totalInsDonation = formatAmount($amt);
+     return $totalInsDonation;
+
+    }
+}
+
+// Get the total of all expenses
+// -----------------------------------------
+if (!function_exists('sumOfAllExpenses')) {
+    function sumOfAllExpenses()
+    {
+    $allRecords = App\Models\InstantRecord::all();
+     $sumOfAllExpenses = $allRecords->where('year', '=', getCurrentYear())
+                           ->where('transaction', '=', 0);
+
+// Sum Amount
+        $sumOfAllExpenses = $sumOfAllExpenses->sum('amount');
+// Format Amount
+        // $amt = $sumOfAllExpenses;
+        // $sumOfAllExpenses = formatAmount($amt);
+     return $sumOfAllExpenses;
+
+    }
+}
+
+// Get the total of available fund
+// -----------------------------------------
+if (!function_exists('sumAvailableFund')) {
+    function sumAvailableFund()
+    {
+    $allRecords = App\Models\InstantRecord::all();
+     $availableFund = $allRecords->where('year', '=', getCurrentYear())
+                           ->where('transaction', '=', 1)
+                           ->where('payment_mode', '!=', 4)
+                           ->where('verification', '=', 1);
+
+// Sum Amount
+        $availableFund = $availableFund->sum('amount');
+        $sumAvailableFund = $availableFund - sumOfAllExpenses();
+// Format Amount
+        $amt = $sumAvailableFund;
+        $sumAvailableFund = formatAmount($amt);
+     return $sumAvailableFund;
+
+    }
+}
+
+// Get the total of all donation including pledges
+// -----------------------------------------
+if (!function_exists('sumAllInstantDonationsWithPledges')) {
+    function sumAllInstantDonationsWithPledges()
+    {
+    $allRecords = App\Models\InstantRecord::all();
+     $sumAllInstantDonationsWithPledges = $allRecords->where('year', '=', getCurrentYear())
+                           ->where('transaction', '=', 1);
+// Sum Amount
+        $sumAllInstantDonationsWithPledges = $sumAllInstantDonationsWithPledges->sum('amount');
+// Format Amount
+        $amt = $sumAllInstantDonationsWithPledges;
+        $sumAllInstantDonationsWithPledges = formatAmount($amt);
+     return $sumAllInstantDonationsWithPledges;
+
+    }
+}
+
+
+// Get the total of all pledges
+// -----------------------------------------
+if (!function_exists('sumAllInstantPledges')) {
+    function sumAllInstantPledges()
+    {
+    $allRecords = App\Models\InstantRecord::all();
+     $sumAllInstantPledges = $allRecords->where('year', '=', getCurrentYear())
+                           ->where('transaction', '=', 1)
+                           ->where('payment_mode', '=', 4)
+                           ->where('payment_status', '=', 0);
+// Sum Amount
+        $sumAllInstantPledges = $sumAllInstantPledges->sum('amount');
+// Format Amount
+        $amt = $sumAllInstantPledges;
+        $sumAllInstantPledges = formatAmount($amt);
+     return $sumAllInstantPledges;
+
+    }
+}
+
+
+
+
+// --- Recorder ---
+
+// Get unverified payment total
+// -----------------------------------------
 if (!function_exists('sumUnverifiedDonationsForRecorder')) {
     function sumUnverifiedDonationsForRecorder()
     {
@@ -99,10 +245,52 @@ if (!function_exists('sumUnverifiedDonationsForRecorder')) {
                            ->where('verification', '=', '0')
                            ->where('recorder_id', '=', getCurrentUser());
 // Sum Amount
-        $totalUnverified_r = $totalUnverified->sum('amount');
+        $totalUnverified = $totalUnverified->sum('amount');
 // Format Amount
-        $totalUnverified = number_format($totalUnverified_r, 2, '.', ',');
+        $amt = $totalUnverified;
+        $totalUnverified = formatAmount($amt);
      return $totalUnverified;
+
+    }
+}
+
+// Get the total of all donation excluding pledges
+// -----------------------------------------
+if (!function_exists('sumAllInstantDonationsFR')) {
+    function sumAllInstantDonationsFR()
+    {
+    $allRecords = App\Models\InstantRecord::all();
+     $sumAllInstantDonationsFR = $allRecords->where('year', '=', getCurrentYear())
+                           ->where('transaction', '=', 1)
+                           ->where('payment_mode', '!=', 4)
+                           ->where('recorder_id', '=', getCurrentUser());
+// Sum Amount
+        $sumAllInstantDonationsFR = $sumAllInstantDonationsFR->sum('amount');
+// Format Amount
+        $amt = $sumAllInstantDonationsFR;
+        $sumAllInstantDonationsFR = formatAmount($amt);
+     return $sumAllInstantDonationsFR;
+
+    }
+}
+
+// Get the total of all pledges
+// -----------------------------------------
+if (!function_exists('sumAllInstantPledgesFR')) {
+    function sumAllInstantPledgesFR()
+    {
+    $allRecords = App\Models\InstantRecord::all();
+     $sumAllInstantPledgesFR = $allRecords->where('year', '=', getCurrentYear())
+                           ->where('transaction', '=', 1)
+                           ->where('payment_mode', '=', 4)
+                           ->where('payment_status', '=', 0)
+                           ->where('recorder_id', '=', getCurrentUser());
+// Sum Amount
+        $sumAllInstantPledgesFR = $sumAllInstantPledgesFR->sum('amount');
+// Format Amount
+        $amt = $sumAllInstantPledgesFR;
+        $sumAllInstantPledgesFR = formatAmount($amt);
+     return $sumAllInstantPledgesFR;
 
     }
 }

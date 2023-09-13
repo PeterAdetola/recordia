@@ -1,4 +1,6 @@
-
+@php
+$sumOfAllExpenses = sumOfAllExpenses();
+@endphp
       <div class="card">
           <div class="card-content">
                 
@@ -10,7 +12,10 @@
                     <p class="no-margin">Total Donations</p>
                   </div>
                   <div class="col s5 m5 right-align mt-5">
-                    <h5 class="mb-0 white-text">6,000,000.00</h5>
+                    <h5 class="mb-0 white-text" style="margin-left: -2.5em">&#8358;&nbsp;
+                    @role('admin'){{ sumAllInstantDonations() }}@endrole
+                    @role('recorder'){{ sumAllInstantDonationsFR() }}@endrole
+                  </h5>
                     <p>Cash & Transfer</p>
                   </div>
                 </div>
@@ -23,7 +28,9 @@
                     <p>Available Fund</p>
                   </div>
                   <div class="col s5 m5 right-align mt-5">
-                    <h5 class="mb-0 white-text">4,500,900.00</h5>
+                    <h5 class="mb-0 white-text" style="margin-left: -2.5em">&#8358;&nbsp;
+                    {{ sumAvailableFund() }}
+                    </h5>
                     <p class="no-margin">Verified & Available</p>
                   </div>
                 </div>
@@ -36,7 +43,10 @@
                     <p>Pledges</p>
                   </div>
                   <div class="col s5 m5 right-align mt-5">
-                    <h5 class="mb-0 white-text">3,400,230.00</h5>
+                    <h5 class="mb-0 white-text" style="margin-left: -2.5em">&#8358;&nbsp;
+                      @role('admin'){{ sumAllInstantPledges() }}@endrole
+                      @role('recorder'){{ sumAllInstantPledgesFR() }}@endrole
+                    </h5>
                     <p class="no-margin">Unpaid Donations</p>
                   </div>
                 </div>
@@ -49,7 +59,10 @@
                     <p>Expected Total</p>
                   </div>
                   <div class="col s5 m5 right-align mt-5">
-                    <h5 class="mb-0 white-text">10,000,000.00</h5>
+                    <h5 class="mb-0 white-text" style="margin-left: -2.5em">&#8358;&nbsp;
+                    @role('admin'){{ sumAllInstantDonationsWithPledges() }}@endrole
+                    @role('recorder'){{ sumAllInstantDonationsWithPledgesFR() }}@endrole
+                  </h5>
                     <p class="no-margin">Paid & Unpaid</p>
                   </div>
                 </div>

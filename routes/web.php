@@ -38,7 +38,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/save/year', [configsController::class, 'saveYear'])->name('save.year');
     Route::post('activate/year', [configsController::class, 'activateYear'])->name('activate.year');
     Route::get('edit/year/{id}', [configsController::class, 'editYear'])->name('edit.year');
-    Route::get('update/year', [configsController::class, 'updateYear'])->name('update.year');
+    Route::post('update/year', [configsController::class, 'updateYear'])->name('update.year');
 });
 
 

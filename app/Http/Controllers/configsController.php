@@ -11,15 +11,9 @@ use Helpers\AppHelpers;
 class configsController extends Controller
 {
 
-     public function __invoke()
-    {
-        if (auth()->user()->can('create-user')) {
-            return view('admin.configs.configPage');
-        }
-    }
 
     /**
-     * Path to create year and/or event.
+     * Path to create year, event and more.
      */
     public function manageConfigs(Request $request)
     {
@@ -73,7 +67,7 @@ class configsController extends Controller
             if ($active_year->id == $selectedYearId) {
 
             $notification = array(
-                'message' => 'Year is already activated'
+                'message' => 'Nothing to activate'
             );
 
             return redirect()->route('manage.configs')->with($notification);
@@ -87,7 +81,7 @@ class configsController extends Controller
                 YearRecord::where('id', '!=', $selectedYearId)->update(['status' => 0]);
 
                     $notification = array(
-                        'message' => 'Selected year activated'
+                        'message' => 'Year '.getCurrentYear().' is activated'
                     );
 
                 return redirect()->route('manage.configs')->with($notification);

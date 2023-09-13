@@ -40,7 +40,7 @@
         </div>
 
         <div class="input-field col m6 s12">
-          <input name="amount" id="amount" :value="old('amount')" type="text" required>
+          <input name="amount" id="amount" :value="old('amount')" type="text" class="inputmask" required>
           <label for="amount">Amount</label>
         @error('amount')
         <small class="errorTxt3  red-text">{{ $message }}*</small>
@@ -48,7 +48,7 @@
         </div>
 
       </div>
-<div id="message" class="chip center" style="display:none;">Please provide phone number for pledge</div>
+<div id="message" class="chip center red-text" style="display:none;">Please provide phone number for pledge<i class="close material-icons">close</i></div>
       <div class="row">
 
                 <fieldset class="collection">
@@ -101,7 +101,7 @@
 
     <div class="modal-footer">
       <button id="submitBtn" type="submit" onclick="ShowPreloader()" class="modal-action waves-effect waves-green btn-large" >Add Donation</button>
-      <a href="javascript:void(0)" class="btn-large btn-flat modal-close">Cancel</a>
+      <a id="reload" href="javascript:void(0)" class="btn-large btn-flat modal-close">Cancel</a>
     </div>
 </form>
   </div>

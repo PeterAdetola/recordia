@@ -61,8 +61,11 @@ $route = Route::current()->getName()
    @include('admin.body.footer')
 
     <!-- END: Footer-->
+    <script src="{{ asset('backend/assets/js/jquery.min.js') }}"></script>
+
     <!-- BEGIN VENDOR JS-->
     <script src="{{ asset('backend/assets/js/vendors.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/jquery.inputmask.js') }}"></script>
     <!-- BEGIN VENDOR JS-->
     <!-- BEGIN PAGE VENDOR JS-->
    @yield('vendor_scripts')
@@ -80,7 +83,7 @@ $route = Route::current()->getName()
     <script src="{{ asset('backend/assets/js/scripts/advance-ui-modals.js') }}"></script>
     <script src="{{ asset('backend/assets/js/scripts/ui-alerts.js') }}"></script>
     <script src="{{ asset('backend/assets/js/scripts/form-select2.js') }}"></script>
-    
+
     <!-- END PAGE LEVEL JS-->
     
 <script>
@@ -89,7 +92,7 @@ $route = Route::current()->getName()
        @if(Session::has('message'))
 
         setTimeout(function () {
-          var toastHTML = "{{ Session::get('message') }}";
+          var toastHTML = "<i class='material-icons' style='color:#616161'>radio_button_checked</i>&nbsp;{{ Session::get('message') }}";
           M.toast({html: toastHTML})
         }, 500);
 
@@ -113,7 +116,9 @@ $route = Route::current()->getName()
 
     document.querySelector('#reload').onclick = reload;
     document.querySelector('#reload2').onclick = reload;
- 
+
+
+
 </script>
   </body>
 </html>

@@ -1,6 +1,6 @@
 @php
           $unverifiedDonations = getUnverifiedDonations();
-          $recordersUnverifiedDonations = getUnverifiedDonations()->where('recorder_id', '=', getCurrentUser())
+          $recordersUnverifiedDonations = getUnverifiedDonations()->where('recorder_id', '=', getCurrentUser());
 
 @endphp
 <div class="row">
@@ -17,18 +17,21 @@
               <table id="multi-select" class="display" style="height: 50px;">
                 <thead>
                   <tr>
+                     @role('admin')
                     <th>
                       <label>
-                        <input type="checkbox" class="select-all filled-in" />
+                        <input type="checkbox" class="select-all" />
                         <span></span>
                       </label>
                     </th>
+                      @endrole
                     <th>Record ID</th>
                     <th>Name</th>
                     <th>Purpose</th>
-                    <th>Phone No.</th>
                     <th>Date</th>
+                     @role('admin')
                     <th>Recorder</th>
+                      @endrole
                     <th>Amount (&#8358;)</th>
                   </tr>
                 </thead>
@@ -41,37 +44,29 @@
                   <tr>
                     <td>
                       <label>
-                        <input type="checkbox" name="verification[]" value="{{ $unverifiedDonation->id }}" class="data-checkbox filled-in" />
+                        <input type="checkbox" name="verification[]" value="{{ $unverifiedDonation->id }}" class="data-checkbox" />
                         <span></span>
                       </label>
                     </td>
                     <td>INS00010323</td>
                     <td>{{ $unverifiedDonation->name }}</td>
                     <td>{{ $unverifiedDonation->purpose }}</td>
-                    <td>{{ $unverifiedDonation->phone }}</td>
                     <td>{{ $unverifiedDonation->updated_at }}</td>
                     <td>Recorder Name</td>
                     <td>{{ number_format($unverifiedDonation->amount, 2, '.', ',') }}</td>
                   </tr>
           @endforeach
+
         @endrole
 
         @role('recorder')         
           @foreach ($recordersUnverifiedDonations as $unverifiedDonation)
 
                   <tr>
-                    <td>
-                      <label>
-                        <input type="checkbox" name="verification[]" value="{{ $unverifiedDonation->id }}" class="data-checkbox filled-in" />
-                        <span></span>
-                      </label>
-                    </td>
                     <td>INS00010323</td>
                     <td>{{ $unverifiedDonation->name }}</td>
                     <td>{{ $unverifiedDonation->purpose }}</td>
-                    <td>{{ $unverifiedDonation->phone }}</td>
                     <td>{{ $unverifiedDonation->updated_at }}</td>
-                    <td>Recorder Name</td>
                     <td>{{ number_format($unverifiedDonation->amount, 2, '.', ',') }}</td>
                   </tr>
           @endforeach
@@ -81,8 +76,8 @@
         
               </table>
               <div class="row">
-                <button id="submitBtn" href="#verify-donation-modal" disabled class="btn mt-1 ml-1 modal-trigger">Verify<i class="material-icons left">check_circle</i> </button>
               @role('admin')
+                <button id="submitBtn2" href="#verify-donation-modal" disabled class="btn mt-1 ml-1 modal-trigger">Verify<i class="material-icons left">check_circle</i> </button>
                 <span class="mt-2 mr-4 right">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ sumUnverifiedDonations() }}</span></span>
               @endrole
 
@@ -106,7 +101,7 @@
 
         <div class="modal-footer">
           <button type="submit" onclick="ShowPreloader()" class="modal-action waves-effect waves-green btn-large">Yes, Verify</button>
-          <a id="reload" href="javascript:void(0)" class="btn-large btn-flat modal-close">No, Cancel</a>
+          <a id="reload2" href="javascript:void(0)" class="btn-large btn-flat modal-close">No, Cancel</a>
         </div>
     </div>
 

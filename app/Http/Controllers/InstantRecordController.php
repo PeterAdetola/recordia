@@ -61,13 +61,17 @@ class InstantRecordController extends Controller
             $request->payment_status = 0;
         }
 
+        // Sanitize amount to numbers only
+        $amount = filter_var($request->amount, FILTER_SANITIZE_NUMBER_INT);
+        $amount = intval($amount);
+
       InstantRecord::create([
             'recorder_id' => $request->recorder_id,
             'name' => $request->name,
             'phone' => $request->phone,
             'purpose' => $request->purpose,
             'transaction' => $request->transaction,
-            'amount' => $request->amount,
+            'amount' => $amount,
             'payment_mode' => $request->payment_mode,
             'payment_status' => $request->payment_status,
             'verification' => $request->verification,
@@ -101,13 +105,17 @@ class InstantRecordController extends Controller
         $request->payment_mode = 0;
         $request->verification = 0;
 
+        // Sanitize amount to numbers only
+        $amount = filter_var($request->amount, FILTER_SANITIZE_NUMBER_INT);
+        $amount = intval($amount);
+
       InstantRecord::create([
             'recorder_id' => $request->recorder_id,
             'name' => $request->name,
             'phone' => $request->phone,
             'purpose' => $request->purpose,
             'transaction' => $request->transaction,
-            'amount' => $request->amount,
+            'amount' => $amount,
 
             'payment_mode' => $request->payment_mode,
             'payment_status' => $request->payment_status,
@@ -139,7 +147,7 @@ class InstantRecordController extends Controller
                 $request->verification = 1;
                 InstantRecord::findOrFail($verification)->update([
                 'verification' => $request->verification,
-            ]);
+                    ]);
                 }
 
         $notification = array(
@@ -148,4 +156,5 @@ class InstantRecordController extends Controller
 
         return redirect()->route('dashboard')->with($notification);
     }
+
 }
