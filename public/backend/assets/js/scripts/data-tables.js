@@ -16,11 +16,11 @@ $(function () {
   var table = $('#data-table-row-grouping').DataTable({
     "responsive": true,
     "columnDefs": [{
-      "visible": false,
+      "visible": true,
       "targets": 2
     }],
     "order": [
-      [2, 'asc']
+      [7, 'desc']
     ],
     "displayLength": 25,
     "drawCallback": function (settings) {
@@ -30,7 +30,7 @@ $(function () {
       }).nodes();
       var last = null;
 
-      api.column(2, {
+      api.column(7, {
         page: 'current'
       }).data().each(function (group, i) {
         if (last !== group) {

@@ -31,7 +31,12 @@ Route::middleware('auth')->group(function () {
 });
 
 
-// --------------| Configuration Page |----------------------------------------
+/*
+|--------------------------------------------------------------------------
+| Configuration Page
+|--------------------------------------------------------------------------
+|
+*/
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/manage/configs', [configsController::class, 'manageConfigs'])->name('manage.configs');
@@ -43,10 +48,29 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 
 
-// --------------| Instant Records |----------------------------------------
+/*
+|--------------------------------------------------------------------------
+| Instant Records
+|--------------------------------------------------------------------------
+|
+*/
+// --------------| For the Dashboard |----------------------------------------
 
 Route::post('/save/donation', [InstantRecordController::class, 'saveDonation'])->name('save.donation');
 Route::post('/save/expense', [InstantRecordController::class, 'saveExpense'])->name('save.expense');
 Route::post('/verify/donation', [InstantRecordController::class, 'verifyDonation'])->name('verify.donation');
+// Route::post('/redeem/pledges', [InstantRecordController::class, 'redeemPledges'])->name('redeem.pledges');
+
+// --------------| For Pages |----------------------------------------
+
+Route::get('/get/instant/records', [InstantRecordController::class, 'getAllInstantRecords'])->name('get.instant.records');
+// --------------| Unpaid Donation |----------------------------------------
+Route::get('/instant/unpaid/donations', [InstantRecordController::class, 'getUnpaidDonations'])->name('instant.unpaid.donations');
+Route::get('/instant/prev_unpaid/donations', [InstantRecordController::class, 'prevUnpaidDonations'])->name('instant.prev_unpaid.donations');
+
+Route::post('/save/expense', [InstantRecordController::class, 'saveExpense'])->name('save.expense');
+Route::post('/verify/donation', [InstantRecordController::class, 'verifyDonation'])->name('verify.donation');
+Route::post('/update/transaction', [InstantRecordController::class, 'updateTransaction'])->name('update.transaction');
+Route::post('/redeem/pledges', [InstantRecordController::class, 'redeemPledges'])->name('redeem.pledges');
 
 require __DIR__.'/auth.php';

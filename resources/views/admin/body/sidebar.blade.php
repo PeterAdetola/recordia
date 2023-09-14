@@ -20,19 +20,51 @@ $route = Route::current()->getName()
 
         <li class="active bold"><a class="{{ ($route == 'dashboard')? 'active' : '' }} waves-effect waves-cyan " href="{{ route('dashboard') }}"><i class="material-icons">dashboard</i><span class="menu-title" data-i18n="Dashboard">Dashboard</span></a>
         </li>
+        <li class="navigation-header"><a class="navigation-header-text">Records </a><i class="navigation-header-icon material-icons">more_horiz</i>
+        </li>
+        <li class="bold">
+          <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">
+          <i class="material-icons">storage</i>
+            <span class="menu-title" data-i18n="Home Slide Setup">Instant Records</span>
+          </a>
+          <div class="collapsible-body">
+            <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+              <li>
+                <a class="{{ ($route == 'instantRecords')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('get.instant.records')}}"><i class="material-icons">radio_button_unchecked</i>
+                  <span data-i18n="Home Slide">All Records</span>
+                </a>
+              </li> 
+              <li>
+                <a class="{{ ($route == 'instantRecords')? 'active' : '' }} waves-effect waves-cyan" href=""><i class="material-icons">radio_button_unchecked</i>
+                  <span data-i18n="Home Slide">Verified Donations</span>
+                </a>
+              </li> 
+              <li>
+                <a class="{{ ($route == 'instantRecords')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('instant.unpaid.donations')}}"><i class="material-icons">radio_button_unchecked</i>
+                  <span data-i18n="Home Slide">Pledges</span>
+                </a>
+              </li> 
+              <li>
+                <a class="{{ ($route == 'instantRecords')? 'active' : '' }} waves-effect waves-cyan" href=""><i class="material-icons">radio_button_unchecked</i>
+                  <span data-i18n="Home Slide">All Expenses</span>
+                </a>
+              </li>               
+            </ul>
+          </div>
+        </li>
 
         <li class="bold">
           <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">
-          <i class="material-icons">swap_vert</i>
-            <span class="menu-title" data-i18n="Home Slide Setup">Financial Records</span>
+          <i class="material-icons">dns</i>
+            <span class="menu-title" data-i18n="Home Slide Setup">Registered Records</span>
           </a>
           <div class="collapsible-body">
             <ul class="collapsible collapsible-sub" data-collapsible="accordion">
               <li>
                 <a class="{{ ($route == 'instantRecords')? 'active' : '' }} waves-effect waves-cyan" href=""><i class="material-icons">radio_button_unchecked</i>
-                  <span data-i18n="Home Slide">Instant Records</span>
+                  <span data-i18n="Home Slide">All Records</span>
                 </a>
-              </li>               
+              </li>                
             </ul>
           </div>
         </li>

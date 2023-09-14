@@ -28,6 +28,7 @@ $route = Route::current()->getName()
     <!-- BEGIN: Page Level CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/themes/vertical-modern-menu-template/materialize.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/themes/vertical-modern-menu-template/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/app-invoice.css') }}">
     @yield('styles')
     <!-- END: Page Level CSS-->
     <!-- BEGIN: Custom CSS-->
@@ -61,11 +62,10 @@ $route = Route::current()->getName()
    @include('admin.body.footer')
 
     <!-- END: Footer-->
-    <script src="{{ asset('backend/assets/js/jquery.min.js') }}"></script>
+    <!-- <script src="{{ asset('backend/assets/js/jquery.min.js') }}"></script> -->
 
     <!-- BEGIN VENDOR JS-->
     <script src="{{ asset('backend/assets/js/vendors.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/jquery.inputmask.js') }}"></script>
     <!-- BEGIN VENDOR JS-->
     <!-- BEGIN PAGE VENDOR JS-->
    @yield('vendor_scripts')
@@ -74,15 +74,16 @@ $route = Route::current()->getName()
     <script src="{{ asset('backend/assets/js/plugins.js') }}"></script>
     <script src="{{ asset('backend/assets/js/search.js') }}"></script>
     <script src="{{ asset('backend/assets/js/custom/custom-script.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/custom/sweetalert.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/custom/sweetalert_init.js') }}"></script>
+    <!-- <script src="{{ asset('backend/assets/js/custom/sweetalert.min.js') }}"></script> -->
+    <!-- <script src="{{ asset('backend/assets/js/custom/sweetalert_init.js') }}"></script> -->
     <!-- END THEME  JS-->
     <!-- BEGIN PAGE LEVEL JS-->
    @yield('scripts')
     <script src="{{ asset('backend/assets/js/scripts/dashboard-modern.js') }}"></script>
     <script src="{{ asset('backend/assets/js/scripts/advance-ui-modals.js') }}"></script>
     <script src="{{ asset('backend/assets/js/scripts/ui-alerts.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/scripts/form-select2.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/scripts/app-invoice.js') }}"></script>
+    <!-- <script src="{{ asset('backend/assets/js/scripts/form-select2.js') }}"></script> -->
 
     <!-- END PAGE LEVEL JS-->
     

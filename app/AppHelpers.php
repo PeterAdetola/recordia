@@ -75,8 +75,18 @@ if (!function_exists('sanitizeAmount')) {
         $amt = filter_var($amt, FILTER_SANITIZE_NUMBER_INT);
         $amt = intval($amt);
         return $amt;
-        }
+    }
 }
+
+// Format Date
+if (!function_exists('formatDate')) {
+        function formatDate($date) {
+          $date = \Carbon\Carbon::parse($date);
+          $date = $date->format('j M, Y');
+        return $date;
+    }
+}
+
 
 
 
@@ -89,12 +99,26 @@ if (!function_exists('sanitizeAmount')) {
 if (!function_exists('getUnverifiedDonations')) {
     function getUnverifiedDonations()
     {
-    $allRecords = App\Models\InstantRecord::all();
+    $allRecords = App\Models\InstantRecord::orderBy('updated_at', 'DESC')->get();
      $unverifiedDonations = $allRecords->where('year', '=', getCurrentYear())
                            ->where('transaction', '=', 1)
                            ->where('payment_status', '=', 1)
                            ->where('verification', '=', '0');
      return $unverifiedDonations;
+    }
+}
+
+// Get list of unpaid donation records
+// -----------------------------------------
+if (!function_exists('getUnpaidDonations')) {
+    function getUnpaidDonations()
+    {
+    $allRecords = App\Models\InstantRecord::all();
+     $unpaidDonations = $allRecords->where('year', '=', getCurrentYear())
+                           ->where('transaction', '=', 1)
+                           ->where('payment_status', '=', 0)
+                           ->where('verification', '=', '0');
+     return $unpaidDonations;
     }
 }
 
@@ -110,7 +134,7 @@ if (!function_exists('getUnverifiedDonations')) {
 if (!function_exists('sumUnverifiedDonations')) {
     function sumUnverifiedDonations()
     {
-    $allRecords = App\Models\InstantRecord::all();
+    $allRecords = App\Models\InstantRecord::orderBy('updated_at', 'DESC')->get();
      $totalUnverified = $allRecords->where('year', '=', getCurrentYear())
                            ->where('transaction', '=', 1)
                            ->where('payment_status', '=', 1)

@@ -48,16 +48,7 @@ $pageTitle = 'Configuration Page';
     </div>
 </div>
 </div>
-<script>
-//     function dismissModal() {
-//   var modal = document.getElementById("delete-modal");
-//   modal.style.display = "none";
-// }
 
-// document.getElementById("cancelBtn").onclick = dismissModal;
-
-
-</script>
 @endsection
 @section('scripts')
   <!-- <script src="{{ asset('backend/assets/js/scripts/page-users.js') }}"></script> -->
