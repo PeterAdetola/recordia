@@ -46,7 +46,14 @@
           <label for="purpose">for</label>
         </div>
 
+
+      <div class="progress collection">
+        <div id="preloader{{$instantRecord->id}}" class=" indeterminate"  style="display:none; 
+        border:2px #ebebeb solid"></div>
+      </div>
+
               <div class="row">
+                @if($instantRecord->transaction == 1)
                   <div class="col s12 m6" style="padding:1em">
                    <div class="switch mt-5">
                       <label>
@@ -62,14 +69,15 @@
                         }
                         @endphp
                         <label>
-                          <input name="verification" type="checkbox" class="filled-in" value="1" {{ ($instantRecord->verification == 1)? 'checked' : '' }} />
+                          <input id="verification" name="verification" type="checkbox" class="filled-in" value="1" {{ ($instantRecord->verification == 1)? 'checked' : '' }} {{ ($instantRecord->verification == 1)? 'disabled' : '' }} />
                           <span>{{ ($instantRecord->verification == 1)? 'Verified' : 'Not Verified' }}</span>
                         </label>
                       </div>
                   </div>
+                  @endif
 
                   <div class="input-field mt-8 col s12 m6">
-                    <button class="btn-large waves-effect waves-light right" type="submit">Update
+                    <button class="btn-large waves-effect waves-light {{ ($instantRecord->transaction == 1)? 'right' : 'center' }}" type="submit"  onclick="ShowPreloader()">Update
                       <i class="material-icons right">send</i>
                     </button>
                   </div>
@@ -79,3 +87,12 @@
       </form>
   </div>
 </div>
+
+<script type="text/javascript">
+  
+
+      // Preloader Script
+      function ShowPreloader() {
+        document.getElementById('preloader{{$instantRecord->id}}').style.display = "block";
+      }
+</script>

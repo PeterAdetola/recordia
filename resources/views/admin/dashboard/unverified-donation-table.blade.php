@@ -18,12 +18,22 @@
                 <thead>
                   <tr>
                      @role('admin')
+                     @if (count($unverifiedDonations))
                     <th>
                       <label>
-                        <input type="checkbox" class="select-all" />
+                        <input onchange="toggleCheckboxes(this)" id="headerCheckbox" type="checkbox" class="select-all"/>
                         <span></span>
                       </label>
                     </th>
+                    @else
+                    <th>
+                      <label>
+                        <input id="headerCheckbox" type="checkbox" class="select-all" disabled />
+                        <span></span>
+                      </label>
+                    </th>
+                    @endif
+
                       @endrole
                     <th>Record ID</th>
                     <th>Name</th>
@@ -51,7 +61,7 @@
                     <td>INS00010323</td>
                     <td>{{ $unverifiedDonation->name }}</td>
                     <td>{{ $unverifiedDonation->purpose }}</td>
-                    <td>{{ $unverifiedDonation->updated_at }}</td>
+                    <td>{{ formatDate($unverifiedDonation->updated_at) }}</td>
                     <td>Recorder Name</td>
                     <td>{{ number_format($unverifiedDonation->amount, 2, '.', ',') }}</td>
                   </tr>

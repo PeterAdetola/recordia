@@ -68,6 +68,16 @@ $pageTitle = 'Configuration Page';
       });
     });
 
+    
+
+      // Preloader Script
+      function ShowPreloader() {
+        document.getElementById('preloader').style.display = "block";
+        document.getElementById('preloader2').style.display = "block";
+        document.getElementById('preloader3').style.display = "block";
+        document.getElementById('preloader4').style.display = "block";
+      }
+
 
   </script>
 @endsection

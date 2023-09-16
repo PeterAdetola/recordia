@@ -1,8 +1,8 @@
  @extends('admin.admin_master')
  @section('admin')
+
 @php
 $pageTitle = 'Unpaid Donations for the year '. getCurrentYear();
-
 @endphp
  <!-- BEGIN: Page Main-->
     <div id="main">
@@ -60,7 +60,6 @@ $pageTitle = 'Unpaid Donations for the year '. getCurrentYear();
               </thead>
               <tbody>
 
-
               @foreach($unpaidDonations as $unpaidDonation)
 
                 <tr class="{{ ($unpaidDonation->transaction == 1 )? 'grey lighten-5' : '' }}">
@@ -73,8 +72,8 @@ $pageTitle = 'Unpaid Donations for the year '. getCurrentYear();
                 <td>{{ formatAmount($unpaidDonation->amount) }}</td>
                 </tr>
 
-
               @endforeach
+
               </tbody>
             </table>
           </div>

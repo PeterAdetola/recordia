@@ -117,7 +117,7 @@ if (!function_exists('getUnpaidDonations')) {
      $unpaidDonations = $allRecords->where('year', '=', getCurrentYear())
                            ->where('transaction', '=', 1)
                            ->where('payment_status', '=', 0)
-                           ->where('verification', '=', '0');
+                           ->where('verification', '=', 0);
      return $unpaidDonations;
     }
 }
@@ -158,7 +158,7 @@ if (!function_exists('sumAllInstantDonations')) {
     $allRecords = App\Models\InstantRecord::all();
      $totalInsDonation = $allRecords->where('year', '=', getCurrentYear())
                            ->where('transaction', '=', 1)
-                           ->where('payment_mode', '!=', 4);
+                           ->where('payment_status', '=', 1);
 // Sanitize Amount
         // $amt =  $totalInsDonation;
         // $totalInsDonation = sanitizeAmount($amt);  
@@ -168,6 +168,28 @@ if (!function_exists('sumAllInstantDonations')) {
         $amt = $totalInsDonation;
         $totalInsDonation = formatAmount($amt);
      return $totalInsDonation;
+
+    }
+}
+
+// Get the total of available fund
+// -----------------------------------------
+if (!function_exists('sumAvailableFund')) {
+    function sumAvailableFund()
+    {
+    $allRecords = App\Models\InstantRecord::all();
+     $availableFund = $allRecords->where('year', '=', getCurrentYear())
+                           ->where('transaction', '=', 1)
+                           ->where('payment_status', '=', 1)
+                           ->where('verification', '=', 1);
+
+// Sum Amount
+        $availableFund = $availableFund->sum('amount');
+        $sumAvailableFund = $availableFund - sumOfAllExpenses();
+// Format Amount
+        $amt = $sumAvailableFund;
+        $sumAvailableFund = formatAmount($amt);
+     return $sumAvailableFund;
 
     }
 }
@@ -187,28 +209,6 @@ if (!function_exists('sumOfAllExpenses')) {
         // $amt = $sumOfAllExpenses;
         // $sumOfAllExpenses = formatAmount($amt);
      return $sumOfAllExpenses;
-
-    }
-}
-
-// Get the total of available fund
-// -----------------------------------------
-if (!function_exists('sumAvailableFund')) {
-    function sumAvailableFund()
-    {
-    $allRecords = App\Models\InstantRecord::all();
-     $availableFund = $allRecords->where('year', '=', getCurrentYear())
-                           ->where('transaction', '=', 1)
-                           ->where('payment_mode', '!=', 4)
-                           ->where('verification', '=', 1);
-
-// Sum Amount
-        $availableFund = $availableFund->sum('amount');
-        $sumAvailableFund = $availableFund - sumOfAllExpenses();
-// Format Amount
-        $amt = $sumAvailableFund;
-        $sumAvailableFund = formatAmount($amt);
-     return $sumAvailableFund;
 
     }
 }
@@ -240,8 +240,8 @@ if (!function_exists('sumAllInstantPledges')) {
     $allRecords = App\Models\InstantRecord::all();
      $sumAllInstantPledges = $allRecords->where('year', '=', getCurrentYear())
                            ->where('transaction', '=', 1)
-                           ->where('payment_mode', '=', 4)
-                           ->where('payment_status', '=', 0);
+                           ->where('payment_status', '=', 0)
+                           ->where('verification', '=', 0);
 // Sum Amount
         $sumAllInstantPledges = $sumAllInstantPledges->sum('amount');
 // Format Amount
@@ -286,7 +286,7 @@ if (!function_exists('sumAllInstantDonationsFR')) {
     $allRecords = App\Models\InstantRecord::all();
      $sumAllInstantDonationsFR = $allRecords->where('year', '=', getCurrentYear())
                            ->where('transaction', '=', 1)
-                           ->where('payment_mode', '!=', 4)
+                           ->where('payment_status', '=', 1)
                            ->where('recorder_id', '=', getCurrentUser());
 // Sum Amount
         $sumAllInstantDonationsFR = $sumAllInstantDonationsFR->sum('amount');
@@ -306,7 +306,7 @@ if (!function_exists('sumAllInstantPledgesFR')) {
     $allRecords = App\Models\InstantRecord::all();
      $sumAllInstantPledgesFR = $allRecords->where('year', '=', getCurrentYear())
                            ->where('transaction', '=', 1)
-                           ->where('payment_mode', '=', 4)
+                           ->where('verification', '=', 0)
                            ->where('payment_status', '=', 0)
                            ->where('recorder_id', '=', getCurrentUser());
 // Sum Amount

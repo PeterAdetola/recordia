@@ -40,7 +40,7 @@
         </div>
 
         <div class="input-field col m6 s12">
-          <input name="amount" id="amount" :value="old('amount')" type="text" class="inputmask" required>
+          <input name="amount" id="amount" :value="old('amount')" type="text" required>
           <label for="amount">Amount</label>
         @error('amount')
         <small class="errorTxt3  red-text">{{ $message }}*</small>

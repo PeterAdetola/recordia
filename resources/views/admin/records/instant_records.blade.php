@@ -98,9 +98,9 @@ $pageTitle = 'Instant Records';
                     <td><a class="modal-trigger" href="#{{ $instantRecord->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a></td>
                   </tr>
 
-<!-- Table Modal here -->
-    @include('admin.records.modals.edit-transaction-form')
- 
+        <!-- Table Modal here -->
+
+    @include('admin.records.modals.edit-transaction-form') 
 
         <!-- /Donation info ends -->
                 @endforeach
@@ -150,6 +150,9 @@ $pageTitle = 'Instant Records';
   $(document).ready(function(){
     $('.sidenav').sidenav();
   });
+
+
+
 
   </script>
 @endsection

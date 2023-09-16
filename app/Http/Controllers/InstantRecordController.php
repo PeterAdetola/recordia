@@ -222,8 +222,9 @@ class InstantRecordController extends Controller
     {
         $id = $request->id;
 
-        if (!isset($request->payment_status)){
+        if (!isset($request->payment_status) && ($request->transaction == 1)){
             $request->payment_status = 0;
+            $request->payment_mode = 4;
             $request->verification = 0;
         }
 
@@ -232,7 +233,6 @@ class InstantRecordController extends Controller
         }
 
         $amount = str_replace(",", "", $request->amount);
-        // $amount = rtrim($amount, ".00");
         $amount = str_replace(".", "", $amount);
 
 

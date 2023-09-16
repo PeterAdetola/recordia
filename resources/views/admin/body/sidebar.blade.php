@@ -20,6 +20,7 @@ $route = Route::current()->getName()
 
         <li class="active bold"><a class="{{ ($route == 'dashboard')? 'active' : '' }} waves-effect waves-cyan " href="{{ route('dashboard') }}"><i class="material-icons">dashboard</i><span class="menu-title" data-i18n="Dashboard">Dashboard</span></a>
         </li>
+        @role('admin')
         <li class="navigation-header"><a class="navigation-header-text">Records </a><i class="navigation-header-icon material-icons">more_horiz</i>
         </li>
         <li class="bold">
@@ -30,7 +31,7 @@ $route = Route::current()->getName()
           <div class="collapsible-body">
             <ul class="collapsible collapsible-sub" data-collapsible="accordion">
               <li>
-                <a class="{{ ($route == 'instantRecords')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('get.instant.records')}}"><i class="material-icons">radio_button_unchecked</i>
+                <a class="{{ ($route == 'get.instant.records')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('get.instant.records')}}"><i class="material-icons">radio_button_unchecked</i>
                   <span data-i18n="Home Slide">All Records</span>
                 </a>
               </li> 
@@ -40,7 +41,7 @@ $route = Route::current()->getName()
                 </a>
               </li> 
               <li>
-                <a class="{{ ($route == 'instantRecords')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('instant.unpaid.donations')}}"><i class="material-icons">radio_button_unchecked</i>
+                <a class="{{ ($route == 'instant.unpaid.donations')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('instant.unpaid.donations')}}"><i class="material-icons">radio_button_unchecked</i>
                   <span data-i18n="Home Slide">Pledges</span>
                 </a>
               </li> 
@@ -68,6 +69,7 @@ $route = Route::current()->getName()
             </ul>
           </div>
         </li>
+        @endrole
       </ul>
       <!-- <div class="navigation-background"></div> -->
       <a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only" href="#" data-target="slide-out"><i class="material-icons">menu</i></a>
