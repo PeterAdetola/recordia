@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Carbon\Carbon;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -29,8 +30,19 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+
+    $hour = Carbon::now()->hour;
+
+    if ($hour >= 5 && $hour < 12) {
+        $greeting = 'Good morning';
+    } elseif ($hour >= 12 && $hour < 18) {
+        $greeting = 'Good afternoon';
+    } else {
+        $greeting = 'Good evening';
+    }
+
         $notification = array(
-            'message' => 'Hi '.getUserName()
+            'message' => $greeting.', '.getUserFisrtName()
         );
 
         return redirect()->intended(RouteServiceProvider::HOME)->with($notification);

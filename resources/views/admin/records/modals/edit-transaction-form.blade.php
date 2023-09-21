@@ -27,7 +27,7 @@
       <div class="row">
 
         <div class="input-field col m6 s12">
-          <input name="amount" id="amount" value="{{ $instantRecord->amount }}" type="text" class="inputmask" required>
+          <input name="amount" id="amount" value="{{ $instantRecord->amount }}" type="text" required>
                   <label for="amount">Amount 
 
           @if ($instantRecord->transaction == 1 && $instantRecord->payment_status == 1)
@@ -48,7 +48,7 @@
 
 
       <div class="progress collection">
-        <div id="preloader{{$instantRecord->id}}" class=" indeterminate"  style="display:none; 
+        <div id="preloader{{$instantRecord->id}}" class="indeterminate"  style="display:none;
         border:2px #ebebeb solid"></div>
       </div>
 
@@ -77,7 +77,7 @@
                   @endif
 
                   <div class="input-field mt-8 col s12 m6">
-                    <button class="btn-large waves-effect waves-light {{ ($instantRecord->transaction == 1)? 'right' : 'center' }}" type="submit"  onclick="ShowPreloader()">Update
+                    <button id="submitBtn{{$instantRecord->id}}" class="btn-large waves-effect waves-light {{ ($instantRecord->transaction == 1)? 'right' : 'center' }}" type="submit"  onclick="ShowPreloader{{$instantRecord->id}}()">Update
                       <i class="material-icons right">send</i>
                     </button>
                   </div>
@@ -88,11 +88,10 @@
   </div>
 </div>
 
-<script type="text/javascript">
-  
-
+<script type="text/javascript"> 
       // Preloader Script
-      function ShowPreloader() {
-        document.getElementById('preloader{{$instantRecord->id}}').style.display = "block";
-      }
+document.getElementById("submitBtn{{$instantRecord->id}}").addEventListener("click", function() {
+  var preloader = document.getElementById("preloader{{$instantRecord->id}}");
+  preloader.style.display = "block";
+});
 </script>

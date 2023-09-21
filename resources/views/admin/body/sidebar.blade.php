@@ -9,7 +9,7 @@ $route = Route::current()->getName()
         <h1 class="logo-wrapper">
           <a class="brand-logo darken-1" href="index.html">
           <img style="padding-bottom: 0.2em; height: 1.3em;" class="hide-on-med-and-down" src="{{ asset('backend/assets/images/logo/recordia_bg_logo.png') }}" alt="recordia logo"/>
-          <img style="margin-top: -0.4em; height: 1.3em;" class="show-on-medium-and-down hide-on-med-and-up" src="{{ asset('backend/assets/images/logo/recordia_bg_logo.png') }}" alt="recordia logo"/><span class="logo-text hide-on-med-and-down"><img src="{{ asset('backend/assets/images/logo/recordia_text.png') }}"  style=" height: 1.5em;" /></span>
+          <img style="margin-top: -0.4em; height: 1.3em;" class="show-on-medium-and-down hide-on-med-and-up" src="{{ asset('backend/assets/images/logo/recordia_bg_logo.png') }}" alt="recordia logo"/><span class="logo-text hide-on-med-and-down"><img src="{{ asset('backend/assets/images/logo/recordia_text.png') }}"  style="height: 1.5em;" /></span>
         </a>
         <a class="navbar-toggler" href="#">
           <i class="material-icons">radio_button_checked</i>

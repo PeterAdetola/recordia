@@ -124,7 +124,6 @@
         document.getElementById('preloader3').style.display = "block";
         // document.getElementById('preloader4').style.display = "block";
       }
-      
 
     </script>
   @endsection

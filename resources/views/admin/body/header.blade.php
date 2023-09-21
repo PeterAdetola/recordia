@@ -39,7 +39,8 @@
             <ul class="dropdown-content" id="profile-dropdown">
               <li><a class="grey-text text-darken-1" href="{{route('profile.edit')}}"><i class="material-icons">person_outline</i> Profile</a></li>
               <li class="divider"></li>
-              <form method="POST" action="{{ route('logout') }}">                            @csrf
+              <form method="POST" action="{{ route('logout') }}">
+                @csrf
               <li>
                 <a class="grey-text text-darken-1" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
                   <i class="material-icons">keyboard_tab</i> Logout</a></li>

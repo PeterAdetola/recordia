@@ -27,6 +27,7 @@ if (!function_exists('getUserInitial')) {
     function getUserInitial()
     {
      $user = auth()->user();
+   if ($user) {  
      $name = $user->name;
     $initials = [];
 
@@ -40,6 +41,9 @@ if (!function_exists('getUserInitial')) {
 
      $initials = implode('', $initials);
      return $initials;
+        } else {
+            return redirect('login');
+        }
     }
 }
 
@@ -50,6 +54,18 @@ if (!function_exists('getUserName')) {
      $user = auth()->user();
      $name = $user->name;
      return $name;
+    }
+}
+
+// Get user's firstname
+if (!function_exists('getUserFisrtName')) {
+    function getUserFisrtName()
+    {
+     $user = auth()->user();
+     $name = $user->name;
+     $nameParts = explode(" ", $name);
+     $firstName = $nameParts[0];
+     return $firstName;
     }
 }
 

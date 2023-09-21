@@ -40,8 +40,8 @@
         </div>
 
         <div class="input-field col m6 s12">
-          <input name="amount" id="amount" :value="old('amount')" type="text" required>
-          <label for="amount">Amount</label>
+          <input name="amount"  id="currency-demo" :value="old('amount')" type="text" required>
+          <label  for="currency-demo">Amount</label>
         @error('amount')
         <small class="errorTxt3  red-text">{{ $message }}*</small>
         @enderror 
@@ -98,7 +98,6 @@
         <div id="preloader" class="indeterminate"  style="display:none; 
         border:2px #ebebeb solid"></div>
       </div>
-
     <div class="modal-footer">
       <button id="submitBtn" type="submit" onclick="ShowPreloader()" class="modal-action waves-effect waves-green btn-large" >Add Donation</button>
       <a id="reload" href="javascript:void(0)" class="btn-large btn-flat modal-close">Cancel</a>

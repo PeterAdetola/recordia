@@ -155,29 +155,6 @@ class InstantRecordController extends Controller
     }
 
     /**
-     * Redeem pledges.
-     */
-    public function redeemPledges(Request $request)
-    {
-
-        $redeemPledges = $request->input('payment_status', []);
-
-        foreach ($redeemPledges as $redeemPledge) {
-
-                $request->payment_status = 1;
-                InstantRecord::findOrFail($redeemPledge)->update([
-                'payment_status' => $request->payment_status,
-                    ]);
-                }
-
-        $notification = array(
-            'message' => 'Verification done'
-        );
-
-        return redirect()->route('dashboard')->with($notification);
-    }
-
-    /**
      * Get all instant records.
      */
     public function getAllInstantRecords(InstantRecord $instantRecord)
@@ -197,11 +174,42 @@ class InstantRecordController extends Controller
 
         $unpaidDonations = InstantRecord::orderBy('updated_at', 'DESC')->get()
                                         ->where('year', '=', getCurrentYear())
-                                        ->where('payment_status', '=', 0)
-                                        ->where('payment_mode', '=', 4);
+                                        ->where('transaction', '=', 1)
+                                        ->where('payment_status', '=', 0);
 
         return view('admin.records.unpaid.unpaid_donations', compact('unpaidDonations'));
     }
+
+    // -----------------|Edit pledges|-----------------------
+    public function editPledges(Request $request)
+    {
+        $unpaidDonations = InstantRecord::orderBy('updated_at', 'DESC')->get()
+                                        ->where('year', '=', getCurrentYear())
+                                        ->where('payment_mode', '=', 4)
+                                        ->where('payment_status', '=', 0);
+
+        return view('admin.records.unpaid.edit_unpaid_donations', compact('unpaidDonations'));
+    }
+
+    // -----------------|Redeem pledge|-----------------------
+    public function redeemAPledge(Request $request)
+    {
+        // $formData = $request->get('id');
+        // echo $formData;
+        // exit();
+        $id = $request->id;
+
+        InstantRecord::findOrFail($id)->update([
+        'payment_status' => $request->payment_status,
+    ]);
+
+        $notification = array(
+            'message' => 'Pledge redeemed'
+        );
+
+        return redirect()->route('instant.unpaid.donations')->with($notification);
+    }
+
 
     // -----------------|Preview Unpaid Donations|-----------------------
     public function prevUnpaidDonations(InstantRecord $instantRecord)
@@ -209,8 +217,8 @@ class InstantRecordController extends Controller
 
         $unpaidDonations = InstantRecord::orderBy('updated_at', 'DESC')->get()
                                         ->where('year', '=', getCurrentYear())
-                                        ->where('payment_status', '=', 0)
-                                        ->where('payment_mode', '=', 4);
+                                        ->where('transaction', '=', 1)
+                                        ->where('payment_status', '=', 0);
 
         return view('admin.records.unpaid.prev_unpaid_donations', compact('unpaidDonations'));
     }
@@ -223,8 +231,8 @@ class InstantRecordController extends Controller
         $id = $request->id;
 
         if (!isset($request->payment_status) && ($request->transaction == 1)){
-            $request->payment_status = 0;
             $request->payment_mode = 4;
+            $request->payment_status = 0;
             $request->verification = 0;
         }
 

@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-    @php
-
+@if (Auth::guest())
+    <script>
+        window.location.href = "{{ route('login') }}";
+    </script>
+@endif
+@php
 $route = Route::current()->getName()
-
 @endphp 
 
 <html class="loading" lang="en" data-textdirection="ltr">
