@@ -27,16 +27,11 @@ $pageTitle = 'Unpaid Donations';
                 <ol class="breadcrumbs mb-0">
                   <li class="breadcrumb-item"><a  href="{{ route('dashboard') }}">Dashboard</a>
                   </li>
-                  <li class="breadcrumb-item active">{{ $pageTitle }}
+                  <li class="breadcrumb-item"><a  href="{{ route('instant.unpaid.donations') }}">{{ $pageTitle }}</a>
+                  </li>
+                  <li class="breadcrumb-item active">Edit {{ $pageTitle }}
                   </li>
                 </ol>
-              </div>
-              <div class="col s2 m6 l6"><a class="btn dropdown-settings waves-effect waves-light breadcrumbs-btn right" href="#!" data-target="dropdown1"><i class="material-icons hide-on-med-and-up">settings</i><i class="material-icons right">arrow_drop_down</i></a>
-              <ul class="dropdown-content" id="dropdown1" tabindex="0">
-                <li tabindex="0"><a class="grey-text text-darken-2" href="user-profile-page.html">Redeem Pledges</a></li>
-                <li class="divider" tabindex="-1"></li>
-                <li tabindex="0"><a class="grey-text text-darken-2" href="{{  route('instant.prev_unpaid.donations')}}">Print</a></li>
-              </ul>
               </div>
             </div>
           </div>
@@ -58,9 +53,26 @@ $pageTitle = 'Unpaid Donations';
               <p>The data in this table contains the records of pledges so far, not for registered donors.</p>
             </div>
             <div class="col s12">
-              <table id="data-table-row-grouping" class="display">
+          <form id="redeemPledges" method="POST" action="{{ route('instant.redeem_pledges') }}">
+          @csrf
+              <table id="multi-select" class="display" style="height: 50px;">
                 <thead>
                   <tr>
+                     @if (count($unpaidDonations))
+                    <th>
+                      <label>
+                        <input onchange="toggleCheckboxes(this)" id="headerCheckbox" type="checkbox" class="select-all"/>
+                        <span></span>
+                      </label>
+                    </th>
+                    @else
+                    <th>
+                      <label>
+                        <input id="headerCheckbox" type="checkbox" class="select-all" disabled />
+                        <span></span>
+                      </label>
+                    </th>
+                    @endif
                     <th>Name</th>
                     <th>Purpose</th>
                     <th>Amount</th>
@@ -75,6 +87,12 @@ $pageTitle = 'Unpaid Donations';
                 <tbody>
                 @foreach ($unpaidDonations as $unpaidDonation)  
                   <tr>
+                    <td>
+                      <label>
+                        <input type="checkbox" name="payment_status[]" value="{{ $unpaidDonation->id }}" class="data-checkbox" />
+                        <span></span>
+                      </label>
+                    </td>
                     <td>{{ $unpaidDonation->name }}</td>
                     <td  style="width: 10em;">{{ $unpaidDonation->purpose }}</td>
                     <td>{{ formatAmount($unpaidDonation->amount) }}</td>
@@ -102,15 +120,10 @@ $pageTitle = 'Unpaid Donations';
                     <td>{{ $unpaidDonation->phone }}</td>
                     <td>{{ formatDate($unpaidDonation->updated_at) }}</td>
                   </tr>
-
-<!-- Table Modal here -->
- 
-
-        <!-- /Donation info ends -->
                 @endforeach
                 </tbody>
 
-                <tfoot>
+                <!-- <tfoot>
                   <tr>
                     <th>Name</th>
                     <th>Purpose</th>
@@ -121,8 +134,33 @@ $pageTitle = 'Unpaid Donations';
                     <th>Phone</th>
                     <th>Date</th>
                   </tr>
-                </tfoot>
+                </tfoot> -->
               </table>
+<!-- Modal Structure -->
+
+    <div id="verify-donation-modal" class="modal border-radius-10" style="padding:2em;">
+        <div class="modal-content">
+          <h6 class="card-title">You are about to redeem <span id="checkbox-count">0</span></h6>
+
+        <p>Do you want to proceed?</p>
+        </div>
+
+      <div class="progress collection">
+        <div id="preloader" class="indeterminate" style="display:none; 
+        border:2px #ebebeb solid"></div>
+      </div>
+
+        <div class="modal-footer">
+          <button type="submit" onclick="ShowPreloader()" class="modal-action waves-effect waves-green btn-large">Yes, Redeem</button>
+          <a id="reload2" href="javascript:void(0)" class="btn-large btn-flat modal-close">No, Cancel</a>
+        </div>
+    </div>
+
+          </form>
+              <div class="row">
+                <button id="submitBtn" href="#verify-donation-modal" disabled class="btn mt-1 ml-1 modal-trigger">Redeem Pledges<i class="material-icons left">check_circle</i> </button>
+                <span class="mt-2 mr-4 right">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ sumAllInstantPledges() }}</span></span>
+              </div>
             </div>
           </div>
         </div>
@@ -150,9 +188,76 @@ $pageTitle = 'Unpaid Donations';
 
   <script type="text/javascript">
 
-  $(document).ready(function(){
-    $('.sidenav').sidenav();
+
+
+/**
+ *  Multiselect checkboxes
+ */
+
+  var table = document.getElementById('multi-select');
+  var headerCheckbox = table.querySelector('thead input[type="checkbox"]');
+  var checkboxes = table.querySelectorAll('tbody input[type="checkbox"]');
+
+  headerCheckbox.addEventListener('change', function() {
+    checkboxes.forEach(function(checkbox) {
+      checkbox.checked = headerCheckbox.checked;
+    });
   });
+
+
+
+/**
+ *  Validate checkbox submit
+ */
+
+const checkboxes2 = document.querySelectorAll('table input[type="checkbox"]');
+const submitBtn = document.getElementById('submitBtn');
+// const submitBtn2 = document.getElementById('submitBtn2');
+
+checkboxes2.forEach(function (checkbox) {
+    checkbox.addEventListener('change', function () {
+        const checkedCheckboxes = document.querySelectorAll('table input[type="checkbox"]:checked');
+        submitBtn.disabled = checkedCheckboxes.length === 0;
+        // submitBtn2.disabled = checkedCheckboxes.length === 0;
+    });
+});
+
+
+
+/**
+ *  Determine amount to verify
+ */
+
+$(document).ready(function() {
+  $('#submitBtn').click(function(e) {
+    
+    // Count the total number of checkboxes in the table
+    var totalCheckboxes = $('input.data-checkbox').length;
+
+    // Count the checked checkboxes
+    var checkedCheckboxes = $('input.data-checkbox:checked').length;
+
+     // Determine the state based on the counts
+    var state;
+    if (checkedCheckboxes === 1) {
+      state = "a pledge";
+    } else if (checkedCheckboxes === totalCheckboxes) {
+      state = "all pledges";
+    } else {
+      var count = $('input.data-checkbox:checked').length;
+      state = count+' pledges';
+    }
+    
+    // Display the count
+    $('#checkbox-count').text(state);
+
+  });
+});
+
+
+      function ShowPreloader() {
+        document.getElementById('preloader').style.display = "block";
+      }
 
   </script>
 @endsection

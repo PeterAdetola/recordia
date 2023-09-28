@@ -165,6 +165,26 @@ if (!function_exists('sumUnverifiedDonations')) {
     }
 }
 
+// Get verified payment total
+// -----------------------------------------
+if (!function_exists('sumVerifiedDonations')) {
+    function sumVerifiedDonations()
+    {
+    $allRecords = App\Models\InstantRecord::orderBy('updated_at', 'DESC')->get();
+     $totalVerified = $allRecords->where('year', '=', getCurrentYear())
+                           ->where('transaction', '=', 1)
+                           ->where('payment_status', '=', 1)
+                           ->where('verification', '=', '1');             
+// Sum Amount
+        $totalVerified = $totalVerified->sum('amount');
+// Format Amount
+        $amt = $totalVerified;
+        $totalVerified = formatAmount($amt);
+     return $totalVerified;
+
+    }
+}
+
 
 // Get the total of all donation excluding pledges
 // -----------------------------------------

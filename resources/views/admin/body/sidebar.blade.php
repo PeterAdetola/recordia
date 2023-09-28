@@ -26,28 +26,33 @@ $route = Route::current()->getName()
         <li class="bold">
           <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">
           <i class="material-icons">storage</i>
-            <span class="menu-title" data-i18n="Home Slide Setup">Instant Records</span>
+            <span class="menu-title" data-i18n="Instant Records">Instant Records</span>
           </a>
           <div class="collapsible-body">
             <ul class="collapsible collapsible-sub" data-collapsible="accordion">
               <li>
                 <a class="{{ ($route == 'get.instant.records')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('get.instant.records')}}"><i class="material-icons">radio_button_unchecked</i>
-                  <span data-i18n="Home Slide">All Records</span>
+                  <span data-i18n="All Records">All Records</span>
                 </a>
               </li> 
               <li>
-                <a class="{{ ($route == 'instantRecords')? 'active' : '' }} waves-effect waves-cyan" href=""><i class="material-icons">radio_button_unchecked</i>
-                  <span data-i18n="Home Slide">Verified Donations</span>
+                <a class="{{ ($route == 'instant.verified.donations')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('instant.verified.donations')}}"><i class="material-icons">radio_button_unchecked</i>
+                  <span data-i18n="Verified Donations">Verified Donations</span>
+                </a>
+              </li>
+              <li>
+                <a class="{{ ($route == 'instant.unverified.donations')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('instant.unverified.donations')}}"><i class="material-icons">radio_button_unchecked</i>
+                  <span data-i18n="Verified Donations">Unverified Donations</span>
                 </a>
               </li> 
               <li>
                 <a class="{{ ($route == 'instant.unpaid.donations')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('instant.unpaid.donations')}}"><i class="material-icons">radio_button_unchecked</i>
-                  <span data-i18n="Home Slide">Pledges</span>
+                  <span data-i18n="Pledges">Pledges</span>
                 </a>
               </li> 
               <li>
                 <a class="{{ ($route == 'instantRecords')? 'active' : '' }} waves-effect waves-cyan" href=""><i class="material-icons">radio_button_unchecked</i>
-                  <span data-i18n="Home Slide">All Expenses</span>
+                  <span data-i18n="All Expenses">All Expenses</span>
                 </a>
               </li>               
             </ul>
@@ -57,13 +62,13 @@ $route = Route::current()->getName()
         <li class="bold">
           <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">
           <i class="material-icons">dns</i>
-            <span class="menu-title" data-i18n="Home Slide Setup">Registered Records</span>
+            <span class="menu-title" data-i18n="Registered Records">Registered Records</span>
           </a>
           <div class="collapsible-body">
             <ul class="collapsible collapsible-sub" data-collapsible="accordion">
               <li>
                 <a class="{{ ($route == 'instantRecords')? 'active' : '' }} waves-effect waves-cyan" href=""><i class="material-icons">radio_button_unchecked</i>
-                  <span data-i18n="Home Slide">All Records</span>
+                  <span data-i18n="All Records">All Records</span>
                 </a>
               </li>                
             </ul>

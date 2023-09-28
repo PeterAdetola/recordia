@@ -35,7 +35,7 @@ $pageTitle = 'Unpaid Donations';
               </div>
               <div class="col s2 m6 l6"><a class="btn dropdown-settings waves-effect waves-light breadcrumbs-btn right" href="#!" data-target="dropdown1"><i class="material-icons hide-on-med-and-up">settings</i><i class="material-icons right">arrow_drop_down</i></a>
               <ul class="dropdown-content" id="dropdown1" tabindex="0">
-                <li tabindex="0"><a class="grey-text text-darken-2" href="user-profile-page.html">Redeem Pledges</a></li>
+                <li tabindex="0"><a class="grey-text text-darken-2" href="{{ route('instant.edit.pledges') }}">Redeem Pledges</a></li>
                 <li class="divider" tabindex="-1"></li>
                 <li tabindex="0"><a class="grey-text text-darken-2" href="{{  route('instant.prev_unpaid.donations')}}">Print</a></li>
               </ul>
@@ -167,6 +167,11 @@ document.getElementById("submitBtn{{$unpaidDonation->id}}").addEventListener("cl
                   </tr>
                 </tfoot>
               </table>
+              <div class="divider"></div>
+              <div class="row">
+                <div class="mt-2 mr-4 center">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ sumAllInstantPledges() }}</span></div>
+              </div>
+            </div>
             </div>
           </div>
         </div>
