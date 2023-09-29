@@ -76,7 +76,7 @@ $pageTitle = 'Unpaid Donations';
                     <th>Name</th>
                     <th>Purpose</th>
                     <th>Amount</th>
-                    <th>Transaction</th>
+                    <th>Recorder</th>
                     <th>Payment Status</th>
                     <th>Verification</th>
                     <th>Phone</th>
@@ -96,12 +96,8 @@ $pageTitle = 'Unpaid Donations';
                     <td>{{ $unpaidDonation->name }}</td>
                     <td  style="width: 10em;">{{ $unpaidDonation->purpose }}</td>
                     <td>{{ formatAmount($unpaidDonation->amount) }}</td>
-
-                    @if($unpaidDonation->transaction == 1)
-                    <td><span class="green-text">Cr</span></td>
-                    @else
-                    <td><span class="red-text">Dr</span></td>
-                    @endif
+                    
+                    <td>{{ $unpaidDonation['recorder']['name'] }}</td>
 
                     @if($unpaidDonation->payment_status == 1)
                     <td><span class="chip green-text">Paid</span></td>

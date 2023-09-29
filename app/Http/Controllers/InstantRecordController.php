@@ -206,8 +206,22 @@ class InstantRecordController extends Controller
                                         ->where('transaction', '=', 1)
                                         ->where('payment_status', '=', 1)
                                         ->where('verification', '=', 0);
+        $recorder = User::all();
 
-        return view('admin.records.paid.unverified_donations', compact('unverifiedDonations'));
+        return view('admin.records.paid.unverified_donations', compact('unverifiedDonations'), compact('recorder'));
+    }
+
+    /**
+     * Get all expenses.
+     */
+    public function getExpenses(InstantRecord $instantRecord)
+    {
+
+        $expenses = InstantRecord::orderBy('updated_at', 'DESC')->get()
+                                        ->where('year', '=', getCurrentYear())
+                                        ->where('transaction', '=', 0);
+
+        return view('admin.records.expenses.expenses', compact('expenses'));
     }
 
     // -----------------|Edit pledges|-----------------------
@@ -243,7 +257,7 @@ class InstantRecordController extends Controller
     // -----------------|Verify a payment|-----------------------
     public function verifyADonation(Request $request)
     {
-        
+
         $id = $request->id;
 
         InstantRecord::findOrFail($id)->update([
@@ -303,6 +317,19 @@ class InstantRecordController extends Controller
                                         ->where('verification', '=', 1);
 
         return view('admin.records.paid.prev_verified_donations', compact('verifiedDonations'));
+    }
+
+    // -----------------|Preview Unverified Donations|-----------------------
+    public function prevUnverifiedDonations(InstantRecord $instantRecord)
+    {
+
+        $unverifiedDonations = InstantRecord::orderBy('updated_at', 'DESC')->get()
+                                        ->where('year', '=', getCurrentYear())
+                                        ->where('transaction', '=', 1)
+                                        ->where('payment_status', '=', 1)
+                                        ->where('verification', '=', 0);
+
+        return view('admin.records.paid.prev_unverified_donations', compact('unverifiedDonations'));
     }
 
     /**

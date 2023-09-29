@@ -2,7 +2,13 @@
         <!-- Transaction info -->
 <div id="{{ $instantRecord->id }}" class="modal" style="padding:1em;">
     <div class="modal-content">
-      <h6 class="card-title">Edit Transaction</h6>
+      <h6 class="card-title">Edit Record taken by {{ $instantRecord['recorder']['name'] }}</h6>
+
+      <div class="progress collection">
+        <div id="preloader{{$instantRecord->id}}" class="indeterminate"  style="display:none;
+        border:2px #ebebeb solid"></div>
+      </div>
+
       <form id="donationForm" method="POST" action="{{ route('update.transaction') }}">
         @csrf
       <input type="hidden" name="id" value="{{ $instantRecord->id }}">
@@ -47,10 +53,6 @@
         </div>
 
 
-      <div class="progress collection">
-        <div id="preloader{{$instantRecord->id}}" class="indeterminate"  style="display:none;
-        border:2px #ebebeb solid"></div>
-      </div>
 
               <div class="row">
                 @if($instantRecord->transaction == 1)

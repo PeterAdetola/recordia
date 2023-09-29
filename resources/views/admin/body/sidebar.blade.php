@@ -51,7 +51,7 @@ $route = Route::current()->getName()
                 </a>
               </li> 
               <li>
-                <a class="{{ ($route == 'instantRecords')? 'active' : '' }} waves-effect waves-cyan" href=""><i class="material-icons">radio_button_unchecked</i>
+                <a class="{{ ($route == 'get.expenses')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('get.expenses')}}"><i class="material-icons">radio_button_unchecked</i>
                   <span data-i18n="All Expenses">All Expenses</span>
                 </a>
               </li>               
@@ -73,6 +73,11 @@ $route = Route::current()->getName()
               </li>                
             </ul>
           </div>
+        </li>
+        <li class="navigation-header"><a class="navigation-header-text">Settings</a><i class="navigation-header-icon material-icons">more_horiz</i>
+        </li>
+
+        <li class="active bold"><a class="{{ ($route == 'manage.configs')? 'active' : '' }} waves-effect waves-cyan " href="{{ route('manage.configs') }}"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Dashboard">Configuration Page</span></a>
         </li>
         @endrole
       </ul>

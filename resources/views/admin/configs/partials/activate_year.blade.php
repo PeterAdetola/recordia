@@ -20,8 +20,8 @@ $existing_years = App\Models\YearRecord::orderBy('year', 'desc')->get();
               @foreach($existing_years as $year)
             <form  method="POST" action="{{ route('activate.year', $year->id) }}">
                   @csrf
-                <a href="{{$year->id}}" class="{{ ($year->status == '1')? 'gradient-45deg-purple-light-blue gradient-shadow white-text' : 'chip mb-2 grey lighten-2' }} chip mb-2"
-                style="{{ ($year->status == '1')? '' : 'border-top:1px solid #bdbdbd; border-right:1px solid #bdbdbd' }}" 
+                <a href="{{$year->id}}" class="{{ ($year->status == '1')? 'gradient-45deg-light-blue-indigo gradient-shadow white-text' : 'chip mb-2 grey lighten-2' }} chip mb-2"
+                style="{{ ($year->status == '1')? 'border-bottom:1px solid white; border-left:1px solid white' : 'border-top:1px solid #bdbdbd; border-right:1px solid #bdbdbd' }}" 
                   >
 
                     <label>
@@ -50,14 +50,15 @@ $existing_years = App\Models\YearRecord::orderBy('year', 'desc')->get();
     <div id="activate-year" class="modal border-radius-10" style="padding:2em;">
         <div class="modal-content">
           <h6 class="card-title">You are about to activate the selected financial year</h6>
-
-        <p>Do you want to proceed with the activation?</p>
-        </div>
-
+          
       <div class="progress collection">
         <div id="preloader2" class="indeterminate" style="display:none; 
         border:2px #ebebeb solid"></div>
       </div>
+
+        <p>Do you want to proceed with the activation?</p>
+        </div>
+
 
         <div class="modal-footer">
           <button type="submit" onclick="ShowPreloader()" class="modal-action waves-effect waves-green btn-large">Yes, Activate Year</button>

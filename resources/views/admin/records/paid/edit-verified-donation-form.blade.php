@@ -2,7 +2,13 @@
         <!-- Transaction info -->
 <div id="{{ $verifiedDonation->id }}" class="modal" style="padding:1em;">
     <div class="modal-content">
-      <h6 class="card-title">Edit Verified Donation</h6>
+      <h6 class="card-title">Edit Verified Donation recorded by {{ $verifiedDonation['recorder']['name'] }}</h6>
+
+      <div class="progress collection">
+        <div id="preloader{{$verifiedDonation->id}}" class="indeterminate"  style="display:none;
+        border:2px #ebebeb solid"></div>
+      </div>
+      
       <form id="donationForm" method="POST" action="{{ route('update.transaction') }}">
         @csrf
       <input type="hidden" name="id" value="{{ $verifiedDonation->id }}">
@@ -46,11 +52,6 @@
           <label for="purpose">for</label>
         </div>
 
-
-      <div class="progress collection">
-        <div id="preloader{{$verifiedDonation->id}}" class="indeterminate"  style="display:none;
-        border:2px #ebebeb solid"></div>
-      </div>
 
               <div class="row">
                 @if($verifiedDonation->transaction == 1)

@@ -79,13 +79,15 @@ Route::post('/instant/redeem_pledges', [InstantRecordController::class, 'redeemP
 
 // --------------| Verified Donations |----------------------------------------
 Route::get('/instant/verified/donations', [InstantRecordController::class, 'getVerifiedDonations'])->name('instant.verified.donations');
-Route::get('/instant/edit/verified_donations', [InstantRecordController::class, 'editVerifiedDonations'])->name('instant.edit.verified_donations');
+// Route::get('/instant/edit/verified_donations', [InstantRecordController::class, 'editVerifiedDonations'])->name('instant.edit.verified_donations');
 Route::get('/instant/prev_verified/donations', [InstantRecordController::class, 'prevVerifiedDonations'])->name('instant.prev_verified.donations');
 
 // --------------| Unverified Donations |----------------------------------------
 Route::get('/instant/unverified/donations', [InstantRecordController::class, 'getUnverifiedDonations'])->name('instant.unverified.donations');
-Route::get('/instant/edit/verified_donations', [InstantRecordController::class, 'editVerifiedDonations'])->name('instant.edit.verified_donations');
 Route::post('/instant/verify_a_donation', [InstantRecordController::class, 'verifyADonation'])->name('instant.verify_a_donation');
-Route::get('/instant/prev_verified/donations', [InstantRecordController::class, 'prevVerifiedDonations'])->name('instant.prev_verified.donations');
+Route::get('/instant/prev_unverified/donations', [InstantRecordController::class, 'prevUnverifiedDonations'])->name('instant.prev_unverified.donations');
+
+// --------------| Expenses |----------------------------------------
+Route::get('/expenses', [InstantRecordController::class, 'getExpenses'])->name('get.expenses');
 
 require __DIR__.'/auth.php';

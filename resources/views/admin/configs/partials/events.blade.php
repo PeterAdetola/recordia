@@ -46,47 +46,35 @@
 
     <div id="add-recorder" class="modal border-radius-10" style="padding:1em;">
           <div class="modal-content">
-            <h6 class="card-title">Add a new recorder</h6>
-            <form class="paaswordvalidate">
-              <div class="row">
-                <div class="col s12">
-                  <div class="input-field">
-                    <input id="firstName" name="firstName" type="text" data-error=".errorTxt4">
-                    <label for="firstName">First Name</label>
-                    <small class="errorTxt4"></small>
-                  </div>
-                </div>
-                <div class="col s12">
-                  <div class="input-field">
-                    <input id="lastName" name="lastName" type="text" data-error=".errorTxt5">
-                    <label for="lastName">Last Name</label>
-                    <small class="errorTxt5"></small>
-                  </div>
-                </div>
-                <div class="col s12">
-                    <!-- Switch -->
-                    <!-- <div class="collection" style="padding:1em">
-                    </div> -->
-              </div>
-          </div>
+            <h6 class="card-title">Add a new event</h6>
 
       <div class="progress collection">
         <div id="preloader4" class="indeterminate" style="display:none; 
         border:2px #ebebeb solid"></div>
       </div>
+      
+            <form>
+              <div class="row">
+                <div class="col s12">
+                  <div class="input-field">
+                    <input id="EventName" name="name" type="text" required />
+                    <label for="EventName">Event Name</label>
+                  </div>
+                </div>
+              </div>
 
         <div class="modal-footer">
             <div class="left mt-3 mb-2">
               <div class="switch">
                 <label>
                   Deactivated
-                  <input type="checkbox" checked/>
+                  <input name="activated" value="1" type="checkbox" />
                   <span class="lever"></span>
                   Activated
                 </label>
               </div>
             </div>
-          <button type="submit" onclick="ShowPreloader()" class="modal-action waves-effect waves-green btn-large">Add Recorder</button>
+          <button type="submit" onclick="ShowPreloader()" class="modal-action waves-effect waves-green btn-large">Add Event</button>
           <a id="reload2" href="javascript:void(0)" class="btn-large btn-flat modal-close">Cancel</a>
         </div>
             </form>

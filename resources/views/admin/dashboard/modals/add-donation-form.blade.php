@@ -4,6 +4,12 @@
 <div id="add-donation-modal" class="modal" style="padding:1em;">
     <div class="modal-content">
       <h6 class="card-title">Add Donation</h6>
+
+      <div class="progress collection">
+        <div id="preloader" class="indeterminate"  style="display:none; 
+        border:2px #ebebeb solid"></div>
+      </div>
+      
       <form id="donationForm" method="POST" action="{{ route('save.donation') }}">
         @csrf
       <input type="hidden" value="{{ getCurrentUser() }}" name="recorder_id">
@@ -92,11 +98,6 @@
                   </p>
                 </div>
         
-      </div>
-
-      <div class="progress collection">
-        <div id="preloader" class="indeterminate"  style="display:none; 
-        border:2px #ebebeb solid"></div>
       </div>
     <div class="modal-footer">
       <button id="submitBtn" type="submit" onclick="ShowPreloader()" class="modal-action waves-effect waves-green btn-large" >Add Donation</button>

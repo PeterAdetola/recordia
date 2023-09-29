@@ -61,12 +61,12 @@ $pageTitle = 'Verified Donations';
                     <th>Name</th>
                     <th>Purpose</th>
                     <th>Amount</th>
-                    <th>Transaction</th>
+                    <th>Recorder</th>
                     <th>Payment Status</th>
                     <th>Verification</th>
                     <th>Phone</th>
                     <th>Date</th>
-                    <th>edit</th>
+                    <th>Edit</th>
                   </tr>
                 </thead>
 
@@ -77,11 +77,7 @@ $pageTitle = 'Verified Donations';
                     <td  style="width: 10em;">{{ $verifiedDonation->purpose }}</td>
                     <td>{{ formatAmount($verifiedDonation->amount) }}</td>
 
-                    @if($verifiedDonation->transaction == 1)
-                    <td><span class="green-text">Cr</span></td>
-                    @else
-                    <td><span class="red-text">Dr</span></td>
-                    @endif
+                    <td>{{ $verifiedDonation['recorder']['name'] }}</td>
 
                     @if($verifiedDonation->payment_status == 1)
                     <td><span class="chip green-text">Paid</span></td>
@@ -121,12 +117,12 @@ $pageTitle = 'Verified Donations';
                     <th>Name</th>
                     <th>Purpose</th>
                     <th>Amount</th>
-                    <th>Transaction</th>
+                    <th>Recorder</th>
                     <th>Payment Status</th>
                     <th>Verification</th>
                     <th>Phone</th>
                     <th>Date</th>
-                    <th>Redeem</th>
+                    <th>Edit</th>
                   </tr>
                 </tfoot>
               </table>

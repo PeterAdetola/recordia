@@ -119,7 +119,7 @@ if (!function_exists('getUnverifiedDonations')) {
      $unverifiedDonations = $allRecords->where('year', '=', getCurrentYear())
                            ->where('transaction', '=', 1)
                            ->where('payment_status', '=', 1)
-                           ->where('verification', '=', '0');
+                           ->where('verification', '=', 0);
      return $unverifiedDonations;
     }
 }
@@ -154,7 +154,7 @@ if (!function_exists('sumUnverifiedDonations')) {
      $totalUnverified = $allRecords->where('year', '=', getCurrentYear())
                            ->where('transaction', '=', 1)
                            ->where('payment_status', '=', 1)
-                           ->where('verification', '=', '0');             
+                           ->where('verification', '=', 0);             
 // Sum Amount
         $totalUnverified = $totalUnverified->sum('amount');
 // Format Amount

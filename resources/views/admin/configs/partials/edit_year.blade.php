@@ -29,13 +29,14 @@ $existing_years = App\Models\YearRecord::orderBy('year', 'desc')->get();
             <input type="hidden" name="id" value="{{ $year->id }}">
         <div class="modal-content">
         <h6 class="card-title">Edit year details</h6>
-          <input id="year" type="text" name="year" value="{{ $year->year }}" />
-          <input id="title" type="text" name="title" value="{{ $year->title }}" placeholder="(Optional) Thanksgiving of ...."  />
-        </div>
 
         <div class="progress collection">
           <div id="preloader3" class="indeterminate" style="display:none; 
           border:2px #ebebeb solid"></div>
+        </div>
+        
+          <input id="year" type="text" name="year" value="{{ $year->year }}" />
+          <input id="title" type="text" name="title" value="{{ $year->title }}" placeholder="(Optional) Thanksgiving of ...."  />
         </div>
 
         <div class="modal-footer">

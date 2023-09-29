@@ -4,6 +4,12 @@
 <div id="add-expense-modal" class="modal border-radius-10" style="padding:1em;">
     <div class="modal-content">
       <h6 class="card-title">Add Expense</h6>
+      
+      <div class="progress collection">
+        <div id="preloader2" class="indeterminate"  style="display:none; 
+        border:2px #ebebeb solid"></div>
+      </div>
+
       <form id="expenseForm" method="POST" action="{{ route('save.expense') }}">
         @csrf
       <input type="hidden" value="{{ getCurrentUser() }}" name="recorder_id">
@@ -41,10 +47,6 @@
         <small class="errorTxt3  red-text">{{ $message }}*</small>
         @enderror 
         </div>
-      </div>
-      <div class="progress collection">
-        <div id="preloader2" class="indeterminate"  style="display:none; 
-        border:2px #ebebeb solid"></div>
       </div>
 
     <div class="modal-footer">
