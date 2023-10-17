@@ -332,6 +332,19 @@ class InstantRecordController extends Controller
         return view('admin.records.paid.prev_unverified_donations', compact('unverifiedDonations'));
     }
 
+    // -----------------|Preview Expenses|-----------------------
+    public function prevExpenses(InstantRecord $instantRecord)
+    {
+
+        $expenses = InstantRecord::orderBy('updated_at', 'DESC')->get()
+                                        ->where('year', '=', getCurrentYear())
+                                        ->where('transaction', '=', 0)
+                                        ->where('payment_status', '=', 0)
+                                        ->where('verification', '=', 0);
+
+        return view('admin.records.expenses.prev_expenses', compact('expenses'));
+    }
+
     /**
      * Update resource in storage.
      */
@@ -347,6 +360,10 @@ class InstantRecordController extends Controller
 
         if (!isset($request->verification)){
             $request->verification = 0;
+        }
+
+        if ($request->payment_status == ''){
+            $request->payment_status = 0;
         }
 
         $amount = str_replace(",", "", $request->amount);

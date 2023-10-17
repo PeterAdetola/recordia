@@ -8,9 +8,9 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
             <meta name="description" content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google.">
             <meta name="keywords" content="materialize, admin template, dashboard template, flat admin template, responsive admin template, eCommerce dashboard, analytic dashboard">
-            <meta name="author" content="ThemeSelect">
-            <title> Register | Admin</title>
-            <link rel="apple-touch-icon" href="{{ asset('backend/assets/images/favicon/apple-touch-icon-152x152.png') }}">
+            <meta name="author" content="Pacmedia Creatives">
+            <title> Recordia | Register</title>
+            <link rel="apple-touch-icon" href="{{ asset('backend/assets/images/favicon/recordia-apple-touch-icon-152x152.png') }}">
             <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/assets/images/favicon/favicon-32x32.png') }}">
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
             <!-- BEGIN: VENDOR CSS-->
@@ -27,12 +27,18 @@
           </head>
           <!-- END: Head-->
 
-          <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu preload-transitions 1-column  login-bg   blank-page blank-page" data-open="click" data-menu="vertical-modern-menu" data-col="1-column">
+          <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu preload-transitions 1-column register-bg blank-page blank-page" data-open="click" data-menu="vertical-modern-menu" data-col="1-column">
             <div class="row">
               <div class="col s12">
                 <div class="container">
                   <div id="register-page" class="row">
-          <div class="col s12 m6 l4 card-panel border-radius-6 register-card bg-opacity-8 pt-3">
+          <!-- <div class="col s12 m6 l4 card-panel border-radius-6 register-card bg-opacity-8 pt-3"> -->
+    <div class="col s12 m6 l4 card border-radius-6 bg-opacity-8" style="margin: 0 auto;padding: 0;">
+              <div class="progress collection" style="margin-top:0">
+                <div id="preloader" class="indeterminate"  style="display:none; 
+                border:2px #ebebeb solid;"></div>
+              </div>
+<div class="" style="padding:0 2em 1em">
 
             <!-- <form method="POST" action="{{ route('register') }}" class="login-form"> -->
 
@@ -94,17 +100,15 @@
           <button class="btn-large waves-effect waves-light" onclick="ShowPreloader()">{{ __('Register') }}</button>
         </div>
       </div>
-              <div class="progress collection">
-                <div id="preloader" class="indeterminate"  style="display:none; 
-                border:2px #ebebeb solid"></div>
-              </div>
+               <div class="divider"></div>
       <div class="row">
         <div class="input-field col s12">
-          <p class="margin medium-small"><a href="{{ route('login') }}">Already have an account? Login</a></p>
+          <p class="margin medium-small"><a href="{{ route('login') }}" class="grey-text">Already have an account? Login</a></p>
         </div>
       </div>
     </form>
           </div>
+        </div>
         </div>
                 </div>
                 <div class="content-overlay"></div>

@@ -3,7 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\AppHelpers;
 use App\Http\Controllers\InstantRecordController;
-use App\Http\Controllers\configsController;
+use App\Http\Controllers\YearController;
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,11 +43,22 @@ Route::middleware('auth')->group(function () {
 */
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/manage/configs', [configsController::class, 'manageConfigs'])->name('manage.configs');
-    Route::post('/save/year', [configsController::class, 'saveYear'])->name('save.year');
-    Route::post('activate/year', [configsController::class, 'activateYear'])->name('activate.year');
-    Route::get('edit/year/{id}', [configsController::class, 'editYear'])->name('edit.year');
-    Route::post('update/year', [configsController::class, 'updateYear'])->name('update.year');
+    Route::get('/manage/year', [YearController::class, 'manageYear'])->name('manage.year');
+
+// --------------| Manage Financial year |----------------------------------------
+    Route::post('/save/year', [YearController::class, 'saveYear'])->name('save.year');
+    Route::post('activate/year', [YearController::class, 'activateYear'])->name('activate.year');
+    Route::get('edit/year/{id}', [YearController::class, 'editYear'])->name('edit.year');
+    Route::post('update/year', [YearController::class, 'updateYear'])->name('update.year');
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/manage/event', [EventController::class, 'manageEvent'])->name('manage.event');
+    Route::post('update/event', [EventController::class, 'updateEvent'])->name('update.event');
+
+// --------------| Events |----------------------------------------
+    Route::post('/save/event', [EventController::class, 'saveEvent'])->name('save.event');
+    Route::post('activate/event', [EventController::class, 'activateEvent'])->name('activate.event');
 });
 
 
@@ -57,7 +69,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 |--------------------------------------------------------------------------
 |
 */
-// --------------| For the Dashboard |----------------------------------------
+// --------------| For the Dashboard |-------------------------------------
 
 Route::post('/save/donation', [InstantRecordController::class, 'saveDonation'])->name('save.donation');
 Route::post('/save/expense', [InstantRecordController::class, 'saveExpense'])->name('save.expense');
@@ -89,5 +101,6 @@ Route::get('/instant/prev_unverified/donations', [InstantRecordController::class
 
 // --------------| Expenses |----------------------------------------
 Route::get('/expenses', [InstantRecordController::class, 'getExpenses'])->name('get.expenses');
+Route::get('/instant/prev_expenses', [InstantRecordController::class, 'prevExpenses'])->name('instant.prev_expenses');
 
 require __DIR__.'/auth.php';

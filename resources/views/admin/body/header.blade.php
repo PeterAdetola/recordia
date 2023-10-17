@@ -18,6 +18,7 @@
               <li class="hide-on-large-only search-input-wrapper"><a class="waves-effect waves-block waves-light search-button" href="javascript:void(0);"><i class="material-icons">search</i></a></li>
               <li>{{ getUserName() }}&nbsp;&nbsp;&nbsp;</li>
               <li><a class="waves-effect waves-block waves-light profile-button" href="javascript:void(0);" data-target="profile-dropdown"><b class="btn-floating  center waves-effect waves-light gradient-45deg-purple-deep-orange" >{{ getUserInitial() }}</b></a></li>
+              <li><a class="waves-effect waves-block waves-light sidenav-trigger" href="#" data-target="slide-out-right"><i class="material-icons">format_indent_increase</i></a></li>
             </ul>
 
 
@@ -38,7 +39,7 @@
             <div class="nav-wrapper">
               <form id="navbarForm">
                 <div class="input-field search-input-sm">
-                  <input class="search-box-sm mb-0" type="search" required="" id="search" placeholder="Explore Materialize" data-search="template-list">
+                  <input class="search-box-sm mb-0" type="search" required="" id="search" placeholder="Explore Recordia" data-search="template-list">
                   <label class="label-icon" for="search"><i class="material-icons search-sm-icon">search</i></label><i class="material-icons search-sm-close">close</i>
                   <ul class="search-list collection search-list-sm display-none"></ul>
                 </div>

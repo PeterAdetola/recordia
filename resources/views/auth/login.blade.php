@@ -8,8 +8,9 @@
     <meta name="description" content="Recordia is a portfolio project for Holberton School which is meant for financial secretaries who want to give almost instant financial reports to the organization they work with and give instant invoice to the donors.">
     <meta name="keywords" content="balance, payments, expenses, accountind dashboard, analytic dashboard">
     <meta name="author" content="Pacmedia Creatives">
+    <title> Recordia | Log in</title>
     <link rel="apple-touch-icon" href="{{ asset('backend/assets/images/favicon/recordia-apple-touch-icon-152x152.png') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/assets/images/favicon/favicon_r-32x32.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/assets/images/favicon/favicon-32x32.png') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- BEGIN: VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/vendors.min.css') }}">
@@ -22,12 +23,12 @@
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/custom/custom.css') }}">
     <!-- END: Custom CSS-->
+
 <style type="text/css">
   form:invalid button {
    pointer-events: none;
    /*opacity: .8;*/
 }
-
 
         #loader {
           background: linear-gradient(45deg, #E91376, #9429D8, #CEC5D4);
@@ -49,6 +50,7 @@
           }
         };
 </style>
+
   </head>
   <!-- END: Head-->
   <body>
@@ -61,23 +63,33 @@
           <div id="login-page" class="row">
   <div class="col s12 m6 l4" style="margin: auto;">
             <div class="flex justify-center" style="width:5em; margin: auto;">
-        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 101.5 101.5" style="enable-background:new 0 0 101.5 101.5;" xml:space="preserve">
-              <style type="text/css">
-                .st0{fill:#E94581;}
-                .st1{fill:#FFFFFF;}
-              </style>
-              <path class="st0" d="M69.8,101.5H31.7C14.2,101.5,0,87.3,0,69.8V31.7C0,14.2,14.2,0,31.7,0h38.2c17.5,0,31.7,14.2,31.7,31.7v38.2
-                C101.5,87.3,87.3,101.5,69.8,101.5z"/>
-              <g>
-                <path class="st1" d="M51.5,77V19.7v-2h-2h-31h-2v2v4.2v2h2h8.2v57.3v2h2h31.9h2v-2V79v-2h-2H51.5z M43.4,25.8v51.3h-8.7V25.8H43.4z
-                  "/>
-                <path class="st1" d="M71.1,17.4c-9.8,0-17.9,8-17.9,17.9c0,9.8,8,17.9,17.9,17.9S89,45.1,89,35.3C89,25.4,81,17.4,71.1,17.4z
-                   M80.9,35.3c0,5.4-4.4,9.8-9.8,9.8c-5.4,0-9.8-4.4-9.8-9.8c0-5.4,4.4-9.8,9.8-9.8C76.5,25.5,80.9,29.9,80.9,35.3z"/>
-              </g>
-        </svg>
+  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+      <style type="text/css">
+        .st0{fill:#FFFFFF;}
+        .st1{fill:#E94581;}
+      </style>
+      <g>
+        <path class="st0" d="M49.7,73.7V24.3v-1.7H48H21.2h-1.7v1.7v3.6v1.7h1.7h7.1V79v1.7H30h27.5h1.7V79v-3.6v-1.7h-1.7
+          C57.5,73.7,49.7,73.7,49.7,73.7z M42.7,29.5v44.2h-7.5V29.5H42.7z"/>
+        <path class="st0" d="M66.6,22.3c-8.4,0-15.4,6.9-15.4,15.4c0,8.4,6.9,15.4,15.4,15.4S82,46.2,82,37.7S75.1,22.3,66.6,22.3z
+           M75,37.7c0,4.7-3.8,8.4-8.4,8.4s-8.4-3.8-8.4-8.4s3.8-8.4,8.4-8.4S75,33.1,75,37.7z"/>
+      </g>
+      <rect class="st1" width="100" height="100"/>
+      <g>
+        <path class="st0" d="M48,73V21.4v-1.8h-1.8H18.3h-1.8v1.8v3.8V27h1.8h7.4v51.6v1.8h1.8h28.8h1.8v-1.8v-3.8V73h-1.8H48z M40.8,73.1
+          H33V26.9h7.8V73.1z"/>
+        <path class="st0" d="M56.1,20.1c0,0.3,0,0.6,0,1c0,15,12.1,27.1,27.1,27.1c0.1,0,0.2,0,0.3,0V20.1H56.1z M76.8,40.4
+          c-6.3-2.1-11.2-7.2-13.1-13.6h13.1V40.4z"/>
+      </g>
+  </svg>
             </div>
     <!-- Session Status -->
-    <div class=" card-panel border-radius-6 login-card bg-opacity-8">
+    <div class="card border-radius-6 bg-opacity-8" style="padding-top:0 ;">
+              <div class="progress collection">
+                <div id="preloader" class="indeterminate"  style="display:none; 
+                border:2px #ebebeb solid;"></div>
+              </div>
+<div style="padding:0 2em 2em 2em">
     <x-auth-session-status class="mb-4" :status="session('status')" />
     <form method="POST" action="{{ route('login') }}">
         @csrf
@@ -103,7 +115,7 @@
       </div>
       <div class="row">
         <div class="col s12 m12 l12 ml-2 mt-1">
-          <p>
+          <p class="ml-2">
             <label>
               <input class="filled-in"  name="remember" type="checkbox" />
               <span>Remember Me</span>
@@ -116,23 +128,22 @@
           <button class="btn-large waves-effect waves-light"  onclick="ShowPreloader()">{{ __('Log in') }}</button>
         </div>
       </div>
+    </form>
 
-              <div class="progress collection">
-                <div id="preloader" class="indeterminate"  style="display:none; 
-                border:2px #ebebeb solid"></div>
-              </div>
+      <!-- Preloader -->
+      <div class="divider"></div>
       <div class="row">
         <div class="input-field col s6 m6">
             @if (Route::has('password.request'))
-          <p class="margin left-align medium-small"><a href="user-forgot-password.html">Forgot password ?</a></p>
+          <p class="margin left-align medium-small"><a href="{{ route('password.request') }}"class="grey-text">Forgot password ?</a></p>
             @endif
         </div>
         <div class="input-field col s6 m6">
-          <p class="margin right-align medium-small"><a href="{{ route('register') }}">Register Now!</a></p>
+          <p class="margin right-align medium-small"><a href="{{ route('register') }}" class="grey-text">Register Now!</a></p>
       </div>
-    </form>
   </div>
   </div>
+</div>
   <div class="row center">Made with <span style="color:red">&#10084;</span> by Pacmedia Creatives</div>
 </div>
         </div>

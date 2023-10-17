@@ -22,6 +22,22 @@ if (!function_exists('getCurrentYear')) {
     }
 }
 
+// Get current event
+if (!function_exists('getCurrentEvent')) {
+    function getCurrentEvent()
+    {
+     $currentEvent = App\Models\Event::where('status', 1)->first();
+
+     if($currentEvent) {
+        $currentEvent = $currentEvent->name;
+     } else {
+        $currentEvent = 'No event';
+     }
+     
+     return $currentEvent;
+    }
+}
+
 // Extract initials from user's name
 if (!function_exists('getUserInitial')) {
     function getUserInitial()
@@ -52,8 +68,12 @@ if (!function_exists('getUserName')) {
     function getUserName()
     {
      $user = auth()->user();
+   if ($user) {  
      $name = $user->name;
      return $name;
+        } else {
+            return redirect('login');
+        }
     }
 }
 

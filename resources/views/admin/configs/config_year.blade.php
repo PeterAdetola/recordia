@@ -3,10 +3,23 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/page-account-settings.css') }}">
   @endsection
  @section('admin')
+
+ @if(Session::has('tab'))
 @php
-$pageTitle = 'Configuration Page';
+    $tab= session('tab');
+@endphp
+@endif
+@php
+
+if(session('expires_at') < time()) {
+  session()->forget('tab');
+}
+
+
+$pageTitle = 'Year Configuration Page';
 
 @endphp
+
     <div id="main">
       <div class="row">
         <div class="content-wrapper-before gradient-45deg-indigo-purple"></div>
@@ -32,14 +45,13 @@ $pageTitle = 'Configuration Page';
             <section class="tabs-vertical mt-1 section">
               <div class="row">
                 <div class="col l4 s12">
-                    @include('admin.configs.partials.config_navigation')
+                    @include('admin.configs.partials.navigation_year')
                 </div>
                 <div class="col l8 s12">
                   <!-- tabs content -->
-                    @include('admin.configs.partials.create_year')           
+                    @include('admin.configs.partials.instructions')           
                     @include('admin.configs.partials.activate_year')           
                     @include('admin.configs.partials.edit_year')           
-                    @include('admin.configs.partials.events')           
                 </div>
               </div>
             </section>
@@ -55,28 +67,28 @@ $pageTitle = 'Configuration Page';
   <script src="{{ asset('backend/assets/js/scripts/page-account-settings.js') }}"></script>
 
   <script type="text/javascript">
-    var radioButtons = document.querySelectorAll('input[type="radio"]');
-    var submitButton = document.getElementById('activate');
+    // var radioButtons = document.querySelectorAll('input[type="radio"]');
+    // var submitButton = document.getElementById('activate');
 
-    radioButtons.forEach(function(radioButton) {
-      radioButton.addEventListener('change', function() {
-        if (radioButton.checked) {
-          submitButton.removeAttribute('disabled');
-        } else {
-          submitButton.setAttribute('disabled', 'disabled');
-        }
-      });
-    });
+    // radioButtons.forEach(function(radioButton) {
+    //   radioButton.addEventListener('change', function() {
+    //     if (radioButton.checked) {
+    //       submitButton.removeAttribute('disabled');
+    //     } else {
+    //       submitButton.setAttribute('disabled', 'disabled');
+    //     }
+    //   });
+    // });
 
     
 
       // Preloader Script
-      function ShowPreloader() {
-        document.getElementById('preloader').style.display = "block";
-        document.getElementById('preloader2').style.display = "block";
-        document.getElementById('preloader3').style.display = "block";
-        document.getElementById('preloader4').style.display = "block";
-      }
+      // function ShowPreloader() {
+      //   document.getElementById('preloader').style.display = "block";
+      //   document.getElementById('preloader2').style.display = "block";
+      //   document.getElementById('preloader3').style.display = "block";
+      //   document.getElementById('preloader4').style.display = "block";
+      // }
 
 
   </script>

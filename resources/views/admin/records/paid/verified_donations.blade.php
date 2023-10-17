@@ -33,7 +33,7 @@ $pageTitle = 'Verified Donations';
                   </li>
                 </ol>
               </div>
-              <div class="col s2 m6 l6"><a class=" mb-2 btn-floating btn-large waves-effect waves-light breadcrumbs-btn right" href="{{  route('instant.prev_verified.donations')}}" ><i class="material-icons hide-on-med-and-up">print</i><i class="material-icons right">print</i></a>
+              <div class="col s2 m6 l6"><a class=" mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right" href="{{  route('instant.prev_verified.donations')}}" ><i class="material-icons hide-on-med-and-up">print</i><i class="material-icons right">print</i></a>
               </div>
             </div>
           </div>

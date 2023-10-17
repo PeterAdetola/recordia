@@ -7,9 +7,9 @@ $route = Route::current()->getName()
     <aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light sidenav-active-square">
       <div class="brand-sidebar">
         <h1 class="logo-wrapper">
-          <a class="brand-logo darken-1" href="index.html">
+          <a class="brand-logo darken-1" href="{{route('dashboard')}}">
           <img style="padding-bottom: 0.2em; height: 1.3em;" class="hide-on-med-and-down" src="{{ asset('backend/assets/images/logo/recordia_bg_logo.png') }}" alt="recordia logo"/>
-          <img style="margin-top: -0.4em; height: 1.3em;" class="show-on-medium-and-down hide-on-med-and-up" src="{{ asset('backend/assets/images/logo/recordia_bg_logo.png') }}" alt="recordia logo"/><span class="logo-text hide-on-med-and-down"><img src="{{ asset('backend/assets/images/logo/recordia_text.png') }}"  style="height: 1.5em;" /></span>
+          <img style="margin-top: -8px; height: 1.3em;" class="show-on-medium-and-down hide-on-med-and-up" src="{{ asset('backend/assets/images/logo/recordia_bg_logo.png') }}" alt="recordia logo"/><span class="logo-text hide-on-med-and-down"><img src="{{ asset('backend/assets/images/logo/recordia_text.png') }}"  style="height: 1.5em;" /></span>
         </a>
         <a class="navbar-toggler" href="#">
           <i class="material-icons">radio_button_checked</i>
@@ -25,7 +25,7 @@ $route = Route::current()->getName()
         </li>
         <li class="bold">
           <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">
-          <i class="material-icons">storage</i>
+          <i class="material-icons">view_agenda</i>
             <span class="menu-title" data-i18n="Instant Records">Instant Records</span>
           </a>
           <div class="collapsible-body">
@@ -77,7 +77,27 @@ $route = Route::current()->getName()
         <li class="navigation-header"><a class="navigation-header-text">Settings</a><i class="navigation-header-icon material-icons">more_horiz</i>
         </li>
 
-        <li class="active bold"><a class="{{ ($route == 'manage.configs')? 'active' : '' }} waves-effect waves-cyan " href="{{ route('manage.configs') }}"><i class="material-icons">settings</i><span class="menu-title" data-i18n="Dashboard">Configuration Page</span></a>
+        
+        <li class="bold">
+          <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">
+          <i class="material-icons">settings</i>
+            <span class="menu-title" data-i18n="Registered Records">Configuration</span>
+          </a>
+          <div class="collapsible-body">
+            <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+              <li>
+                <a class="{{ ($route == 'manage.year')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('manage.year')}}"><i class="material-icons">radio_button_unchecked</i>
+                  <span data-i18n="Manage Year">Manage Year</span>
+                </a>
+              </li>
+
+              <li>
+                <a class="{{ ($route == 'manage.event')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('manage.event')}}"><i class="material-icons">radio_button_unchecked</i>
+                  <span data-i18n="Manage Event">Manage Event</span>
+                </a>
+              </li>            
+            </ul>
+          </div>
         </li>
         @endrole
       </ul>

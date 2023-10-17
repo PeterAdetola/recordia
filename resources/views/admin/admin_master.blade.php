@@ -19,7 +19,7 @@ $route = Route::current()->getName()
     <meta name="author" content="Pacmedia Creatives">
     <title>Recordia | Financial recording for transparency</title>
     <link rel="apple-touch-icon" href="{{ asset('backend/assets/images/favicon/recordia-apple-touch-icon-152x152.png') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/assets/images/favicon/favicon_r-32x32.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/assets/images/favicon/favicon-32x32.png') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- BEGIN: VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/vendors.min.css') }}">
@@ -61,6 +61,7 @@ $route = Route::current()->getName()
 
     
     <!-- BEGIN: Footer-->
+    @include('admin.body.rightbar')
 
    @include('admin.body.footer')
 
