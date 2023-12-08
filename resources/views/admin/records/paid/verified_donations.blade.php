@@ -65,6 +65,7 @@ $pageTitle = 'Verified Donations';
                     <th>Payment Status</th>
                     <th>Verification</th>
                     <th>Phone</th>
+                    <th>Event</th>
                     <th>Date</th>
                     <th>Edit</th>
                   </tr>
@@ -94,6 +95,7 @@ $pageTitle = 'Verified Donations';
                     @endif
 
                     <td>{{ $verifiedDonation->phone }}</td>
+                    <td>{{ ($verifiedDonation->event == '')? 'No event': $verifiedDonation->event }}</td>
                     <td>{{ formatDate($verifiedDonation->updated_at) }}</td>
                     <td>
                       <a class="modal-trigger" href="#{{ $verifiedDonation->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a>
@@ -121,6 +123,7 @@ $pageTitle = 'Verified Donations';
                     <th>Payment Status</th>
                     <th>Verification</th>
                     <th>Phone</th>
+                    <th>Event</th>
                     <th>Date</th>
                     <th>Edit</th>
                   </tr>

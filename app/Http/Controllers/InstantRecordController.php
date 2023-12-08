@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\InstantRecord;
+use App\Models\RegisteredRecord;
 use App\Models\User;
 
 class InstantRecordController extends Controller
@@ -37,7 +38,8 @@ class InstantRecordController extends Controller
      * Transfer (payment_mode = 3)
      * Pledge   (payment_mode = 4)
      */
-
+// Get Event
+    $request->event = getCurrentEvent();
 
         switch ($request->payment_mode) {
     case ($request->payment_mode == 1):        
@@ -61,6 +63,8 @@ class InstantRecordController extends Controller
             $request->payment_status = 0;
         }
 
+   
+
         // Sanitize amount to numbers only
         $amount = filter_var($request->amount, FILTER_SANITIZE_NUMBER_INT);
         $amount = intval($amount);
@@ -75,6 +79,7 @@ class InstantRecordController extends Controller
             'payment_mode' => $request->payment_mode,
             'payment_status' => $request->payment_status,
             'verification' => $request->verification,
+            'event' => $request->event,
             'year' => $request->year,
         ]);
 

@@ -67,28 +67,6 @@ $pageTitle = 'Event Configuration Page';
   <script src="{{ asset('backend/assets/js/scripts/page-account-settings.js') }}"></script>
 
   <script type="text/javascript">
-    // var radioButtons = document.querySelectorAll('input[type="radio"]');
-    // var submitButton = document.getElementById('activate');
-
-    // radioButtons.forEach(function(radioButton) {
-    //   radioButton.addEventListener('change', function() {
-    //     if (radioButton.checked) {
-    //       submitButton.removeAttribute('disabled');
-    //     } else {
-    //       submitButton.setAttribute('disabled', 'disabled');
-    //     }
-    //   });
-    // });
-
-    
-
-      // Preloader Script
-      // function ShowPreloader() {
-      //   document.getElementById('preloader').style.display = "block";
-      //   document.getElementById('preloader2').style.display = "block";
-      //   document.getElementById('preloader3').style.display = "block";
-      //   document.getElementById('preloader4').style.display = "block";
-      // }
 
 
   </script>

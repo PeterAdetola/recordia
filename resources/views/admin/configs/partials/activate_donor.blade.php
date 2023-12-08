@@ -5,12 +5,12 @@
           <div class="row mb-2 ml-3"><i class="material-icons left red-text small-ico-bg">info</i></div>
           <div class="divider mb-2"></div>
     
-       @if(Session::has('eventMessageTitle'))
+       @if(Session::has('donorMessageTitle'))
 
                <div class="card-alert card pink lighten-5" >
                 <div class="card-content pink-text darken-1">
-                  <span class="card-title pink-text darken-1"><i class="material-icons">notifications</i>&nbsp;{{ Session::get('eventMessageTitle') }}</span>
-                  <p>{{ Session::get('eventMessage') }}</p>
+                  <span class="card-title pink-text darken-1"><i class="material-icons">notifications</i>&nbsp;{{ Session::get('donorMessageTitle') }}</span>
+                  <p>{{ Session::get('donorMessage') }}</p>
                 </div>
                 <div class="card-action pink lighten-4">
                   <a href="#" data-dismiss="alert" aria-label="Close" class="close pink-text" aria-hidden="true">Ok</a>
@@ -19,28 +19,28 @@
 
        @endif 
        
-      <h6 class="card-title">Manage Events</h6>
+      <h6 class="card-title">Manage Donors</h6>
             <div class="caption mb-0">
               <div class="collection" style="padding:1em">
 
-           @if (count($events))
-              @foreach($events as $event)
-    <form id="activateEventForm"  method="POST" action="{{ route('activate.event', $event->id) }}">
+           @if (count($donors))
+              @foreach($donors as $donor)
+    <form id="activateDonorForm"  method="POST" action="{{ route('activate.donor', $donor->id) }}">
                   @csrf
-              <input type="hidden" name="tab" value="activate_event">
-                <a href="{{$event->id}}" class="{{ ($event->status == '1')? 'gradient-45deg-light-blue-indigo gradient-shadow white-text' : 'chip mb-2 grey lighten-2' }} chip mb-2"
-                style="{{ ($event->status == '1')? 'border-bottom:1px solid white; border-left:1px solid white' : 'border-top:1px solid #bdbdbd; border-right:1px solid #bdbdbd' }}" >
+              <input type="hidden" name="tab" value="activate_donor">
+                <a href="{{$donor->id}}" class="{{ ($donor->status == '1')? 'gradient-45deg-light-blue-indigo white-text' : 'chip mb-2 grey lighten-2' }} chip mb-2"
+                style="{{ ($donor->status == '1')? 'border-bottom:1px solid white; border-left:1px solid white' : 'border-top:1px solid #bdbdbd; border-right:1px solid #bdbdbd' }}" >
 
               <label>
-                <input class="actEvent" name="status" type="radio" value="{{ $event->id }}"  {{ ($event->status == '1')? 'checked' : '' }}/>
-                <span class="{{ ($event->status == '1')? 'white-text' : 'grey-text' }}">{{ $event->name }}</span>
+                <input class="filled-in" name="status" type="checkbox" value="{{ $donor->id }}"  {{ ($donor->status == '1')? 'checked' : '' }}/>
+                <span class="{{ ($donor->status == '1')? 'white-text' : 'grey-text' }}">{{ $donor->name }}</span>
               </label>
                 </a>
               @endforeach
 
               @else
                 <div class="chip mb-2 grey lighten-2">
-                    <span class="grey-text">No available event</span>                 
+                    <span class="grey-text">No available donor</span>                 
                 </div>
               @endif
 
@@ -58,19 +58,11 @@
                     </label>
                   </div>
                 </div> -->
-                <a  class="{{ ($noEvent == 1)? 'gradient-45deg-light-blue-indigo gradient-shadow white-text' : 'chip mb-2 grey lighten-2' }} chip mb-2 mt-3"
-                style="{{ ($noEvent == 1)? 'border-bottom:1px solid white; border-left:1px solid white' : 'border-top:1px solid #bdbdbd; border-right:1px solid #bdbdbd' }}" >
-
-              <label>
-                <input id="noEvent" name="no_event" type="radio" value="No Event"  {{ ($noEvent == 1)? 'checked' : '' }}/>
-                <span class="{{ ($noEvent == 1)? 'white-text' : 'grey-text' }}">No Event</span>
-              </label>
-                </a>
 
              </div>
 
              </div>
-             <a id="actEventBtn" href="#activate-event" class="modal-trigger btn-large" >Activate Event</a>
+             <a id="actDonorBtn" href="#activate-event" class="modal-trigger btn-large" >Activate Donors</a>
             </div>
         </div>
       </div>

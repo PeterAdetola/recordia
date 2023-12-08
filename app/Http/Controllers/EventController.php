@@ -18,7 +18,14 @@ class EventController extends Controller
 
         $events = Event::orderBy('updated_at', 'DESC')->get();
 
-        return view('admin.configs.config_event', compact('tab', 'events',));
+        $activeEvent = Event::where('status', 1)->exists();
+        if($activeEvent){
+            $noEvent = 0;
+        } else {
+            $noEvent = 1;
+        }
+
+        return view('admin.configs.config_event', compact('tab', 'events', 'noEvent'));
     }
 
     /**
@@ -75,11 +82,33 @@ class EventController extends Controller
     public function activateEvent(Request $request)
     {
         $selectedEventId = $request->input('status');
+        $noEvent = $request->input('no_event');
 
 
 
         $existing_events = Event::get();
         $active_event = $existing_events->where('status', '=', '1');
+
+        if($noEvent){
+
+        // Create session with tab value
+        $expiresAt = time() + 1; 
+        session(['tab' => $request->tab, 'expires_at' => $expiresAt]);
+
+        // Update all other rows' status to inactive
+        Event::where('id', '!=', $selectedEventId)->update(['status' => 0]);
+           
+
+            $notification = array(
+                'message' => 'No event activated',
+                'eventMessageTitle' => getCurrentEvent().' is activated!',
+                'eventMessage' => 'All activities will be done to '.getCurrentEvent().'.'
+            );
+
+            return redirect()->route('manage.event')->with($notification);
+
+
+        } else {
 
     if (count($active_event)){
 
@@ -120,15 +149,25 @@ class EventController extends Controller
             }
 
     } else {
+        // Create session with tab value
+        $expiresAt = time() + 1; 
+        session(['tab' => $request->tab, 'expires_at' => $expiresAt]);
 
             // Update the selected row's status to active
             Event::where('id', $selectedEventId)->update(['status' => 1]);
                 
-                    $notification = array(
-                        'message' => 'Selected event activated'
-                    );
+           
+
+            $notification = array(
+                'message' => 'Event activated',
+                'eventMessageTitle' => getCurrentEvent().' is activated!',
+                'eventMessage' => 'All activities will be done to '.getCurrentEvent().'.'
+            );
 
             return redirect()->route('manage.event')->with($notification);
+
+            }
+
 
         }
     }

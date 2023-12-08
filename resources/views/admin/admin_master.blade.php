@@ -87,7 +87,7 @@ $route = Route::current()->getName()
     <script src="{{ asset('backend/assets/js/scripts/advance-ui-modals.js') }}"></script>
     <script src="{{ asset('backend/assets/js/scripts/ui-alerts.js') }}"></script>
     <script src="{{ asset('backend/assets/js/scripts/app-invoice.js') }}"></script>
-    <!-- <script src="{{ asset('backend/assets/js/scripts/form-select2.js') }}"></script> -->
+    <!-- <script src="{{ asset('backend/assets/js/scripts/intro.js') }}"></script> -->
 
     <!-- END PAGE LEVEL JS-->
     

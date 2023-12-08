@@ -3,8 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use App\AppHelpers;
 use App\Http\Controllers\InstantRecordController;
+use App\Http\Controllers\RegisteredRecordController;
 use App\Http\Controllers\YearController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\DonorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,15 +52,21 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('activate/year', [YearController::class, 'activateYear'])->name('activate.year');
     Route::get('edit/year/{id}', [YearController::class, 'editYear'])->name('edit.year');
     Route::post('update/year', [YearController::class, 'updateYear'])->name('update.year');
-});
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/manage/event', [EventController::class, 'manageEvent'])->name('manage.event');
     Route::post('update/event', [EventController::class, 'updateEvent'])->name('update.event');
 
 // --------------| Events |----------------------------------------
     Route::post('/save/event', [EventController::class, 'saveEvent'])->name('save.event');
     Route::post('activate/event', [EventController::class, 'activateEvent'])->name('activate.event');
+
+// --------------| Donors |----------------------------------------
+    Route::get('/manage/donor', [DonorController::class, 'manageDonor'])->name('manage.donor');
+    Route::get('/get/donor/{id}', [DonorController::class, 'getDonor'])->name('get.donor');
+    Route::get('/activate/donors', [DonorController::class, 'activateDonors'])->name('activate.donors');
+    Route::post('/save/donor', [DonorController::class, 'saveDonor'])->name('save.donor');
+    Route::post('activate/donor', [DonorController::class, 'activateDonor'])->name('activate.donor');
+    Route::post('update/donor', [DonorController::class, 'updateDonor'])->name('update.donor');
 });
 
 
@@ -71,36 +79,65 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 */
 // --------------| For the Dashboard |-------------------------------------
 
-Route::post('/save/donation', [InstantRecordController::class, 'saveDonation'])->name('save.donation');
-Route::post('/save/expense', [InstantRecordController::class, 'saveExpense'])->name('save.expense');
-Route::post('/verify/donation', [InstantRecordController::class, 'verifyDonation'])->name('verify.donation');
+Route::controller(InstantRecordController::class)->group(function () {
+
+Route::post('/save/donation', 'saveDonation')->name('save.donation');
+Route::post('/save/expense', 'saveExpense')->name('save.expense');
+Route::post('/verify/donation', 'verifyDonation')->name('verify.donation');
 
 
 // --------------| For Pages |----------------------------------------
 
-Route::get('/get/instant/records', [InstantRecordController::class, 'getAllInstantRecords'])->name('get.instant.records');
-Route::post('/update/transaction', [InstantRecordController::class, 'updateTransaction'])->name('update.transaction');
+Route::get('/get/instant/records', 'getAllInstantRecords')->name('get.instant.records');
+Route::post('/update/transaction', 'updateTransaction')->name('update.transaction');
 
 // --------------| Unpaid Donations |----------------------------------------
-Route::get('/instant/unpaid/donations', [InstantRecordController::class, 'getUnpaidDonations'])->name('instant.unpaid.donations');
-Route::get('/instant/prev_unpaid/donations', [InstantRecordController::class, 'prevUnpaidDonations'])->name('instant.prev_unpaid.donations');
-Route::get('/instant/edit/pledges', [InstantRecordController::class, 'editPledges'])->name('instant.edit.pledges');
-Route::post('/instant/redeem_a_pledge', [InstantRecordController::class, 'redeemAPledge'])->name('instant.redeem_a_pledge');
-Route::get('/instant/edit/pledges', [InstantRecordController::class, 'editPledges'])->name('instant.edit.pledges');
-Route::post('/instant/redeem_pledges', [InstantRecordController::class, 'redeemPledges'])->name('instant.redeem_pledges');
+Route::get('/instant/unpaid/donations', 'getUnpaidDonations')->name('instant.unpaid.donations');
+Route::get('/instant/prev_unpaid/donations', 'prevUnpaidDonations')->name('instant.prev_unpaid.donations');
+Route::get('/instant/edit/pledges', 'editPledges')->name('instant.edit.pledges');
+Route::post('/instant/redeem_a_pledge', 'redeemAPledge')->name('instant.redeem_a_pledge');
+Route::get('/instant/edit/pledges', 'editPledges')->name('instant.edit.pledges');
+Route::post('/instant/redeem_pledges', 'redeemPledges')->name('instant.redeem_pledges');
 
 // --------------| Verified Donations |----------------------------------------
-Route::get('/instant/verified/donations', [InstantRecordController::class, 'getVerifiedDonations'])->name('instant.verified.donations');
-// Route::get('/instant/edit/verified_donations', [InstantRecordController::class, 'editVerifiedDonations'])->name('instant.edit.verified_donations');
-Route::get('/instant/prev_verified/donations', [InstantRecordController::class, 'prevVerifiedDonations'])->name('instant.prev_verified.donations');
+Route::get('/instant/verified/donations', 'getVerifiedDonations')->name('instant.verified.donations');
+Route::get('/instant/prev_verified/donations', 'prevVerifiedDonations')->name('instant.prev_verified.donations');
 
 // --------------| Unverified Donations |----------------------------------------
-Route::get('/instant/unverified/donations', [InstantRecordController::class, 'getUnverifiedDonations'])->name('instant.unverified.donations');
-Route::post('/instant/verify_a_donation', [InstantRecordController::class, 'verifyADonation'])->name('instant.verify_a_donation');
-Route::get('/instant/prev_unverified/donations', [InstantRecordController::class, 'prevUnverifiedDonations'])->name('instant.prev_unverified.donations');
+Route::get('/instant/unverified/donations', 'getUnverifiedDonations')->name('instant.unverified.donations');
+Route::post('/instant/verify_a_donation', 'verifyADonation')->name('instant.verify_a_donation');
+Route::get('/instant/prev_unverified/donations', 'prevUnverifiedDonations')->name('instant.prev_unverified.donations');
 
-// --------------| Expenses |----------------------------------------
-Route::get('/expenses', [InstantRecordController::class, 'getExpenses'])->name('get.expenses');
-Route::get('/instant/prev_expenses', [InstantRecordController::class, 'prevExpenses'])->name('instant.prev_expenses');
+// --------------| Expenses |---------------------------------------------------
+Route::get('/expenses', 'getExpenses')->name('get.expenses');
+Route::get('/instant/prev_expenses', 'prevExpenses')->name('instant.prev_expenses');
+
+});
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Registered Records
+|--------------------------------------------------------------------------
+|
+*/
+// --------------| Add donor (Dashboard) |---------------------------------
+
+Route::controller(DonorController::class)->group(function () {
+
+Route::post('/save/donor', 'saveDonor')->name('save.donor');
+
+});
+
+// --------------| Add Donation (Dashboard) |----------------------------------
+
+Route::controller(RegisteredRecordController::class)->group(function () {
+
+Route::post('/save/donation', 'saveDonation')->name('save.donation');
+
+});
+
+ // Route::post('/save/donor', [DonorController::class, 'saveDonor'])->name('save.donor');
 
 require __DIR__.'/auth.php';

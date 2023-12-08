@@ -144,6 +144,17 @@ if (!function_exists('getUnverifiedDonations')) {
     }
 }
 
+// Get list of donors
+// -----------------------------------------
+if (!function_exists('getRegisteredDonors')) {
+    function getRegisteredDonors()
+    {
+    $donors = App\Models\Donor::orderBy('updated_at', 'DESC')->get();
+    $donors = $donors->where('status', '=', 1);
+     return $donors;
+    }
+}
+
 // Get list of unpaid donation records
 // -----------------------------------------
 if (!function_exists('getUnpaidDonations')) {

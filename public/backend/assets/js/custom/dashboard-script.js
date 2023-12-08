@@ -7,7 +7,8 @@
  *  Prevent pledge donation without phone number
  */
 
-const form = document.getElementById('donationForm');
+const form = document.getElementById('insDonationForm');
+if (form) {
 const pledgeBtn = document.querySelector('input[name="payment_mode"][value="4"]'); 
 const radios = document.querySelectorAll('input[name="payment_mode"]'); 
 const phoneNumber = document.querySelector('#phone');
@@ -96,6 +97,8 @@ phoneNumber.addEventListener('input', function() {
   }
 
 });
+
+}
 
 
 

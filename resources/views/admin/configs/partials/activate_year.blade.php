@@ -29,13 +29,13 @@
             <form  method="POST" action="{{ route('activate.year', $year->id) }}">
                   @csrf
             <input type="hidden" name="tab" value="activate_year">
-                <a href="{{$year->id}}" class="{{ ($year->status == '1')? 'gradient-45deg-light-blue-indigo gradient-shadow white-text' : 'chip mb-2 grey lighten-2' }} chip mb-2" style="{{ ($year->status == '1')? 'border-bottom:1px solid white; border-left:1px solid white' : 'border-top:1px solid #bdbdbd; border-right:1px solid #bdbdbd' }}">
+              <a href="{{$year->id}}" class="{{ ($year->status == '1')? 'gradient-45deg-light-blue-indigo gradient-shadow white-text' : 'chip mb-2 grey lighten-2' }} chip mb-2" style="{{ ($year->status == '1')? 'border-bottom:1px solid white; border-left:1px solid white' : 'border-top:1px solid #bdbdbd; border-right:1px solid #bdbdbd' }}">
 
-                    <label>
-                      <input class="actYear" name="status" type="radio"  value="{{ $year->id }}" required {{ ($year->status == '1')? 'checked' : '' }}/>
-                      <span class="{{ ($year->status == '1')? 'white-text' : 'grey-text' }}">Year {{ $year->year }}</span>
-                    </label>
-                </a>
+                  <label>
+                    <input class="actYear" name="status" type="radio"  value="{{ $year->id }}" required {{ ($year->status == '1')? 'checked' : '' }}/>
+                    <span class="{{ ($year->status == '1')? 'white-text' : 'grey-text' }}">Year {{ $year->year }}</span>
+                  </label>
+              </a>
                 @endforeach
                 
               @else

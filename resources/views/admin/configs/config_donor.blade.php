@@ -10,7 +10,7 @@
   @endsection
 
 @php
-$pageTitle = 'Instant Records';
+$pageTitle = 'Registered Donors';
 @endphp
 
 
@@ -24,13 +24,15 @@ $pageTitle = 'Instant Records';
             <div class="row">
               <div class="col s10 m6 l6">
                 <h5 class="breadcrumbs-title mt-0 mb-0">
-                  <span>{{ $pageTitle }} for the year {{ getCurrentYear() }}</span>
+                  <span>{{ $pageTitle }}</span>
                 </h5>
                 <ol class="breadcrumbs mb-0">
                   <li class="breadcrumb-item"><a  href="{{ route('dashboard') }}">Dashboard</a></li>
                   <li class="breadcrumb-item active">{{ $pageTitle }}</li>
                 </ol>
               </div>
+              <!-- <div class="col s2 m6 l6"><a class=" mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right" href="{{  route('activate.donors')}}" ><i class="material-icons hide-on-med-and-up">playlist_add_check</i><i class="material-icons right">playlist_add_check</i></a>
+              </div> -->
             </div>
           </div>
         </div>
@@ -45,64 +47,51 @@ $pageTitle = 'Instant Records';
     <div class="col s12 m12 l12">
       <div id="" class="card card card-default scrollspy">
         <div class="card-content">
-          <h4 class="card-title">Manage Records</h4>
+          <div class="row">
+          <h4 class="card-title left ml-2">{{ $pageTitle }}</h4>
+          <a href="{{  route('activate.donors')}}"><span class="right chip"><b style="color: maroon;">&nbsp;Edit Donors <i class="material-icons right mt-8" style="font-size: 1.2em;">navigate_next</i></b></span></a>
+        </div>
           <div class="row">
             <div class="col s12">
-              <p>The data in this table contains the extensive records of donations, pledges and expenses recorded so far, not for registered donors.</p>
+              <p>The data in this table contains the extensive records of donations and pledges recorded so far, not for instant donations.</p><br/>
             </div>
             <div class="col s12">
-              <table id="data-table-row-grouping" class="display">
+              <table id="page-length-option" class="display">
                 <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Purpose</th>
-                    <th>Amount</th>
-                    <th>Transaction</th>
-                    <th>Payment Status</th>
-                    <th>Verification</th>
+                    <th>Username</th>
                     <th>Phone</th>
-                    <th>Event</th>
-                    <th>Date</th>
-                    <th>Edit</th>
+                    <th>Status</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                @foreach ($instantRecords as $instantRecord)  
+                @foreach ($donors as $donor) 
+                @php
+                $donor->total_donation = $donor->registeredRecords->sum('amount') 
+                @endphp
                   <tr>
-                    <td>{{ $instantRecord->name }}</td>
-                    <td  style="width: 10em;">{{ $instantRecord->purpose }}</td>
-                    <td>{{ formatAmount($instantRecord->amount) }}</td>
+                    <td>{{ $donor->title }} {{ $donor->name }}</td>
+                    <td>{{ $donor->username }}</td>
+                    <td>{{ $donor->phone }}</td>
 
-                    @if($instantRecord->transaction == 1)
-                    <td><span class="green-text">Cr</span></td>
+                    @if($donor->status == 1)
+                    <td><span class="chip green-text">active</span></td>
                     @else
-                    <td><span class="red-text">Dr</span></td>
+                    <td><span class="chip red-text">inactive</span></td>
                     @endif
 
-                    @if($instantRecord->payment_status == 1)
-                    <td><span class="chip green-text">Paid</span></td>
-                    @elseif($instantRecord->payment_status == 0 && $instantRecord->transaction == 0)
-                    <td><span class="chip red-text">Paid</span></td>
-                    @else
-                    <td><span class="chip red-text">Unpaid</span></td>
-                    @endif
-
-                  @if($instantRecord->verification == 1)
-                    <td><i class="material-icons green-text">check_box</i></td>
-                  @else
-                    <td><i class="material-icons grey-text">indeterminate_check_box</i></td>
-                  @endif
-
-                    <td>{{ $instantRecord->phone }}</td>
-                    <td>{{ ($instantRecord->event == '')? 'No event': $instantRecord->event }}</td>
-                    <td>{{ formatDate($instantRecord->updated_at) }}</td>
-                    <td><a class="modal-trigger" href="#{{ $instantRecord->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a></td>
+                    <td>
+                      <a class="modal-trigger" href="#{{ route('get.donor', $donor->id) }}" ><i class="material-icons grey-text small-ico-bg">more_horiz</i></a>
+                      <a class="modal-trigger" href="#{{ $donor->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a>
+                    </td>
                   </tr>
 
         <!-- Table Modal here -->
 
-    @include('admin.records.modals.edit-transaction-form') 
+   @include('admin.configs.modals.edit-donor-form')
 
         <!-- /Donation info ends -->
                 @endforeach
@@ -111,15 +100,10 @@ $pageTitle = 'Instant Records';
                 <tfoot>
                   <tr>
                     <th>Name</th>
-                    <th>Purpose</th>
-                    <th>Amount</th>
-                    <th>Transaction</th>
-                    <th>Payment Status</th>
-                    <th>Verification</th>
+                    <th>Username</th>
                     <th>Phone</th>
-                    <th>Event</th>
-                    <th>Date</th>
-                    <th>Edit</th>
+                    <th>Status</th>
+                    <th>Action</th>
                   </tr>
                 </tfoot>
               </table>
@@ -139,6 +123,11 @@ $pageTitle = 'Instant Records';
       </div>
     </div>
     <!-- END: Page Main-->
+  <div style="bottom: 50px; right: 19px;" class="fixed-action-btn direction-top"><a href="#add-donor-modal" class="modal-trigger btn-floating btn-large gradient-45deg-purple-deep-orange gradient-shadow"><i class="material-icons">add</i></a>
+  </div>
+
+    <!-- Add Modal Here -->
+    @include('admin.dashboard.modals.add-donor-form')
 
 @endsection
   @section('vendor_scripts')
@@ -149,4 +138,24 @@ $pageTitle = 'Instant Records';
 @section('scripts')
   <!-- <script src="{{ asset('backend/assets/js/plugins.js') }}"></script> -->
   <script src="{{ asset('backend/assets/js/scripts/data-tables.js') }}"></script>
+  <script>
+    
+// document.getElementById("submitBtn2").addEventListener("click", function() {
+//   var preloader = document.getElementById("preloader2");
+//   preloader.style.display = "block";
+// });
+
+document.getElementById("submitDonorBtn").addEventListener("click", function() {
+  var preloader = document.getElementById("donor-preloader");
+  preloader.style.display = "block";
+});
+// Preloader Script
+      // function ShowPreloader() {
+      //   document.getElementById('preloader1').style.display = "block";
+      //   document.getElementById('preloader2').style.display = "block";
+      //   document.getElementById('preloader3').style.display = "block";
+      //   // document.getElementById('preloader4').style.display = "block";
+      // }
+    </script>
+  </script>
 @endsection

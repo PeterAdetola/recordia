@@ -17,7 +17,7 @@ $(function () {
     "responsive": true,
     "columnDefs": [{
       "visible": true,
-      "targets": 2
+      "targets": 7
     }],
     "order": [
       [7, 'desc']
@@ -30,7 +30,7 @@ $(function () {
       }).nodes();
       var last = null;
 
-      api.column(7, {
+      api.column(8, {
         page: 'current'
       }).data().each(function (group, i) {
         if (last !== group) {

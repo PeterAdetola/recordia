@@ -9,7 +9,7 @@
         border:2px #ebebeb solid"></div>
       </div>
       
-            <form method="POST" action="{{route('save.event')}}">
+            <form method="POST" action="{{ route('save.event') }}">
         @csrf
             <input type="hidden" name="tab" value="events">
               <div class="row">

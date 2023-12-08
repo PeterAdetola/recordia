@@ -3,14 +3,14 @@
 <!-- Start Modal -->
 <div id="add-donation-modal" class="modal" style="padding:1em;">
     <div class="modal-content">
-      <h6 class="card-title">Add Donation</h6>
+      <h6 class="card-title" style="display:inline-block;">Add Donation</h6>&nbsp;&nbsp;<span class="chip right">Instant donation</span>
 
       <div class="progress collection">
         <div id="preloader" class="indeterminate"  style="display:none; 
         border:2px #ebebeb solid"></div>
       </div>
       
-      <form id="donationForm" method="POST" action="{{ route('save.donation') }}">
+      <form id="insDonationForm" method="POST" action="{{ route('save.donation') }}">
         @csrf
       <input type="hidden" value="{{ getCurrentUser() }}" name="recorder_id">
       <input type="hidden" value="{{ getCurrentYear() }}" name="year">

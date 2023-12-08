@@ -53,9 +53,13 @@
     </a>
 
     <!-- Add Modal Here -->
-    @include('admin.dashboard.modals.add-donation-form')
+    @if (getCurrentEvent() == 'No event')
+      @include('admin.dashboard.modals.add-ins-donation-form')
+    @else
+      @include('admin.dashboard.modals.add-reg-donation-form')
+    @endif
 
-      <a href="#!">
+      <a class="modal-trigger" href="#add-donor-modal">
       <div class="col s12 m6 l4 card-width">
         <div class="card border-radius-6">
           <div class="card-content center-align">
@@ -67,6 +71,7 @@
     </a>
 
     <!-- Add Modal Here -->
+    @include('admin.dashboard.modals.add-donor-form')
 
       @role('admin')
     <a class="modal-trigger" href="#add-expense-modal">
@@ -124,6 +129,5 @@
         document.getElementById('preloader3').style.display = "block";
         // document.getElementById('preloader4').style.display = "block";
       }
-
     </script>
   @endsection

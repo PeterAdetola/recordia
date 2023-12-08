@@ -66,6 +66,7 @@ $pageTitle = 'Expenses';
                     <th>Payment Status</th>
                     <th>Verification</th>
                     <th>Phone</th>
+                    <th>Event</th>
                     <th>Date</th>
                     <th>Edit</th>
                   </tr>
@@ -95,6 +96,7 @@ $pageTitle = 'Expenses';
                     @endif
 
                     <td>{{ $expense->phone }}</td>
+                    <td>{{ ($expense->event == '')? 'No event': $expense->event }}</td>
                     <td>{{ formatDate($expense->updated_at) }}</td>
                     <td>
                       <a class="modal-trigger" href="#{{ $expense->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a>
@@ -122,6 +124,7 @@ $pageTitle = 'Expenses';
                     <th>Payment Status</th>
                     <th>Verification</th>
                     <th>Phone</th>
+                    <th>Event</th>
                     <th>Date</th>
                     <th>Edit</th>
                   </tr>

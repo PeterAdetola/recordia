@@ -95,6 +95,12 @@ $route = Route::current()->getName()
                 <a class="{{ ($route == 'manage.event')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('manage.event')}}"><i class="material-icons">radio_button_unchecked</i>
                   <span data-i18n="Manage Event">Manage Event</span>
                 </a>
+              </li> 
+
+              <li>
+                <a class="{{ ($route == 'manage.donor')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('manage.donor')}}"><i class="material-icons">radio_button_unchecked</i>
+                  <span data-i18n="Manage Event">Manage Donor</span>
+                </a>
               </li>            
             </ul>
           </div>
