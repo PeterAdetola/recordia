@@ -18,4 +18,8 @@ class RegisteredRecord extends Model
     public function donor(){
         return $this->belongsTo(Donor::class,'donor_id', 'id');
     }
+
+    public function event(){
+        return $this->belongsTo(Event::class,'event_id', 'id');
+    }
 }

@@ -165,10 +165,10 @@ class InstantRecordController extends Controller
     public function getAllInstantRecords(InstantRecord $instantRecord)
     {
 
-        $instantRecords = InstantRecord::orderBy('updated_at', 'DESC')->get()
-                                        ->where('year', '=', getCurrentYear());
+        $instantRecords = InstantRecord::orderBy('updated_at', 'DESC')
+                        ->where('year', '=', getCurrentYear())->get();
 
-        return view('admin.records.instant_records', compact('instantRecords'));
+        return view('admin.records.instant.instant_records', compact('instantRecords'));
     }
 
     /**
@@ -182,7 +182,7 @@ class InstantRecordController extends Controller
                                         ->where('transaction', '=', 1)
                                         ->where('payment_status', '=', 0);
 
-        return view('admin.records.unpaid.unpaid_donations', compact('unpaidDonations'));
+        return view('admin.records.instant.unpaid.unpaid_donations', compact('unpaidDonations'));
     }
 
     /**
@@ -197,7 +197,7 @@ class InstantRecordController extends Controller
                                         ->where('payment_status', '=', 1)
                                         ->where('verification', '=', 1);
 
-        return view('admin.records.paid.verified_donations', compact('verifiedDonations'));
+        return view('admin.records.instant.paid.verified_donations', compact('verifiedDonations'));
     }
 
     /**
@@ -213,7 +213,7 @@ class InstantRecordController extends Controller
                                         ->where('verification', '=', 0);
         $recorder = User::all();
 
-        return view('admin.records.paid.unverified_donations', compact('unverifiedDonations'), compact('recorder'));
+        return view('admin.records.instant.paid.unverified_donations', compact('unverifiedDonations'), compact('recorder'));
     }
 
     /**
@@ -226,7 +226,7 @@ class InstantRecordController extends Controller
                                         ->where('year', '=', getCurrentYear())
                                         ->where('transaction', '=', 0);
 
-        return view('admin.records.expenses.expenses', compact('expenses'));
+        return view('admin.records.instant.expenses.expenses', compact('expenses'));
     }
 
     // -----------------|Edit pledges|-----------------------
@@ -237,7 +237,7 @@ class InstantRecordController extends Controller
                                         ->where('transaction', '=', 1)
                                         ->where('payment_status', '=', 0);
 
-        return view('admin.records.unpaid.edit_unpaid_donations', compact('unpaidDonations'));
+        return view('admin.records.instant.unpaid.edit_unpaid_donations', compact('unpaidDonations'));
     }
 
     // -----------------|Redeem a pledge|-----------------------
@@ -308,7 +308,7 @@ class InstantRecordController extends Controller
                                         ->where('transaction', '=', 1)
                                         ->where('payment_status', '=', 0);
 
-        return view('admin.records.unpaid.prev_unpaid_donations', compact('unpaidDonations'));
+        return view('admin.records.instant.unpaid.prev_unpaid_donations', compact('unpaidDonations'));
     }
 
     // -----------------|Preview Verified Donations|-----------------------
@@ -321,7 +321,7 @@ class InstantRecordController extends Controller
                                         ->where('payment_status', '=', 1)
                                         ->where('verification', '=', 1);
 
-        return view('admin.records.paid.prev_verified_donations', compact('verifiedDonations'));
+        return view('admin.records.instant.paid.prev_verified_donations', compact('verifiedDonations'));
     }
 
     // -----------------|Preview Unverified Donations|-----------------------
@@ -334,7 +334,7 @@ class InstantRecordController extends Controller
                                         ->where('payment_status', '=', 1)
                                         ->where('verification', '=', 0);
 
-        return view('admin.records.paid.prev_unverified_donations', compact('unverifiedDonations'));
+        return view('admin.records.instant.paid.prev_unverified_donations', compact('unverifiedDonations'));
     }
 
     // -----------------|Preview Expenses|-----------------------
@@ -347,7 +347,7 @@ class InstantRecordController extends Controller
                                         ->where('payment_status', '=', 0)
                                         ->where('verification', '=', 0);
 
-        return view('admin.records.expenses.prev_expenses', compact('expenses'));
+        return view('admin.records.instant.expenses.prev_expenses', compact('expenses'));
     }
 
     /**

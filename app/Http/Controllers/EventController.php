@@ -66,8 +66,8 @@ class EventController extends Controller
     } else {
         $notification = array(
             'message' => 'Event created and activated',
-            'eventMessageTitle' => getCurrentEvent().' is created and activated!',
-            'eventMessage' => 'All activities will be done to '.getCurrentEvent().'.'
+            'eventMessageTitle' => getCurrentEventName().' is created and activated!',
+            'eventMessage' => 'All activities will be done to '.getCurrentEventName().'.'
         );
     }
 
@@ -101,8 +101,8 @@ class EventController extends Controller
 
             $notification = array(
                 'message' => 'No event activated',
-                'eventMessageTitle' => getCurrentEvent().' is activated!',
-                'eventMessage' => 'All activities will be done to '.getCurrentEvent().'.'
+                'eventMessageTitle' => getCurrentEventName().' is activated!',
+                'eventMessage' => 'All activities will be done to '.getCurrentEventName().'.'
             );
 
             return redirect()->route('manage.event')->with($notification);
@@ -138,8 +138,8 @@ class EventController extends Controller
 
             $notification = array(
                 'message' => 'Event activated',
-                'eventMessageTitle' => getCurrentEvent().' is activated!',
-                'eventMessage' => 'All activities will be done to '.getCurrentEvent().'.'
+                'eventMessageTitle' => getCurrentEventName().' is activated!',
+                'eventMessage' => 'All activities will be done to '.getCurrentEventName().'.'
             );
 
             return redirect()->route('manage.event')->with($notification);
@@ -160,8 +160,8 @@ class EventController extends Controller
 
             $notification = array(
                 'message' => 'Event activated',
-                'eventMessageTitle' => getCurrentEvent().' is activated!',
-                'eventMessage' => 'All activities will be done to '.getCurrentEvent().'.'
+                'eventMessageTitle' => getCurrentEventName().' is activated!',
+                'eventMessage' => 'All activities will be done to '.getCurrentEventName().'.'
             );
 
             return redirect()->route('manage.event')->with($notification);

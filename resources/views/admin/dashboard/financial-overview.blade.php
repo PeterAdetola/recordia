@@ -13,7 +13,7 @@ $sumOfAllExpenses = sumOfAllExpenses();
                   </div>
                   <div class="col s5 m5 right-align mt-5">
                     <h5 class="mb-0 white-text" style="margin-left: -2.5em">&#8358;&nbsp;
-                    @role('admin'){{ sumAllInstantDonations() }}@endrole
+                    @role('admin'){{ getTotalPaidDonation() }}@endrole
                     @role('recorder'){{ sumAllInstantDonationsFR() }}@endrole
                   </h5>
                     <p>Cash & Transfer</p>
@@ -44,7 +44,7 @@ $sumOfAllExpenses = sumOfAllExpenses();
                   </div>
                   <div class="col s5 m5 right-align mt-5">
                     <h5 class="mb-0 white-text" style="margin-left: -2.5em">&#8358;&nbsp;
-                      @role('admin'){{ sumAllInstantPledges() }}@endrole
+                      @role('admin'){{ sumAllPledges() }}@endrole
                       @role('recorder'){{ sumAllInstantPledgesFR() }}@endrole
                     </h5>
                     <p class="no-margin">Unpaid Donations</p>
@@ -60,7 +60,7 @@ $sumOfAllExpenses = sumOfAllExpenses();
                   </div>
                   <div class="col s5 m5 right-align mt-5">
                     <h5 class="mb-0 white-text" style="margin-left: -2.5em">&#8358;&nbsp;
-                    @role('admin'){{ sumAllInstantDonationsWithPledges() }}@endrole
+                    @role('admin'){{ sumAllDonationsWithPledges() }}@endrole
                     @role('recorder'){{ sumAllInstantDonationsWithPledgesFR() }}@endrole
                   </h5>
                     <p class="no-margin">Paid & Unpaid</p>

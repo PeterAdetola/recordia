@@ -31,7 +31,9 @@ $pageTitle = 'Registered Donors';
                   <li class="breadcrumb-item active">{{ $pageTitle }}</li>
                 </ol>
               </div>
-              <!-- <div class="col s2 m6 l6"><a class=" mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right" href="{{  route('activate.donors')}}" ><i class="material-icons hide-on-med-and-up">playlist_add_check</i><i class="material-icons right">playlist_add_check</i></a>
+              <!-- <div class="col s2 m6 l6">
+                <a class="btn tooltipped mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right"  data-position="left" data-tooltip="activate multiple donors" href="{{  route('activate.donors')}}" ><i class="material-icons hide-on-med-and-up">playlist_add_check</i><i class="material-icons right">playlist_add_check</i>
+                </a>
               </div> -->
             </div>
           </div>
@@ -48,15 +50,16 @@ $pageTitle = 'Registered Donors';
       <div id="" class="card card card-default scrollspy">
         <div class="card-content">
           <div class="row">
-          <h4 class="card-title left ml-2">{{ $pageTitle }}</h4>
-          <a href="{{  route('activate.donors')}}"><span class="right chip"><b style="color: maroon;">&nbsp;Edit Donors <i class="material-icons right mt-8" style="font-size: 1.2em;">navigate_next</i></b></span></a>
-        </div>
+            <h4 class="card-title left ml-2">{{ $pageTitle }}</h4>
+            <a href="{{ route('activate.donors') }}"><span class="right chip"><b style="color: maroon;">&nbsp;Edit Donors <i class="material-icons right mt-8" style="font-size: 1.2em;">navigate_next</i></b></span></a>
+          </div>
           <div class="row">
             <div class="col s12">
-              <p>The data in this table contains the extensive records of donations and pledges recorded so far, not for instant donations.</p><br/>
+              <br/>
+              <div class="divider"></div>
             </div>
             <div class="col s12">
-              <table id="page-length-option" class="display">
+              <table id="data-table-simple" class="display">
                 <thead>
                   <tr>
                     <th>Name</th>
@@ -69,12 +72,11 @@ $pageTitle = 'Registered Donors';
 
                 <tbody>
                 @foreach ($donors as $donor) 
-                @php
-                $donor->total_donation = $donor->registeredRecords->sum('amount') 
-                @endphp
                   <tr>
                     <td>{{ $donor->title }} {{ $donor->name }}</td>
-                    <td>{{ $donor->username }}</td>
+
+                    <td>{{ $donor->username }} </td>
+
                     <td>{{ $donor->phone }}</td>
 
                     @if($donor->status == 1)
@@ -84,14 +86,26 @@ $pageTitle = 'Registered Donors';
                     @endif
 
                     <td>
-                      <a class="modal-trigger" href="#{{ route('get.donor', $donor->id) }}" ><i class="material-icons grey-text small-ico-bg">more_horiz</i></a>
-                      <a class="modal-trigger" href="#{{ $donor->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a>
+                      @if($donor->donationCount() > 0)
+                      <a href="{{ route('donor.donation', $donor->id) }}" class="notification-button btn-floating mb-1 btn-flat waves-effect waves-light grey lighten-2">
+                        <i class="material-icons blue-text">more_horiz</i>
+                      </a>
+                      @else
+                      <a href="{{ route('donor.donation', $donor->id) }}" class="btn-floating mb-1 btn-flat waves-effect waves-light grey lighten-2">
+                        <i class="material-icons grey-text">more_horiz</i>
+                      </a>
+                      @endif
+
+                      
+                      <a href="#{{ $donor->id }}" class="modal-trigger btn-floating mb-1 btn-flat waves-effect waves-light grey lighten-2">
+                        <i class="material-icons grey-text">edit</i>
+                      </a>
                     </td>
                   </tr>
 
         <!-- Table Modal here -->
 
-   @include('admin.configs.modals.edit-donor-form')
+    @include('admin.configs.modals.edit-donor-form') 
 
         <!-- /Donation info ends -->
                 @endforeach
@@ -123,7 +137,7 @@ $pageTitle = 'Registered Donors';
       </div>
     </div>
     <!-- END: Page Main-->
-  <div style="bottom: 50px; right: 19px;" class="fixed-action-btn direction-top"><a href="#add-donor-modal" class="modal-trigger btn-floating btn-large gradient-45deg-purple-deep-orange gradient-shadow"><i class="material-icons">add</i></a>
+  <div style="bottom: 50px; right: 19px;" class="fixed-action-btn"><a href="#add-donor-modal" class="modal-trigger btn-floating btn-large gradient-45deg-purple-deep-orange gradient-shadow"><i class="material-icons">add</i></a>
   </div>
 
     <!-- Add Modal Here -->
@@ -138,24 +152,13 @@ $pageTitle = 'Registered Donors';
 @section('scripts')
   <!-- <script src="{{ asset('backend/assets/js/plugins.js') }}"></script> -->
   <script src="{{ asset('backend/assets/js/scripts/data-tables.js') }}"></script>
-  <script>
-    
-// document.getElementById("submitBtn2").addEventListener("click", function() {
-//   var preloader = document.getElementById("preloader2");
-//   preloader.style.display = "block";
-// });
 
-document.getElementById("submitDonorBtn").addEventListener("click", function() {
-  var preloader = document.getElementById("donor-preloader");
-  preloader.style.display = "block";
-});
-// Preloader Script
-      // function ShowPreloader() {
-      //   document.getElementById('preloader1').style.display = "block";
-      //   document.getElementById('preloader2').style.display = "block";
-      //   document.getElementById('preloader3').style.display = "block";
-      //   // document.getElementById('preloader4').style.display = "block";
-      // }
-    </script>
+  <script>
+
+    document.getElementById("submitDonorBtn").addEventListener("click", function() {
+      var preloader = document.getElementById("donor-preloader");
+      preloader.style.display = "block";
+    });
+
   </script>
 @endsection

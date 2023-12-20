@@ -67,7 +67,7 @@ $route = Route::current()->getName()
           <div class="collapsible-body">
             <ul class="collapsible collapsible-sub" data-collapsible="accordion">
               <li>
-                <a class="{{ ($route == 'instantRecords')? 'active' : '' }} waves-effect waves-cyan" href=""><i class="material-icons">radio_button_unchecked</i>
+                <a class="{{ ($route == 'get.registered.records')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('get.registered.records')}}"><i class="material-icons">radio_button_unchecked</i>
                   <span data-i18n="All Records">All Records</span>
                 </a>
               </li>                
@@ -98,7 +98,7 @@ $route = Route::current()->getName()
               </li> 
 
               <li>
-                <a class="{{ ($route == 'manage.donor')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('manage.donor')}}"><i class="material-icons">radio_button_unchecked</i>
+                <a class="{{ ($route == 'manage.donor')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('manage.donor') }}"><i class="material-icons">radio_button_unchecked</i>
                   <span data-i18n="Manage Event">Manage Donor</span>
                 </a>
               </li>            

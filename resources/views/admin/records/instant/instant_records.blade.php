@@ -7,12 +7,10 @@
   @endsection
   @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/data-tables.css') }}">
-    @include('admin.records.modal_style')
-
   @endsection
 
 @php
-$pageTitle = 'Verified Donations';
+$pageTitle = 'Instant Records';
 @endphp
 
 
@@ -25,15 +23,13 @@ $pageTitle = 'Verified Donations';
           <div class="container">
             <div class="row">
               <div class="col s10 m6 l6">
-                <h5 class="breadcrumbs-title mt-0 mb-0"><span>{{ $pageTitle }} for the year {{getCurrentYear()}}</span></h5>
+                <h5 class="breadcrumbs-title mt-0 mb-0">
+                  <span>{{ $pageTitle }} for the year {{ getCurrentYear() }}</span>
+                </h5>
                 <ol class="breadcrumbs mb-0">
-                  <li class="breadcrumb-item"><a  href="{{ route('dashboard') }}">Dashboard</a>
-                  </li>
-                  <li class="breadcrumb-item active">{{ $pageTitle }}
-                  </li>
+                  <li class="breadcrumb-item"><a  href="{{ route('dashboard') }}">Dashboard</a></li>
+                  <li class="breadcrumb-item active">{{ $pageTitle }}</li>
                 </ol>
-              </div>
-              <div class="col s2 m6 l6"><a class=" mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right" href="{{  route('instant.prev_verified.donations')}}" ><i class="material-icons hide-on-med-and-up">print</i><i class="material-icons right">print</i></a>
               </div>
             </div>
           </div>
@@ -49,10 +45,10 @@ $pageTitle = 'Verified Donations';
     <div class="col s12 m12 l12">
       <div id="" class="card card card-default scrollspy">
         <div class="card-content">
-          <h4 class="card-title">Verified Donations</h4>
+          <h4 class="card-title">Manage Records</h4>
           <div class="row">
             <div class="col s12">
-              <p>The data in this table contains the records of confirmed donations, not for registered donors.</p>
+              <p>The data in this table contains the extensive records of donations, pledges and expenses recorded so far, not for registered donors.</p>
             </div>
             <div class="col s12">
               <table id="data-table-row-grouping" class="display">
@@ -61,54 +57,46 @@ $pageTitle = 'Verified Donations';
                     <th>Name</th>
                     <th>Purpose</th>
                     <th>Amount</th>
-                    <th>Recorder</th>
                     <th>Payment Status</th>
                     <th>Verification</th>
+                    <th>Recorder</th>
                     <th>Phone</th>
-                    <th>Event</th>
-                    <th>Date</th>
                     <th>Edit</th>
+                    <th>Date</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                @foreach ($verifiedDonations as $verifiedDonation)  
+                @foreach ($instantRecords as $instantRecord)  
                   <tr>
-                    <td>{{ $verifiedDonation->name }}</td>
-                    <td  style="width: 10em;">{{ $verifiedDonation->purpose }}</td>
-                    <td>{{ formatAmount($verifiedDonation->amount) }}</td>
+                    <td>{{ $instantRecord->name }}</td>
+                    <td  style="width: 10em;">{{ $instantRecord->purpose }}</td>
+                    <td>{{ formatAmount($instantRecord->amount) }}</td>
 
-                    <td>{{ $verifiedDonation['recorder']['name'] }}</td>
-
-                    @if($verifiedDonation->payment_status == 1)
-                    <td><span class="chip green-text">Paid</span></td>
-                    @elseif($verifiedDonation->payment_status == 0 && $verifiedDonation->transaction == 0)
-                    <td><span class="chip red-text">Paid</span></td>
+                    @if($instantRecord->payment_status == 1)
+                    <td><span class="chip green-text">paid</span></td>
+                    @elseif($instantRecord->payment_status == 0 && $instantRecord->transaction == 0)
+                    <td><span class="chip red-text">paid</span></td>
                     @else
-                    <td><span class="chip red-text">Unpaid</span></td>
+                    <td><span class="chip red-text">unpaid</span></td>
                     @endif
 
-                    @if($verifiedDonation->verification == 1)
+                    @if($instantRecord->verification == 1)
                       <td><i class="material-icons green-text">check_box</i></td>
                     @else
                       <td><i class="material-icons grey-text">indeterminate_check_box</i></td>
                     @endif
+                    
+                    <td>{{ $instantRecord['recorder']['name'] }}</td>
 
-                    <td>{{ $verifiedDonation->phone }}</td>
-                    <td>{{ ($verifiedDonation->event == '')? 'No event': $verifiedDonation->event }}</td>
-                    <td>{{ formatDate($verifiedDonation->updated_at) }}</td>
-                    <td>
-                      <a class="modal-trigger" href="#{{ $verifiedDonation->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a>
-                    </td>
+                    <td>{{ $instantRecord->phone }}</td>
+                    <td><a class="modal-trigger" href="#{{ $instantRecord->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a></td>
+                    <td>{{ formatDate($instantRecord->updated_at) }}</td>
                   </tr>
 
-
-<!-- Modal Structure -->
-
-    
         <!-- Table Modal here -->
 
-    @include('admin.records.paid.edit-verified-donation-form') 
+    @include('admin.records.instant.modals.edit-ins-transaction-form') 
 
         <!-- /Donation info ends -->
                 @endforeach
@@ -119,20 +107,17 @@ $pageTitle = 'Verified Donations';
                     <th>Name</th>
                     <th>Purpose</th>
                     <th>Amount</th>
-                    <th>Recorder</th>
                     <th>Payment Status</th>
                     <th>Verification</th>
+                    <th>Recorder</th>
                     <th>Phone</th>
-                    <th>Event</th>
-                    <th>Date</th>
                     <th>Edit</th>
+                    <th>Date</th>
                   </tr>
                 </tfoot>
               </table>
-              <div class="divider"></div>
-              <div class="row">
-                <div class="mt-2 mr-4 center">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ sumVerifiedDonations() }}</span></div>
-              </div>
+
+              
             </div>
           </div>
         </div>
@@ -157,6 +142,4 @@ $pageTitle = 'Verified Donations';
 @section('scripts')
   <!-- <script src="{{ asset('backend/assets/js/plugins.js') }}"></script> -->
   <script src="{{ asset('backend/assets/js/scripts/data-tables.js') }}"></script>
-
-
 @endsection

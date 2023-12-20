@@ -61,12 +61,17 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('activate/event', [EventController::class, 'activateEvent'])->name('activate.event');
 
 // --------------| Donors |----------------------------------------
-    Route::get('/manage/donor', [DonorController::class, 'manageDonor'])->name('manage.donor');
-    Route::get('/get/donor/{id}', [DonorController::class, 'getDonor'])->name('get.donor');
-    Route::get('/activate/donors', [DonorController::class, 'activateDonors'])->name('activate.donors');
-    Route::post('/save/donor', [DonorController::class, 'saveDonor'])->name('save.donor');
-    Route::post('activate/donor', [DonorController::class, 'activateDonor'])->name('activate.donor');
-    Route::post('update/donor', [DonorController::class, 'updateDonor'])->name('update.donor');
+Route::controller(DonorController::class)->group(function () {
+    Route::get('/manage/donor', 'manageDonor')->name('manage.donor');
+    Route::post('/save/donor', 'saveDonor')->name('save.donor');
+    Route::get('/donor/donation/{id}', 'getDonorDonation')->name('donor.donation');
+    Route::get('/current/donor/donation/{id}', 'getCurrentDonorDonation')->name('current.donor.donation');
+    // Route::get('/get/donor/{id}', [DonorController::class, 'getDonor'])->name('get.donor');
+    Route::get('/activate/donors', 'activateDonors')->name('activate.donors');
+    Route::post('activate/donor', 'activateDonor')->name('activate.donor');
+    Route::post('update/donor', 'updateDonor')->name('update.donor');
+    
+    });
 });
 
 
@@ -122,19 +127,19 @@ Route::get('/instant/prev_expenses', 'prevExpenses')->name('instant.prev_expense
 |--------------------------------------------------------------------------
 |
 */
-// --------------| Add donor (Dashboard) |---------------------------------
-
-Route::controller(DonorController::class)->group(function () {
-
-Route::post('/save/donor', 'saveDonor')->name('save.donor');
-
-});
 
 // --------------| Add Donation (Dashboard) |----------------------------------
 
 Route::controller(RegisteredRecordController::class)->group(function () {
 
 Route::post('/save/donation', 'saveDonation')->name('save.donation');
+Route::post('/update/donation', 'updateDonation')->name('update.donation');
+
+// --------------| For Pages |----------------------------------------
+
+Route::get('/get/registered/records', 'getAllRegisteredRecords')->name('get.registered.records');
+Route::post('/update/donation', 'updateDonation')->name('update.donation');
+Route::post('/redeem/donor/donation', 'redeemDonorDonation')->name('redeem.donor.donation');
 
 });
 

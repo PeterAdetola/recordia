@@ -7,12 +7,10 @@
   @endsection
   @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/data-tables.css') }}">
-    @include('admin.records.modal_style')
-
   @endsection
 
 @php
-$pageTitle = 'Expenses';
+$pageTitle = 'Registered Records';
 @endphp
 
 
@@ -25,16 +23,13 @@ $pageTitle = 'Expenses';
           <div class="container">
             <div class="row">
               <div class="col s10 m6 l6">
-                <h5 class="breadcrumbs-title mt-0 mb-0"><span>{{ $pageTitle }} for the year {{getCurrentYear()}}</span></h5>
+                <h5 class="breadcrumbs-title mt-0 mb-0">
+                  <span>{{ $pageTitle }} for the year {{ getCurrentYear() }}</span>
+                </h5>
                 <ol class="breadcrumbs mb-0">
-                  <li class="breadcrumb-item"><a  href="{{ route('dashboard') }}">Dashboard</a>
-                  </li>
-                  <li class="breadcrumb-item active">{{ $pageTitle }}
-                  </li>
+                  <li class="breadcrumb-item"><a  href="{{ route('dashboard') }}">Dashboard</a></li>
+                  <li class="breadcrumb-item active">{{ $pageTitle }}</li>
                 </ol>
-              </div>
-
-              <div class="col s2 m6 l6"><a class="material-icons btn-flat btn-floating white-text  mb-5 breadcrumbs-btn right" href="{{  route('instant.prev_expenses')}}" ><i class="material-icons hide-on-med-and-up">print</i><i class="material-icons right">print</i></a>
               </div>
             </div>
           </div>
@@ -50,10 +45,10 @@ $pageTitle = 'Expenses';
     <div class="col s12 m12 l12">
       <div id="" class="card card card-default scrollspy">
         <div class="card-content">
-          <h4 class="card-title">Expenses</h4>
+          <h4 class="card-title">Manage Records</h4>
           <div class="row">
             <div class="col s12">
-              <p>The data in this table contains the records of expenses</p>
+              <p>The data in this table contains the extensive records of registered donations recorded so far</p>
             </div>
             <div class="col s12">
               <table id="data-table-row-grouping" class="display">
@@ -62,54 +57,53 @@ $pageTitle = 'Expenses';
                     <th>Name</th>
                     <th>Purpose</th>
                     <th>Amount</th>
-                    <th>Recorder</th>
                     <th>Payment Status</th>
                     <th>Verification</th>
-                    <th>Phone</th>
+                    <th>Recorder</th>
                     <th>Event</th>
-                    <th>Date</th>
                     <th>Edit</th>
+                    <th>Date</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                @foreach ($expenses as $expense)  
+                
+                <?php $sn = 0;  ?>
+                @foreach ($registeredRecords as $registeredRecord) 
+                <?php $sn++;  ?>
+
+
                   <tr>
-                    <td>{{ $expense->name }}</td>
-                    <td  style="width: 10em;">{{ $expense->purpose }}</td>
-                    <td>{{ formatAmount($expense->amount) }}</td>
+                    <td>{{ $registeredRecord['donor']['title']  }} {{ $registeredRecord['donor']['name']  }}</td>
 
-                    <td>{{ $expense['recorder']['name'] }}</td>
+                    <td  style="width: 10em;">{{ $registeredRecord->purpose }}</td>
 
-                    @if($expense->payment_status == 1)
-                    <td><span class="chip green-text">Paid</span></td>
-                    @elseif($expense->payment_status == 0 && $expense->transaction == 0)
-                    <td><span class="chip red-text">Paid</span></td>
+                    <td>{{ formatAmount($registeredRecord->amount) }}</td>
+
+                    @if($registeredRecord->payment_status == 1)
+                    <td><span class="chip green-text">paid</span></td>
                     @else
-                    <td><span class="chip red-text">Unpaid</span></td>
+                    <td><span class="chip red-text">unpaid</span></td>
                     @endif
 
-                    @if($expense->verification == 1)
-                      <td><i class="material-icons green-text">check_box</i></td>
-                    @else
-                      <td><i class="material-icons grey-text">indeterminate_check_box</i></td>
-                    @endif
+                  @if($registeredRecord->verification == 1)
+                    <td><i class="material-icons green-text">check_box</i></td>
+                  @else
+                    <td><i class="material-icons grey-text">indeterminate_check_box</i></td>
+                  @endif
+                    
+                    <td>{{ $registeredRecord['recorder']['name'] }}</td>
 
-                    <td>{{ $expense->phone }}</td>
-                    <td>{{ ($expense->event == '')? 'No event': $expense->event }}</td>
-                    <td>{{ formatDate($expense->updated_at) }}</td>
-                    <td>
-                      <a class="modal-trigger" href="#{{ $expense->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a>
-                    </td>
+                    <td>{{ ($registeredRecord->event == '')? 'no event': $registeredRecord['event']['name'] }}</td>
+
+                    <td><a class="modal-trigger" href="#{{ $registeredRecord->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a></td>
+                    
+                    <td>{{ formatDate($registeredRecord->updated_at) }}</td>
                   </tr>
 
-
-<!-- Modal Structure -->
-
-    
         <!-- Table Modal here -->
 
-    @include('admin.records.expenses.edit-expense-form') 
+    @include('admin.records.registered.modals.edit-reg-donation-form')
 
         <!-- /Donation info ends -->
                 @endforeach
@@ -120,20 +114,17 @@ $pageTitle = 'Expenses';
                     <th>Name</th>
                     <th>Purpose</th>
                     <th>Amount</th>
-                    <th>Recorder</th>
                     <th>Payment Status</th>
                     <th>Verification</th>
-                    <th>Phone</th>
+                    <th>Recorder</th>
                     <th>Event</th>
-                    <th>Date</th>
                     <th>Edit</th>
+                    <th>Date</th>
                   </tr>
                 </tfoot>
               </table>
-              <div class="divider"></div>
-              <div class="row">
-                <div class="mt-2 mr-4 center">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ formatAmount(sumOfAllExpenses()) }}</span></div>
-              </div>
+
+              
             </div>
           </div>
         </div>
@@ -158,6 +149,4 @@ $pageTitle = 'Expenses';
 @section('scripts')
   <!-- <script src="{{ asset('backend/assets/js/plugins.js') }}"></script> -->
   <script src="{{ asset('backend/assets/js/scripts/data-tables.js') }}"></script>
-
-
 @endsection

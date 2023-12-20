@@ -5,7 +5,7 @@ $active_donors = getRegisteredDonors();
 <!-- Start Modal -->
 <div id="add-donation-modal" class="modal" style="padding:1em;">
     <div class="modal-content">
-      <h6 class="card-title" style="display:inline-block;">Add Donation</h6>&nbsp;&nbsp;<span class="chip right">Registered Donation</span>
+      <h6 class="card-title" style="display:inline-block;">Add Donation for {{ getCurrentEventName() }}</h6>&nbsp;&nbsp;<span class="chip right">Registered Donation</span>
 
       <div class="progress collection">
         <div id="preloader" class="indeterminate"  style="display:none; 

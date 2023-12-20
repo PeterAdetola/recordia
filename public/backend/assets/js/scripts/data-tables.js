@@ -20,7 +20,7 @@ $(function () {
       "targets": 7
     }],
     "order": [
-      [7, 'desc']
+      [7, 'asc']
     ],
     "displayLength": 25,
     "drawCallback": function (settings) {

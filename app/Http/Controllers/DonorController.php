@@ -16,9 +16,9 @@ class DonorController extends Controller
     {
 
         $donors = Donor::orderBy('updated_at', 'DESC')->get();
-        // $donations = RegisteredRecord::orderBy('updated_at', 'DESC')->get();
+        $donorDonations = RegisteredRecord::get();
 
-        return view('admin.configs.config_donor', compact('donors'));
+        return view('admin.configs.config_donor', compact('donors'), compact('donorDonations'));
     }
 
     /**
@@ -30,11 +30,37 @@ class DonorController extends Controller
     }
 
     /**
-     * Get Donor.
+     * Get Donor's donations.
      */
-    public function getDonor(Request $request)
+    public function getDonorDonation($id)
     {
-        //
+        $donor = Donor::where('id', $id)->first();
+        $donorDonations = RegisteredRecord::with('event')->where('donor_id', $id)->orderBy('updated_at', 'DESC')->get();
+        $paidDonorDonations = formatAmount(RegisteredRecord::where('donor_id', $id)
+                            ->where('payment_status', 1)->sum('amount'));
+        $unpaidDonorDonations = formatAmount(RegisteredRecord::where('donor_id', $id)
+                            ->where('payment_status', 0)->sum('amount'));
+        $sumDonorDonations = formatAmount(RegisteredRecord::where('donor_id', $id)->sum('amount'));
+
+        
+        return view('admin.configs.donor_donation', compact('donor', 'donorDonations', 'sumDonorDonations', 'paidDonorDonations', 'unpaidDonorDonations'));
+    }
+
+    /**
+     * Get Current Donor's donations.
+     */
+    public function getCurrentDonorDonation($id)
+    {
+        $donor = Donor::where('id', $id)->first();
+        $donorDonations = RegisteredRecord::with('event')->where('donor_id', $id)->where('year', '=', getCurrentYear())->where('year', '=', getCurrentEvent())->orderBy('updated_at', 'DESC')->get();
+        $paidDonorDonations = formatAmount(RegisteredRecord::where('donor_id', $id)
+                            ->where('payment_status', 1)->sum('amount'));
+        $unpaidDonorDonations = formatAmount(RegisteredRecord::where('donor_id', $id)
+                            ->where('payment_status', 0)->sum('amount'));
+        $sumDonorDonations = formatAmount(RegisteredRecord::where('donor_id', $id)->sum('amount'));
+
+        
+        return view('admin.configs.donor_donation', compact('donor', 'donorDonations', 'sumDonorDonations', 'paidDonorDonations', 'unpaidDonorDonations'));
     }
 
     /**
@@ -43,6 +69,7 @@ class DonorController extends Controller
     public function updateDonor(Request $request)
     {
         $id = $request->id;
+
         if (isset($request->status)) {
             $request->status = 1;
         } else {
@@ -94,18 +121,55 @@ class DonorController extends Controller
         // echo $request->status;
         // exit();
 
+      $existingDonor = Donor::where('username', $request->username)
+                     ->where('phone', $request->phone)
+                     ->first();
 
-      Donor::create([
-            'title'     => $request->title,
-            'name'      => $request->name,
-            'username'  => $request->username,
-            'phone'     => $request->phone,
-            'status'    => $request->status,
-        ]);
+      $existingUsername = Donor::where('username', $request->username)->first();
+
+      $existingPhone = Donor::where('phone', $request->phone)->first();
+
+if (!$existingDonor) {
+
+    if (!$existingUsername) {
+
+        if (!$existingPhone) {
+
+          Donor::create([
+                'title'     => $request->title,
+                'name'      => $request->name,
+                'username'  => $request->username,
+                'phone'     => $request->phone,
+                'status'    => $request->status,
+            ]);
+
+            $notification = array(
+                'message' => 'Donor saved'
+            );
+
+            } else {
+
+                $notification = array(
+                    'message' => 'Phone number already exists'
+                );
+
+            }
+
+        } else {
+
+            $notification = array(
+                'message' => 'Username already exists'
+            );
+
+        }
+
+    } else {
 
         $notification = array(
-            'message' => 'Donor saved'
+            'message' => 'Donor already exists'
         );
+
+    }
 
         return redirect()->back()->with($notification);
     }

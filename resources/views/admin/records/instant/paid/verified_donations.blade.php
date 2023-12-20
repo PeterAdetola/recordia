@@ -7,12 +7,12 @@
   @endsection
   @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/data-tables.css') }}">
-    @include('admin.records.modal_style')
+    @include('admin.records.instant.modal_style')
 
   @endsection
 
 @php
-$pageTitle = 'Unverified Donations';
+$pageTitle = 'Verified Donations';
 @endphp
 
 
@@ -33,7 +33,7 @@ $pageTitle = 'Unverified Donations';
                   </li>
                 </ol>
               </div>
-              <div class="col s2 m6 l6"><a class=" mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right" href="{{  route('instant.prev_unverified.donations')}}" ><i class="material-icons hide-on-med-and-up">print</i><i class="material-icons right">print</i></a>
+              <div class="col s2 m6 l6"><a class=" mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right" href="{{  route('instant.prev_verified.donations')}}" ><i class="material-icons hide-on-med-and-up">print</i><i class="material-icons right">print</i></a>
               </div>
             </div>
           </div>
@@ -49,10 +49,10 @@ $pageTitle = 'Unverified Donations';
     <div class="col s12 m12 l12">
       <div id="" class="card card card-default scrollspy">
         <div class="card-content">
-          <h4 class="card-title">Unverified Donations</h4>
+          <h4 class="card-title">Verified Donations</h4>
           <div class="row">
             <div class="col s12">
-              <p>The data in this table contains the records of unconfirmed donations, not for registered donors.</p>
+              <p>The data in this table contains the records of confirmed donations, not for registered donors.</p>
             </div>
             <div class="col s12">
               <table id="data-table-row-grouping" class="display">
@@ -72,62 +72,43 @@ $pageTitle = 'Unverified Donations';
                 </thead>
 
                 <tbody>
-                @foreach ($unverifiedDonations as $unverifiedDonation)  
+                @foreach ($verifiedDonations as $verifiedDonation)  
                   <tr>
-                    <td>{{ $unverifiedDonation->name }}</td>
-                    <td  style="width: 10em;">{{ $unverifiedDonation->purpose }}</td>
-                    <td>{{ formatAmount($unverifiedDonation->amount) }}</td>
+                    <td>{{ $verifiedDonation->name }}</td>
+                    <td  style="width: 10em;">{{ $verifiedDonation->purpose }}</td>
+                    <td>{{ formatAmount($verifiedDonation->amount) }}</td>
 
-                    <td>{{ $unverifiedDonation['recorder']['name'] }}</td>
+                    <td>{{ $verifiedDonation['recorder']['name'] }}</td>
 
-                    @if($unverifiedDonation->payment_status == 1)
+                    @if($verifiedDonation->payment_status == 1)
                     <td><span class="chip green-text">Paid</span></td>
-                    @elseif($unverifiedDonation->payment_status == 0 && $unverifiedDonation->transaction == 0)
+                    @elseif($verifiedDonation->payment_status == 0 && $verifiedDonation->transaction == 0)
                     <td><span class="chip red-text">Paid</span></td>
                     @else
                     <td><span class="chip red-text">Unpaid</span></td>
                     @endif
 
-                    @if($unverifiedDonation->verification == 1)
+                    @if($verifiedDonation->verification == 1)
                       <td><i class="material-icons green-text">check_box</i></td>
                     @else
                       <td><i class="material-icons grey-text">indeterminate_check_box</i></td>
                     @endif
 
-                    <td>{{ $unverifiedDonation->phone }}</td>
-                    <td>{{ ($unverifiedDonation->event == '')? 'No event': $unverifiedDonation->event }}</td>
-                    <td>{{ formatDate($unverifiedDonation->updated_at) }}</td>
+                    <td>{{ $verifiedDonation->phone }}</td>
+                    <td>{{ ($verifiedDonation->event == '')? 'No event': $verifiedDonation->event }}</td>
+                    <td>{{ formatDate($verifiedDonation->updated_at) }}</td>
                     <td>
-                      <a class="modal-trigger" href="#{{ $unverifiedDonation->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a>
+                      <a class="modal-trigger" href="#{{ $verifiedDonation->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a>
                     </td>
                   </tr>
-       
+
 
 <!-- Modal Structure -->
 
-    <div id="{{ $unverifiedDonation->id }}" class="modal border-radius-10" style="padding:2em;">
+    
+        <!-- Table Modal here -->
 
-<form id="redeemPledge" method="POST" action="{{ route('instant.verify_a_donation') }}">
-      @csrf
-      <input type="hidden" name="id" value="{{ $unverifiedDonation->id }}">
-      <input type="hidden" name="payment_status" value="1">
-        <div class="modal-content">
-          <h6 class="card-title">
-            You are about to verify the payment of 
-            {{ $unverifiedDonation->name }} 
-          </h6>
-
-        <p>Do you want to proceed ?</p>
-        </div>
-    <div class="progress collection">
-      <div id="preloader{{$unverifiedDonation->id}}" class="indeterminate"  style="display:none; 
-      border:2px #ebebeb solid"></div>
-    </div>
-
-        <div class="modal-footer">
-      <button id="submitBtn{{$unverifiedDonation->id}}" type="submit" class="modal-action waves-effect waves-green btn-large" >Yes, Payment is verified</button>
-          <a href="javascript:void(0)" class="btn-large btn-flat modal-close">No, Cancel</a>
-        </div>
+    @include('admin.records.instant.paid.edit-verified-donation-form') 
 
         <!-- /Donation info ends -->
                 @endforeach
@@ -150,7 +131,7 @@ $pageTitle = 'Unverified Donations';
               </table>
               <div class="divider"></div>
               <div class="row">
-                <div class="mt-2 mr-4 center">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ sumUnverifiedDonations() }}</span></div>
+                <div class="mt-2 mr-4 center">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ sumVerifiedDonations() }}</span></div>
               </div>
             </div>
           </div>

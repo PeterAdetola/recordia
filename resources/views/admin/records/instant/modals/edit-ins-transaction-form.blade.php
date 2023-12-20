@@ -2,7 +2,11 @@
         <!-- Transaction info -->
 <div id="{{ $instantRecord->id }}" class="modal" style="padding:1em;">
     <div class="modal-content">
-      <h6 class="card-title">Edit Record taken by {{ $instantRecord['recorder']['name'] }}</h6>
+      <div class="row">
+        <h6 class="card-title left ml-2">Edit Record</h6>
+        <span class="grey-text right mr-3 pt-1">Recorded by {{ $instantRecord['recorder']['name'] }}</span>
+      </div>
+
 
       <div class="progress collection">
         <div id="preloader{{$instantRecord->id}}" class="indeterminate"  style="display:none;
@@ -51,6 +55,7 @@
           <input name="purpose" id="purpose" value="{{ $instantRecord->purpose }}" type="text" class="autocomplete" required>
           <label for="purpose">for</label>
         </div>
+
 
 
 

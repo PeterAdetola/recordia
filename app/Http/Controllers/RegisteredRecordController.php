@@ -10,24 +10,37 @@ use App\Models\User;
 class RegisteredRecordController extends Controller
 {
 
+
+    /**
+     * Get all registered records.
+     */
+    public function getAllRegisteredRecords(RegisteredRecord $registeredRecord)
+    {
+
+        $registeredRecords = RegisteredRecord::orderBy('updated_at', 'DESC')->get()
+                                        ->where('year', '=', getCurrentYear());
+
+        return view('admin.records.registered.registered_records', compact('registeredRecords'));
+    }
+
     /**
      * Save donation.
      */
     public function saveDonation(Request $request)
     {
-        // $request->validate([
-        //     'donor_id' => 'required',            
-        //     'amount' => 'required',
-        //     'purpose' => 'required',
-        //     'slip_no' => 'required',
-        //     'payment_mode' => 'required',
-        // ],[
-        //     'donor_id.required' => 'Donor\'fullname and title is required',
-        //     'amount.required' => 'Amount donated is required',
-        //     'purpose.required' => 'Purpose of donation is required',
-        //     'slip_no.required' => 'Slip number is required',
-        //     'payment_mode.required' => 'Indicate the mode of payment',
-        // ]);
+        $request->validate([
+            'donor_id' => 'required',            
+            'amount' => 'required',
+            'purpose' => 'required',
+            'slip_no' => 'required',
+            'payment_mode' => 'required',
+        ],[
+            'donor_id.required' => 'Donor\'fullname and title is required',
+            'amount.required' => 'Amount donated is required',
+            'purpose.required' => 'Purpose of donation is required',
+            'slip_no.required' => 'Slip number is required',
+            'payment_mode.required' => 'Indicate the mode of payment',
+        ]);
 
 
     /**
@@ -38,7 +51,7 @@ class RegisteredRecordController extends Controller
      */
 // Get Event
     $request->recorder_id = getCurrentUser();
-    $request->event = getCurrentEvent();
+    $request->event_id = getCurrentEvent();
     $request->year = getCurrentYear();
 
         switch ($request->payment_mode) {
@@ -76,7 +89,7 @@ class RegisteredRecordController extends Controller
             'payment_mode' => $request->payment_mode,
             'payment_status' => $request->payment_status,
             'verification' => $request->verification,
-            'event' => $request->event,
+            'event_id' => $request->event_id,
             'year' => $request->year,
         ]);
 
@@ -85,5 +98,72 @@ class RegisteredRecordController extends Controller
         );
 
         return redirect()->route('dashboard')->with($notification);
+    }
+
+    /**
+     * Update resource in storage.
+     */
+    public function updateDonation(Request $request)
+    {
+        $id = $request->id;
+
+        if (!isset($request->payment_status)){
+            $request->payment_mode = 4;
+            $request->payment_status = 0;
+            $request->verification = 0;
+        }
+
+        if (!isset($request->verification)){
+            $request->verification = 0;
+        }
+
+        if ($request->payment_status == ''){
+            $request->payment_status = 0;
+        }
+
+        $amount = str_replace(",", "", $request->amount);
+        $amount = str_replace(".", "", $amount);
+
+
+        $amount = intval($amount);
+
+        // echo $amount;
+        // exit;
+
+        RegisteredRecord::findOrFail($id)->update([
+        'purpose' => $request->purpose,
+        'amount' => $amount,
+        'payment_status' => $request->payment_status,
+        'verification' => $request->verification,
+    ]);
+
+        $notification = array(
+            'message' => 'Donation Updated'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    /**
+     * Redeem Donor's Donation.
+     */
+    public function redeemDonorDonation(Request $request)
+    {
+        $id = $request->id;
+
+        if (!isset($request->verification)){
+            $request->verification = 0;
+        }
+
+        RegisteredRecord::findOrFail($id)->update([
+        'verification' => $request->verification,
+        'payment_status' => $request->payment_status,
+    ]);
+
+        $notification = array(
+            'message' => 'Pledge redeemed'
+        );
+
+        return redirect()->back()->with($notification);
     }
 }

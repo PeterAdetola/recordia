@@ -10,4 +10,9 @@ class Event extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function registeredRecords()
+    {
+        return $this->hasMany(RegisteredRecord::class, 'event_id', 'id');
+    }
 }

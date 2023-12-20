@@ -11,7 +11,6 @@
       </div>
 
         <form method="POST" action="{{ route('update.donor') }}">
-              <!-- <form method="POST" action="{{ route('save.event') }}"> -->
               @csrf
               <input type="hidden" name="id" value="{{ $donor->id }}">
             <div class="row">
@@ -58,7 +57,7 @@
           </div>
         </form>
 
-</div>
+  </div>
 </div>
 <script type="text/javascript"> 
       // Preloader Script

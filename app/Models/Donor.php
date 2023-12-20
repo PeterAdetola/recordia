@@ -15,4 +15,9 @@ class Donor extends Model
     {
         return $this->hasMany(RegisteredRecord::class, 'donor_id', 'id');
     }
+
+    public function donationCount()
+    {
+        return $this->registeredRecords()->count();
+    }
 }
