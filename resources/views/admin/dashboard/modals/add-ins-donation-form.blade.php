@@ -10,7 +10,7 @@
         border:2px #ebebeb solid"></div>
       </div>
       
-      <form id="insDonationForm" method="POST" action="{{ route('save.donation') }}">
+      <form id="insDonationForm" method="POST" action="{{ route('save.ins_donation') }}">
         @csrf
       <input type="hidden" value="{{ getCurrentUser() }}" name="recorder_id">
       <input type="hidden" value="{{ getCurrentYear() }}" name="year">

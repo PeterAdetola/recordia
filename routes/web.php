@@ -65,6 +65,7 @@ Route::controller(DonorController::class)->group(function () {
     Route::get('/manage/donor', 'manageDonor')->name('manage.donor');
     Route::post('/save/donor', 'saveDonor')->name('save.donor');
     Route::get('/donor/donation/{id}', 'getDonorDonation')->name('donor.donation');
+    Route::get('preview/donor/donation/{id}', 'prevDonorDonation')->name('preview.donor.donation');
     Route::get('/current/donor/donation/{id}', 'getCurrentDonorDonation')->name('current.donor.donation');
     // Route::get('/get/donor/{id}', [DonorController::class, 'getDonor'])->name('get.donor');
     Route::get('/activate/donors', 'activateDonors')->name('activate.donors');
@@ -86,7 +87,7 @@ Route::controller(DonorController::class)->group(function () {
 
 Route::controller(InstantRecordController::class)->group(function () {
 
-Route::post('/save/donation', 'saveDonation')->name('save.donation');
+Route::post('/save/ins_donation', 'saveInsDonation')->name('save.ins_donation');
 Route::post('/save/expense', 'saveExpense')->name('save.expense');
 Route::post('/verify/donation', 'verifyDonation')->name('verify.donation');
 
@@ -132,7 +133,7 @@ Route::get('/instant/prev_expenses', 'prevExpenses')->name('instant.prev_expense
 
 Route::controller(RegisteredRecordController::class)->group(function () {
 
-Route::post('/save/donation', 'saveDonation')->name('save.donation');
+Route::post('/save/reg_donation', 'saveRegDonation')->name('save.reg_donation');
 Route::post('/update/donation', 'updateDonation')->name('update.donation');
 
 // --------------| For Pages |----------------------------------------

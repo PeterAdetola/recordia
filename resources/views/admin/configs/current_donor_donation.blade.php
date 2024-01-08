@@ -10,7 +10,7 @@
   @endsection
 
 @php
-$pageTitle = 'Donor\'s Donations';
+$pageTitle = 'Current Donor\'s Donations';
 @endphp
 
 
@@ -27,13 +27,14 @@ $pageTitle = 'Donor\'s Donations';
                   <span>{{ $pageTitle }}</span>
                 </h5>
                 <ol class="breadcrumbs mb-0">
-                  <li class="breadcrumb-item"><a  href="{{ route('manage.donor') }}">Manage Donors</a></li>
+                  <li class="breadcrumb-item">
+                    <a  href="{{ route('manage.donor') }}">Manage Donors</a>
+                  </li>
+                  <li class="breadcrumb-item">
+                    <a  href="{{ route('donor.donation', $donor->id) }}">Donor's Donations</a>
+                  </li>
                   <li class="breadcrumb-item active">{{ $pageTitle }}</li>
                 </ol>
-              </div>
-              <div class="col s2 m6 l6">
-                <a class="mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right"  data-position="left" data-tooltip="activate multiple donors" href="{{ route('preview.donor.donation', $donor->id) }}" ><i class="material-icons hide-on-med-and-up">playlist_add_check</i><i class="material-icons right">print</i>
-                </a>
               </div>
             </div>
           </div>
@@ -53,18 +54,17 @@ $pageTitle = 'Donor\'s Donations';
         <div class="card-content">
           <div class="row">
             <h4 class="card-title left ml-2">{{ $donor->title }} {{ $donor->name }}'s donations</h4>
-            <a href="{{ route('current.donor.donation', $donor->id) }}"><span class="right chip"><b style="color: maroon;">&nbsp;Current Donations <i class="material-icons right mt-6" style="font-size: 1.2em;">navigate_next</i></b></span></a>
           </div>
           <div class="row">
             <div class="col s12">
-              <p>All donations made by {{ $donor->title }} {{ $donor->name }}</p>
+              <p>All donations made by {{ $donor->title }} {{ $donor->name }} during {{getCurrentEventName()}} for the year {{getCurrentYear()}}</p>
             </div>
             <div class="col s12">
               <table id="data-table-row-grouping" class="display">
                 <thead>
                   <tr>
                     <th>Purpose</th>
-                    <th>Amount (&#8358;)</th>
+                    <th>Amount</th>
                     <th>Payment Status</th>
                     <th>Verification</th>
                     <th>Recorder</th>

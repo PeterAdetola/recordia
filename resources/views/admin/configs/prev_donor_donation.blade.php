@@ -1,9 +1,6 @@
  @extends('admin.admin_master')
  @section('admin')
 
-@php
-$pageTitle = 'Unverified Donations for the year '. getCurrentYear();
-@endphp
  <!-- BEGIN: Page Main-->
     <div id="main">
       <div class="row">
@@ -19,10 +16,10 @@ $pageTitle = 'Unverified Donations for the year '. getCurrentYear();
         <div class="card-content invoice-print-area">
           <!-- header section -->
           <div class="row invoice-date-number">
-            <div class="col xl4 s12">
+            <!-- <div class="col xl4 s12">
               <span class="invoice-number mr-1">Print#</span>
               <span>000756</span>
-            </div>
+            </div> -->
             <div class="col xl8 s12">
               <div class="invoice-date display-flex align-items-center flex-wrap">
                 <div class="mr-3">
@@ -43,7 +40,7 @@ $pageTitle = 'Unverified Donations for the year '. getCurrentYear();
           <!-- invoice address and contact -->
           <div class="row invoice-info">
               <!-- <h4 class="indigo-text center"></h4>  -->
-      <h6 class="card-title center">{{ $pageTitle }}</h6>           
+      <h6 class="card-title center">All donations made by {{ $donor->title }} {{ $donor->name }}</h6>           
           </div>
           <div class="divider mb-3 mt-3"></div>
           <!-- product details table-->
@@ -51,25 +48,40 @@ $pageTitle = 'Unverified Donations for the year '. getCurrentYear();
             <table class="striped responsive-table" >
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Purpose</th>
-                  <th>Date</th>
-                  <th>Phone No.</th>
-                  <th>Amount (&#8358;)</th>
+                    <th>Purpose</th>
+                    <th>Date</th>
+                    <th>Event</th>
+                    <th>Status</th>
+                    <th>Verification</th>
+                    <th>Amount(&#8358;)</th>
                 </tr>
               </thead>
               <tbody>
 
-              @foreach($unverifiedDonations as $unverifiedDonation)
+              @foreach($donorDonations as $donorDonation)
 
-                <tr class="{{ ($unverifiedDonation->transaction == 1 )? 'grey lighten-5' : '' }}">
-                <td>
-                  {{ $unverifiedDonation->name }}
-                </td>
-                <td>{{ $unverifiedDonation->purpose }}</td>
-                <td>{{ formatDate($unverifiedDonation->updated_at) }}</td>
-                <td>{{ $unverifiedDonation->phone }}</td>
-                <td>{{ formatAmount($unverifiedDonation->amount) }}</td>
+                <tr>
+
+                <td>{{ $donorDonation->purpose }}</td>
+
+                <td>{{ formatDate($donorDonation->updated_at) }}</td>
+
+                <td>{{ $donorDonation->event->name }}</td>
+
+                    @if($donorDonation->payment_status == 1)
+                      <td>paid</td>
+                    @else
+                      <td>unpaid</td>
+                    @endif
+
+                    @if($donorDonation->verification == 1)
+                      <td>verified</td>
+                    @else
+                      <td>unverified</td>
+                    @endif
+
+                <td>{{ formatAmount($donorDonation->amount) }}</td>
+
                 </tr>
 
               @endforeach
@@ -87,8 +99,17 @@ $pageTitle = 'Unverified Donations for the year '. getCurrentYear();
               <div class="col xl4 m7 s12 offset-xl3">
                 <ul>
                   <li class="display-flex justify-content-between">
-                    <h6 class="invoice-subtotal-title" style="display:inline-block;">Total</h6>
-                    <h6 class="invoice-subtotal-value">&#8358;{{sumUnverifiedDonations()}}</h6>
+                    <span class="invoice-subtotal-title mt-3">Paid</span>
+                    <h6 class="invoice-subtotal-value">&#8358; {{$paidDonorDonations}}</h6>
+                  </li>
+                  <li class="display-flex justify-content-between">
+                    <span class="invoice-subtotal-title mt-3">Outstanding</span>
+                    <h6 class="invoice-subtotal-value">&#8358; {{$unpaidDonorDonations}}</h6>
+                  </li>
+                  <hr>
+                  <li class="display-flex justify-content-between">
+                    <span class="invoice-subtotal-title mt-3">Total Donation</span>
+                    <h6 class="invoice-subtotal-value">&#8358; {{ $sumDonorDonations }}</h6>
                   </li>
                 </ul>
               </div>
@@ -114,7 +135,7 @@ $pageTitle = 'Unverified Donations for the year '. getCurrentYear();
             </a>
           </div>
           <div class="invoice-action-btn">
-            <a href="{{ route('get.instant.records') }}" class="btn waves-effect waves-light display-flex align-items-center justify-content-center">
+            <a href="{{ route('donor.donation', $donor->id) }}" class="btn waves-effect waves-light display-flex align-items-center justify-content-center">
               <span class="text-nowrap">All Records</span>
             </a>
           </div>

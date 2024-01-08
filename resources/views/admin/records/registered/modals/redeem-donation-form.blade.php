@@ -9,11 +9,12 @@
     <div class="modal-content">
         
           <h6 class="card-title">
-            You are about to confirm that the pledge of 
-            {{ $donorDonation['donor']['title']  }} {{ $donorDonation['donor']['name']  }} for {{$donorDonation->purpose}} has been paid
+            Pledge redemption confirmation
           </h6>
 
-        <p>Do you want to proceed ?</p>
+        <p>You are about to confirm that the sum of {{formatAmount($donorDonation->amount)}} pledged by 
+            {{ $donorDonation['donor']['title']  }} {{ $donorDonation['donor']['name']  }} for {{$donorDonation->purpose}} has been paid.</p>
+            <p class="mt-2">Do you want to proceed ?</p>
 
 
 

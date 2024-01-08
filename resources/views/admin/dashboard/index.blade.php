@@ -15,14 +15,20 @@
         <div class="breadcrumbs-dark pb-0 pt-4" id="breadcrumbs-wrapper">
           <!-- Search for small screen-->
           <div class="container">
-            <div class="row">
+            <div class="row" style="margin-top: -1.5em;">
               <div class="col s10 m6 l6">
-                <h5 class="breadcrumbs-title mt-0 mb-0"><span>Hi, {{ getUserName() }}</span></h5>
+                <h5 class="breadcrumbs-title mt-0 mb-0"><span>
+                Financial overview/activities for the year {{ getCurrentYear() }}</span></h5>
+               
                 <ol class="breadcrumbs mb-0">
-                  <li class="breadcrumb-item"><a href="#!">Here is 
-                  @role('admin') the @endrole 
-                  @role('recorder') your @endrole
-                financial overview/activities for the year {{ getCurrentYear() }}</a>
+                  <li class="breadcrumb-item">
+                    <a href="{{ route('manage.event') }}"><span class="chip white-text indigo darken-4">Event</span>
+                    </a>
+                      @if (getCurrentEvent() == 'No event')
+                      <span class="chip indigo-text darken-4 white">No event</span>
+                      @else
+                      <span class="chip indigo-text darken-4 white">{{ getCurrentEventName() }}</span>
+                      @endif
                   </li>
                 </ol>
               </div>

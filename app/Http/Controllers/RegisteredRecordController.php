@@ -26,7 +26,7 @@ class RegisteredRecordController extends Controller
     /**
      * Save donation.
      */
-    public function saveDonation(Request $request)
+    public function saveRegDonation(Request $request)
     {
         $request->validate([
             'donor_id' => 'required',            

@@ -12,7 +12,7 @@ $active_donors = getRegisteredDonors();
         border:2px #ebebeb solid"></div>
       </div>
       
-      <form id="regDonationForm" method="POST" action="{{ route('save.donation') }}">
+      <form id="regDonationForm" method="POST" action="{{ route('save.reg_donation') }}">
         @csrf
 
       <div class="row">

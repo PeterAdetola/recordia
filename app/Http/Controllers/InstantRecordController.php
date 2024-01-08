@@ -14,7 +14,7 @@ class InstantRecordController extends Controller
     /**
      * Save donation.
      */
-    public function saveDonation(Request $request)
+    public function saveInsDonation(Request $request)
     {
         $request->validate([
             'name' => 'required',
@@ -106,7 +106,7 @@ class InstantRecordController extends Controller
             'amount.required' => 'Amount donated is required',
         ]);
 
-        $request->payment_status = 0;
+        $request->payment_status = 2;
         $request->payment_mode = 0;
         $request->verification = 0;
 
