@@ -1,3 +1,3 @@
 # recordia
-Record diary for event's donations
+Record keeping and invoice generating web app for NGO
 
