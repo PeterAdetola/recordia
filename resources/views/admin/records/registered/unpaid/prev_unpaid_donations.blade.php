@@ -2,7 +2,7 @@
  @section('admin')
 
 @php
-$pageTitle = 'Verified Donations for the year '. getCurrentYear();
+$pageTitle = 'Unpaid Donations for the year '. getCurrentYear();
 @endphp
  <!-- BEGIN: Page Main-->
     <div id="main">
@@ -19,10 +19,6 @@ $pageTitle = 'Verified Donations for the year '. getCurrentYear();
         <div class="card-content invoice-print-area">
           <!-- header section -->
           <div class="row invoice-date-number">
-            <div class="col xl4 s12">
-              <span class="invoice-number mr-1">Print#</span>
-              <span>000756</span>
-            </div>
             <div class="col xl8 s12">
               <div class="invoice-date display-flex align-items-center flex-wrap">
                 <div class="mr-3">
@@ -60,16 +56,17 @@ $pageTitle = 'Verified Donations for the year '. getCurrentYear();
               </thead>
               <tbody>
 
-              @foreach($verifiedDonations as $verifiedDonation)
+              @foreach($unpaidDonations as $unpaidDonation)
 
-                <tr class="{{ ($verifiedDonation->transaction == 1 )? 'grey lighten-5' : '' }}">
+                <tr class="{{ ($unpaidDonation->transaction == 1 )? 'grey lighten-5' : '' }}">
                 <td>
-                  {{ $verifiedDonation->name }}
+                  {{ $unpaidDonation['donor']['title'] }}
+                  {{ $unpaidDonation['donor']['name'] }}
                 </td>
-                <td>{{ $verifiedDonation->purpose }}</td>
-                <td>{{ formatDate($verifiedDonation->updated_at) }}</td>
-                <td>{{ $verifiedDonation->phone }}</td>
-                <td>{{ formatAmount($verifiedDonation->amount) }}</td>
+                <td>{{ $unpaidDonation->purpose }}</td>
+                <td>{{ formatDate($unpaidDonation->updated_at) }}</td>
+                <td>{{ $unpaidDonation['donor']['phone'] }}</td>
+                <td>{{ formatAmount($unpaidDonation->amount) }}</td>
                 </tr>
 
               @endforeach
@@ -88,7 +85,7 @@ $pageTitle = 'Verified Donations for the year '. getCurrentYear();
                 <ul>
                   <li class="display-flex justify-content-between">
                     <h6 class="invoice-subtotal-title" style="display:inline-block;">Total</h6>
-                    <h6 class="invoice-subtotal-value">&#8358;{{sumVerifiedInsDonations()}}</h6>
+                    <h6 class="invoice-subtotal-value">&#8358;{{sumAllRegPledges()}}</h6>
                   </li>
                 </ul>
               </div>

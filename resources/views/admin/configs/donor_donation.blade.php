@@ -27,7 +27,7 @@ $pageTitle = 'Donor\'s Donations';
                   <span>{{ $pageTitle }}</span>
                 </h5>
                 <ol class="breadcrumbs mb-0">
-                  <li class="breadcrumb-item"><a  href="{{ route('manage.donor') }}">Manage Donors</a></li>
+                  <li class="breadcrumb-item"><a  href="{{ route('manage.donor') }}">Registered Donors</a></li>
                   <li class="breadcrumb-item active">{{ $pageTitle }}</li>
                 </ol>
               </div>

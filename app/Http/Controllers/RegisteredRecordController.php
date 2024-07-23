@@ -166,4 +166,142 @@ class RegisteredRecordController extends Controller
 
         return redirect()->back()->with($notification);
     }
+
+    /**
+     * Get all registered verified donation.
+     */
+    public function getVerifiedDonations(RegisteredRecord $registeredRecord)
+    {
+
+        $verifiedDonations = RegisteredRecord::orderBy('updated_at', 'DESC')->get()
+                                        ->where('year', '=', getCurrentYear())
+                                        ->where('payment_status', '=', 1)
+                                        ->where('verification', '=', 1);
+
+        return view('admin.records.registered.paid.verified_donations', compact('verifiedDonations'));
+    }
+
+    /**
+     * verified a donation.
+     */
+    public function verifyADonation(Request $request)
+    {
+
+        $id = $request->id;
+
+        $request->verification = 1;
+
+        RegisteredRecord::findOrFail($id)->update([
+        'verification' => $request->verification,
+    ]);
+
+        $notification = array(
+            'message' => 'Payment verified'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    /**
+     * unverified a donation.
+     */
+    public function unverifyADonation(Request $request)
+    {
+
+        $id = $request->id;
+
+        $request->verification = 0;
+
+        RegisteredRecord::findOrFail($id)->update([
+        'verification' => $request->verification,
+    ]);
+
+        $notification = array(
+            'message' => 'Payment unverified'
+        );
+
+        return redirect()->back()->with($notification);
+    }
+
+    /**
+     * Preview all registered verified donation.
+     */
+    public function prevVerifiedDonations(RegisteredRecord $registeredRecord)
+    {
+
+        $verifiedDonations = RegisteredRecord::orderBy('updated_at', 'DESC')->get()
+                                        ->where('year', '=', getCurrentYear())
+                                        ->where('payment_status', '=', 1)
+                                        ->where('verification', '=', 1);
+
+        return view('admin.records.registered.paid.prev_verified_donations', compact('verifiedDonations'));
+    }
+
+
+    /**
+     * Get all registered unverified donation.
+     */
+    public function getUnverifiedDonations(RegisteredRecord $registeredRecord)
+    {
+
+        $unverifiedDonations = RegisteredRecord::orderBy('updated_at', 'DESC')->get()
+                                        ->where('year', '=', getCurrentYear())
+                                        ->where('payment_status', '=', 1)
+                                        ->where('verification', '=', 0);
+        // $recorder = User::all();
+
+        return view('admin.records.registered.paid.unverified_donations', compact('unverifiedDonations'));
+    }
+
+    /**
+     * Preview all registered unverified donation.
+     */
+    public function prevUnverifiedDonations(RegisteredRecord $registeredRecord)
+    {
+
+        $unverifiedDonations = RegisteredRecord::orderBy('updated_at', 'DESC')->get()
+                                        ->where('year', '=', getCurrentYear())
+                                        ->where('payment_status', '=', 1)
+                                        ->where('verification', '=', 0);
+
+        return view('admin.records.registered.paid.prev_unverified_donations', compact('unverifiedDonations'));
+    }
+
+    /**
+     * Get all registered unpaid donation.
+     */
+    public function getUnpaidDonations(RegisteredRecord $registeredRecord)
+    {
+
+        $unpaidDonations = RegisteredRecord::orderBy('updated_at', 'DESC')->get()
+                                        ->where('year', '=', getCurrentYear())
+                                        ->where('payment_status', '=', 0);
+
+        return view('admin.records.registered.unpaid.unpaid_donations', compact('unpaidDonations'));
+    }
+
+    /**
+     * Preview registered unpaid donation.
+     */
+    public function prevUnpaidDonations(RegisteredRecord $registeredRecord)
+    {
+
+        $unpaidDonations = RegisteredRecord::orderBy('updated_at', 'DESC')->get()
+                                        ->where('year', '=', getCurrentYear())
+                                        ->where('payment_status', '=', 0);
+
+        return view('admin.records.registered.unpaid.prev_unpaid_donations', compact('unpaidDonations'));
+    }
+
+    /**
+     * Edit registered unpaid donations.
+     */
+    public function editPledges(Request $request)
+    {
+        $unpaidDonations = RegisteredRecord::orderBy('updated_at', 'DESC')->get()
+                                        ->where('year', '=', getCurrentYear())
+                                        ->where('payment_status', '=', 0);
+
+        return view('admin.records.registered.unpaid.edit_unpaid_donations', compact('unpaidDonations'));
+    }
 }

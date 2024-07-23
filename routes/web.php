@@ -142,6 +142,22 @@ Route::get('/get/registered/records', 'getAllRegisteredRecords')->name('get.regi
 Route::post('/update/donation', 'updateDonation')->name('update.donation');
 Route::post('/redeem/donor/donation', 'redeemDonorDonation')->name('redeem.donor.donation');
 
+// --------------| Verified Donations |----------------------------------------
+Route::get('/registered/verified/donations', 'getVerifiedDonations')->name('registered.verified.donations');
+Route::get('/registered/prev_verified/donations', 'prevVerifiedDonations')->name('registered.prev_verified.donations');
+Route::post('/registered/unverify_a_donation', 'unverifyADonation')->name('registered.unverify_a_donation');
+
+// --------------| Unverified Donations |----------------------------------------
+Route::get('/registered/unverified/donations', 'getUnverifiedDonations')->name('registered.unverified.donations');
+Route::post('/registered/verify_a_donation', 'verifyADonation')->name('registered.verify_a_donation');
+Route::get('/registered/prev_unverified/donations', 'prevUnverifiedDonations')->name('registered.prev_unverified.donations');
+
+// --------------| Unpaid Donations |----------------------------------------
+Route::get('/registered/unpaid/donations', 'getUnpaidDonations')->name('registered.unpaid.donations');
+Route::post('/registered/redeem_a_pledge', 'redeemAPledge')->name('registered.redeem_a_pledge');
+Route::get('/registered/prev_unpaid/donations', 'prevUnpaidDonations')->name('registered.prev_unpaid.donations');
+Route::get('/registered/edit/pledges', 'editPledges')->name('registered.edit.pledges');
+
 });
 
  // Route::post('/save/donor', [DonorController::class, 'saveDonor'])->name('save.donor');

@@ -128,6 +128,16 @@ $pageTitle = 'Unverified Donations';
       <button id="submitBtn{{$unverifiedDonation->id}}" type="submit" class="modal-action waves-effect waves-green btn-large" >Yes, Payment is verified</button>
           <a href="javascript:void(0)" class="btn-large btn-flat modal-close">No, Cancel</a>
         </div>
+      </form>
+
+      <script type="text/javascript"> 
+      // Preloader Script
+document.getElementById("submitBtn{{$unverifiedDonation->id}}").addEventListener("click", function() {
+  var preloader = document.getElementById("preloader{{$unverifiedDonation->id}}");
+  preloader.style.display = "block";
+});
+</script>
+    </div>
 
         <!-- /Donation info ends -->
                 @endforeach
@@ -150,7 +160,7 @@ $pageTitle = 'Unverified Donations';
               </table>
               <div class="divider"></div>
               <div class="row">
-                <div class="mt-2 mr-4 center">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ sumUnverifiedDonations() }}</span></div>
+                <div class="mt-2 mr-4 center">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ sumUnverifiedInsDonations() }}</span></div>
               </div>
             </div>
           </div>

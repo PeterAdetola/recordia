@@ -66,7 +66,7 @@ $route = Route::current()->getName()
    @include('admin.body.footer')
 
     <!-- END: Footer-->
-    <!-- <script src="{{ asset('backend/assets/js/jquery.min.js') }}"></script> -->
+     <script src="{{ asset('backend/assets/js/jquery.min.js') }}"></script> 
 
     <!-- BEGIN VENDOR JS-->
     <script src="{{ asset('backend/assets/js/vendors.min.js') }}"></script>

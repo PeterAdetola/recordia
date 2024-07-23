@@ -70,7 +70,22 @@ $route = Route::current()->getName()
                 <a class="{{ ($route == 'get.registered.records')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('get.registered.records')}}"><i class="material-icons">radio_button_unchecked</i>
                   <span data-i18n="All Records">All Records</span>
                 </a>
-              </li>                
+              </li>
+              <li>
+                <a class="{{ ($route == 'registered.verified.donations')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('registered.verified.donations')}}"><i class="material-icons">radio_button_unchecked</i>
+                  <span data-i18n="Verified Donations">Verified Donations</span>
+                </a>
+              </li> 
+              <li>
+                <a class="{{ ($route == 'registered.unverified.donations')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('registered.unverified.donations')}}"><i class="material-icons">radio_button_unchecked</i>
+                  <span data-i18n="Verified Donations">Unverified Donations</span>
+                </a>
+              </li>              
+              <li>
+                <a class="{{ ($route == 'registered.unpaid.donations')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('registered.unpaid.donations')}}"><i class="material-icons">radio_button_unchecked</i>
+                  <span data-i18n="Pledges">Pledges</span>
+                </a>
+              </li> 
             </ul>
           </div>
         </li>

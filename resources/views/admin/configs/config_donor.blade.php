@@ -47,11 +47,10 @@ $pageTitle = 'Registered Donors';
   <!-- DataTables Row grouping -->
   <div class="row">
     <div class="col s12 m12 l12">
-      <div id="" class="card card card-default scrollspy">
+      <div id="" class="card card-default scrollspy">
         <div class="card-content">
           <div class="row">
             <h4 class="card-title left ml-2">{{ $pageTitle }}</h4>
-            <a href="{{ route('activate.donors') }}"><span class="right chip"><b style="color: maroon;">&nbsp;Edit Donors <i class="material-icons right mt-8" style="font-size: 1.2em;">navigate_next</i></b></span></a>
           </div>
           <div class="row">
             <div class="col s12">
@@ -87,7 +86,7 @@ $pageTitle = 'Registered Donors';
 
                     <td>
                       @if($donor->donationCount() > 0)
-                      <a href="{{ route('donor.donation', $donor->id) }}" class="notification-button btn-floating mb-1 btn-flat waves-effect waves-light grey lighten-2">
+                      <a href="{{ route('donor.donation', $donor->id) }}" class="btn-floating mb-1 btn-flat waves-effect waves-light grey lighten-2">
                         <i class="material-icons blue-text">more_horiz</i>
                       </a>
                       @else
@@ -150,7 +149,6 @@ $pageTitle = 'Registered Donors';
     <script src="{{ asset('backend/assets/vendors/data-tables/js/dataTables.select.min.js') }}"></script>
   @endsection
 @section('scripts')
-  <!-- <script src="{{ asset('backend/assets/js/plugins.js') }}"></script> -->
   <script src="{{ asset('backend/assets/js/scripts/data-tables.js') }}"></script>
 
   <script>

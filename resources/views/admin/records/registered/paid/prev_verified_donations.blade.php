@@ -64,11 +64,11 @@ $pageTitle = 'Verified Donations for the year '. getCurrentYear();
 
                 <tr class="{{ ($verifiedDonation->transaction == 1 )? 'grey lighten-5' : '' }}">
                 <td>
-                  {{ $verifiedDonation->name }}
+                  {{ $verifiedDonation['donor']['title']  }} {{ $verifiedDonation['donor']['name']  }}
                 </td>
                 <td>{{ $verifiedDonation->purpose }}</td>
                 <td>{{ formatDate($verifiedDonation->updated_at) }}</td>
-                <td>{{ $verifiedDonation->phone }}</td>
+                <td>{{ $verifiedDonation['donor']['phone']  }}</td>
                 <td>{{ formatAmount($verifiedDonation->amount) }}</td>
                 </tr>
 
@@ -88,7 +88,7 @@ $pageTitle = 'Verified Donations for the year '. getCurrentYear();
                 <ul>
                   <li class="display-flex justify-content-between">
                     <h6 class="invoice-subtotal-title" style="display:inline-block;">Total</h6>
-                    <h6 class="invoice-subtotal-value">&#8358;{{sumVerifiedInsDonations()}}</h6>
+                    <h6 class="invoice-subtotal-value">&#8358;{{sumVerifiedRegDonations()}}</h6>
                   </li>
                 </ul>
               </div>

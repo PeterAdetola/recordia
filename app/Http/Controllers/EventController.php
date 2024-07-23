@@ -155,9 +155,7 @@ class EventController extends Controller
 
             // Update the selected row's status to active
             Event::where('id', $selectedEventId)->update(['status' => 1]);
-                
-           
-
+        
             $notification = array(
                 'message' => 'Event activated',
                 'eventMessageTitle' => getCurrentEventName().' is activated!',
@@ -167,7 +165,6 @@ class EventController extends Controller
             return redirect()->route('manage.event')->with($notification);
 
             }
-
 
         }
     }

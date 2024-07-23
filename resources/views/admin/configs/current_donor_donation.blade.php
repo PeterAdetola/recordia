@@ -28,7 +28,7 @@ $pageTitle = 'Current Donor\'s Donations';
                 </h5>
                 <ol class="breadcrumbs mb-0">
                   <li class="breadcrumb-item">
-                    <a  href="{{ route('manage.donor') }}">Manage Donors</a>
+                    <a  href="{{ route('manage.donor') }}">Registered Donors</a>
                   </li>
                   <li class="breadcrumb-item">
                     <a  href="{{ route('donor.donation', $donor->id) }}">Donor's Donations</a>

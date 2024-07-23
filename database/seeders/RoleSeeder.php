@@ -49,7 +49,7 @@ class RoleSeeder extends Seeder
         $admin->username = 'Pter';
         $admin->email = 'peter@gmail.com';
         // $user->email_verified_at = '2023-09-05 14:10:43';
-        $admin->password = bcrypt('peter.com');
+        $admin->password = bcrypt('password');
         $admin->save();
         $admin->roles()->attach($admin);
         $admin->permissions()->attach($add_donor);
@@ -59,7 +59,7 @@ class RoleSeeder extends Seeder
         $user->username = 'Eugene';
         $user->email = 'eugene@gmail.com';
         // $user->email_verified_at = '2023-09-05 14:10:43';
-        $user->password = bcrypt('eugene.com');
+        $user->password = bcrypt('password');
         $user->save();
         $user->roles()->attach($userRole);
         $user->permissions()->attach($add_donor);
@@ -69,7 +69,7 @@ class RoleSeeder extends Seeder
         $user->username = 'Felicia';
         $user->email = 'felicia@gmail.com';
         // $user->email_verified_at = '2023-09-05 14:10:43';
-        $user->password = bcrypt('felicia.com');
+        $user->password = bcrypt('password');
         $user->save();
         $user->roles()->attach($userRole);
         $user->permissions()->attach($add_donor);

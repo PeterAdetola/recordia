@@ -206,10 +206,10 @@ if (!function_exists('getUnpaidDonations')) {
  */
 
 // --- Admin ---
-// Get unverified payment total
+// Get instant unverified payment total
 // -----------------------------------------
-if (!function_exists('sumUnverifiedDonations')) {
-    function sumUnverifiedDonations()
+if (!function_exists('sumUnverifiedInsDonations')) {
+    function sumUnverifiedInsDonations()
     {
     $allRecords = App\Models\InstantRecord::orderBy('updated_at', 'DESC')->get();
      $totalUnverified = $allRecords->where('year', '=', getCurrentYear())
@@ -226,14 +226,52 @@ if (!function_exists('sumUnverifiedDonations')) {
     }
 }
 
-// Get verified payment total
+// Get registered unverified payment total
 // -----------------------------------------
-if (!function_exists('sumVerifiedDonations')) {
-    function sumVerifiedDonations()
+if (!function_exists('sumUnverifiedRegDonations')) {
+    function sumUnverifiedRegDonations()
+    {
+    $allRecords = App\Models\RegisteredRecord::orderBy('updated_at', 'DESC')->get();
+     $totalVerified = $allRecords->where('year', '=', getCurrentYear())
+                           ->where('payment_status', '=', 1)
+                           ->where('verification', '=', 0);             
+// Sum Amount
+        $totalVerified = $totalVerified->sum('amount');
+// Format Amount
+        $amt = $totalVerified;
+        $totalVerified = formatAmount($amt);
+     return $totalVerified;
+
+    }
+}
+
+// Get instant verified payment total
+// -----------------------------------------
+if (!function_exists('sumVerifiedInsDonations')) {
+    function sumVerifiedInsDonations()
     {
     $allRecords = App\Models\InstantRecord::orderBy('updated_at', 'DESC')->get();
      $totalVerified = $allRecords->where('year', '=', getCurrentYear())
                            ->where('transaction', '=', 1)
+                           ->where('payment_status', '=', 1)
+                           ->where('verification', '=', 1);             
+// Sum Amount
+        $totalVerified = $totalVerified->sum('amount');
+// Format Amount
+        $amt = $totalVerified;
+        $totalVerified = formatAmount($amt);
+     return $totalVerified;
+
+    }
+}
+
+// Get registered verified payment total
+// -----------------------------------------
+if (!function_exists('sumVerifiedRegDonations')) {
+    function sumVerifiedRegDonations()
+    {
+    $allRecords = App\Models\RegisteredRecord::orderBy('updated_at', 'DESC')->get();
+     $totalVerified = $allRecords->where('year', '=', getCurrentYear())
                            ->where('payment_status', '=', 1)
                            ->where('verification', '=', '1');             
 // Sum Amount
@@ -490,7 +528,7 @@ if (!function_exists('sumAllRegPledges')) {
     function sumAllRegPledges()
     {
     $allRegRecords = App\Models\RegisteredRecord::all();
-     $allRegPledges = $allRecords->where('year', '=', getCurrentYear())
+     $allRegPledges = $allRegRecords->where('year', '=', getCurrentYear())
                            ->where('payment_status', '=', 0)
                            ->where('verification', '=', 0);
 // Sum Amount

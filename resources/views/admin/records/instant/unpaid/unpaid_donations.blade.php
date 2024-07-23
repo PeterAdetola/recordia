@@ -100,7 +100,7 @@ $pageTitle = 'Unpaid Donations';
                     @endif
 
                     <td>{{ $unpaidDonation->phone }}</td>
-                    <td>{{ ($unpaidDonation->event == '')? 'No event': $instantRecord->event }}</td>
+                    <td>{{ ($unpaidDonation->event == '')? 'No event': $unpaidDonation->event }}</td>
                     <td>{{ formatDate($unpaidDonation->updated_at) }}</td>
                     <td>
                       <a class="modal-trigger" href="#{{ $unpaidDonation->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a>

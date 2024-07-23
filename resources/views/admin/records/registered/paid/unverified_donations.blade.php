@@ -7,12 +7,12 @@
   @endsection
   @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/data-tables.css') }}">
-    @include('admin.records.instant.modal_style')
+    {{-- @include('admin.records.registered.modal_style') --}}
 
   @endsection
 
 @php
-$pageTitle = 'Verified Donations';
+$pageTitle = 'Unverified Donations';
 @endphp
 
 
@@ -33,7 +33,7 @@ $pageTitle = 'Verified Donations';
                   </li>
                 </ol>
               </div>
-              <div class="col s2 m6 l6"><a class=" mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right" href="{{  route('instant.prev_verified.donations')}}" ><i class="material-icons hide-on-med-and-up">print</i><i class="material-icons right">print</i></a>
+              <div class="col s2 m6 l6"><a class=" mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right" href="{{  route('registered.prev_unverified.donations') }}" ><i class="material-icons hide-on-med-and-up">print</i><i class="material-icons right">print</i></a>
               </div>
             </div>
           </div>
@@ -49,7 +49,7 @@ $pageTitle = 'Verified Donations';
     <div class="col s12 m12 l12">
       <div id="" class="card card card-default scrollspy">
         <div class="card-content">
-          <h4 class="card-title">Verified Donations</h4>
+          <h4 class="card-title">Unverified Donations</h4>
           <div class="row">
             <div class="col s12">
               <p>The data in this table contains the records of confirmed donations, not for registered donors.</p>
@@ -72,33 +72,33 @@ $pageTitle = 'Verified Donations';
                 </thead>
 
                 <tbody>
-                @foreach ($verifiedDonations as $verifiedDonation)  
+                @foreach ($unverifiedDonations as $unverifiedDonation)  
                   <tr>
-                    <td>{{ $verifiedDonation->name }}</td>
-                    <td  style="width: 10em;">{{ $verifiedDonation->purpose }}</td>
-                    <td>{{ formatAmount($verifiedDonation->amount) }}</td>
+                    <td>{{ $unverifiedDonation['donor']['title']  }} {{ $unverifiedDonation['donor']['name']  }}</td>
+                    <td  style="width: 10em;">{{ $unverifiedDonation->purpose }}</td>
+                    <td>{{ formatAmount($unverifiedDonation->amount) }}</td>
 
-                    <td>{{ $verifiedDonation['recorder']['name'] }}</td>
+                    <td>{{ $unverifiedDonation['recorder']['name'] }}</td>
 
-                    @if($verifiedDonation->payment_status == 1)
+                    @if($unverifiedDonation->payment_status == 1)
                     <td><span class="chip green-text">Paid</span></td>
-                    @elseif($verifiedDonation->payment_status == 0 && $verifiedDonation->transaction == 0)
+                    @elseif($unverifiedDonation->payment_status == 0 && $unverifiedDonation->transaction == 0)
                     <td><span class="chip red-text">Paid</span></td>
                     @else
                     <td><span class="chip red-text">Unpaid</span></td>
                     @endif
 
-                    @if($verifiedDonation->verification == 1)
+                    @if($unverifiedDonation->verification == 1)
                       <td><i class="material-icons green-text">check_box</i></td>
                     @else
                       <td><i class="material-icons grey-text">indeterminate_check_box</i></td>
                     @endif
 
-                    <td>{{ $verifiedDonation->phone }}</td>
-                    <td>{{ ($verifiedDonation->event == '')? 'No event': $verifiedDonation->event }}</td>
-                    <td>{{ formatDate($verifiedDonation->updated_at) }}</td>
+                    <td>{{ $unverifiedDonation['donor']['phone'] }}</td>
+                    <td>{{ ($unverifiedDonation->event == '')? 'No event': $unverifiedDonation['event']['name'] }}</td>
+                    <td>{{ formatDate($unverifiedDonation->updated_at) }}</td>
                     <td>
-                      <a class="modal-trigger" href="#{{ $verifiedDonation->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a>
+                      <a class="modal-trigger" href="#{{ $unverifiedDonation->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a>
                     </td>
                   </tr>
 
@@ -108,7 +108,7 @@ $pageTitle = 'Verified Donations';
     
         <!-- Table Modal here -->
 
-    @include('admin.records.instant.paid.edit-verified-donation-form') 
+    @include('admin.records.registered.paid.edit-unverified-donation-form')
 
         <!-- /Donation info ends -->
                 @endforeach
@@ -131,7 +131,7 @@ $pageTitle = 'Verified Donations';
               </table>
               <div class="divider"></div>
               <div class="row">
-                <div class="mt-2 mr-4 center">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ sumVerifiedInsDonations() }}</span></div>
+                <div class="mt-2 mr-4 center">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ sumUnverifiedRegDonations() }}</span></div>
               </div>
             </div>
           </div>

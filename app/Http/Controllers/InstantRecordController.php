@@ -343,9 +343,7 @@ class InstantRecordController extends Controller
 
         $expenses = InstantRecord::orderBy('updated_at', 'DESC')->get()
                                         ->where('year', '=', getCurrentYear())
-                                        ->where('transaction', '=', 0)
-                                        ->where('payment_status', '=', 0)
-                                        ->where('verification', '=', 0);
+                                        ->where('transaction', '=', 0);
 
         return view('admin.records.instant.expenses.prev_expenses', compact('expenses'));
     }

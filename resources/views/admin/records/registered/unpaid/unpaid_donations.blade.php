@@ -7,12 +7,12 @@
   @endsection
   @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/data-tables.css') }}">
-    @include('admin.records.instant.modal_style')
+    {{--@include('admin.records.registered.modal_style')--}}
 
   @endsection
 
 @php
-$pageTitle = 'Verified Donations';
+$pageTitle = 'Unpaid Donations';
 @endphp
 
 
@@ -33,7 +33,12 @@ $pageTitle = 'Verified Donations';
                   </li>
                 </ol>
               </div>
-              <div class="col s2 m6 l6"><a class=" mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right" href="{{  route('instant.prev_verified.donations')}}" ><i class="material-icons hide-on-med-and-up">print</i><i class="material-icons right">print</i></a>
+              <div class="col s2 m6 l6"><a class="btn dropdown-settings waves-effect waves-light breadcrumbs-btn right" href="#!" data-target="dropdown1"><i class="material-icons hide-on-med-and-up">settings</i><i class="material-icons right">arrow_drop_down</i></a>
+              <ul class="dropdown-content" id="dropdown1" tabindex="0">
+                <li tabindex="0"><a class="grey-text text-darken-2" href="{{ route('registered.edit.pledges') }}">Redeem Pledges</a></li>
+                <li class="divider" tabindex="-1"></li>
+                <li tabindex="0"><a class="grey-text text-darken-2" href="{{  route('registered.prev_unpaid.donations')}}">Print</a></li>
+              </ul>
               </div>
             </div>
           </div>
@@ -49,10 +54,10 @@ $pageTitle = 'Verified Donations';
     <div class="col s12 m12 l12">
       <div id="" class="card card card-default scrollspy">
         <div class="card-content">
-          <h4 class="card-title">Verified Donations</h4>
+          <h4 class="card-title">Unpaid Donations</h4>
           <div class="row">
             <div class="col s12">
-              <p>The data in this table contains the records of confirmed donations, not for registered donors.</p>
+              <p>The data in this table contains the records of pledges so far, for registered donors.</p>
             </div>
             <div class="col s12">
               <table id="data-table-row-grouping" class="display">
@@ -67,48 +72,78 @@ $pageTitle = 'Verified Donations';
                     <th>Phone</th>
                     <th>Event</th>
                     <th>Date</th>
-                    <th>Edit</th>
+                    <th>Redeem</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                @foreach ($verifiedDonations as $verifiedDonation)  
+                @foreach ($unpaidDonations as $unpaidDonation)  
                   <tr>
-                    <td>{{ $verifiedDonation->name }}</td>
-                    <td  style="width: 10em;">{{ $verifiedDonation->purpose }}</td>
-                    <td>{{ formatAmount($verifiedDonation->amount) }}</td>
+                    <td>{{ $unpaidDonation['donor']['title'] }} {{ $unpaidDonation['donor']['name'] }}</td>
+                    <td  style="width: 10em;">{{ $unpaidDonation->purpose }}</td>
+                    <td>{{ formatAmount($unpaidDonation->amount) }}</td>
+                    
+                    <td>{{ $unpaidDonation['recorder']['name'] }}</td>
 
-                    <td>{{ $verifiedDonation['recorder']['name'] }}</td>
-
-                    @if($verifiedDonation->payment_status == 1)
-                    <td><span class="chip green-text">Paid</span></td>
-                    @elseif($verifiedDonation->payment_status == 0 && $verifiedDonation->transaction == 0)
-                    <td><span class="chip red-text">Paid</span></td>
+                    @if($unpaidDonation->payment_status == 1)
+                    <td><span class="chip green-text">paid</span></td>
                     @else
-                    <td><span class="chip red-text">Unpaid</span></td>
+                    <td><span class="chip red-text">unpaid</span></td>
                     @endif
 
-                    @if($verifiedDonation->verification == 1)
+                    @if($unpaidDonation->verification == 1)
                       <td><i class="material-icons green-text">check_box</i></td>
                     @else
                       <td><i class="material-icons grey-text">indeterminate_check_box</i></td>
                     @endif
 
-                    <td>{{ $verifiedDonation->phone }}</td>
-                    <td>{{ ($verifiedDonation->event == '')? 'No event': $verifiedDonation->event }}</td>
-                    <td>{{ formatDate($verifiedDonation->updated_at) }}</td>
+                    <td>{{ $unpaidDonation['donor']['phone'] }}</td>
+                    <td>{{ ($unpaidDonation->event == '')? 'No event': $unpaidDonation['event']['name'] }}</td>
+                    <td>{{ formatDate($unpaidDonation->updated_at) }}</td>
                     <td>
-                      <a class="modal-trigger" href="#{{ $verifiedDonation->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a>
+                      <a class="modal-trigger" href="#{{ $unpaidDonation->id }}" ><i class="material-icons red-text small-ico-bg">edit</i></a>
                     </td>
                   </tr>
 
 
 <!-- Modal Structure -->
 
-    
-        <!-- Table Modal here -->
+    <div id="{{ $unpaidDonation->id }}" class="modal border-radius-10" style="padding:2em;">
 
-    @include('admin.records.instant.paid.edit-verified-donation-form') 
+<form id="redeemPledge" method="POST" action="{{ route('registered.redeem_a_pledge') }}">
+      @csrf
+      <input type="hidden" name="id" value="{{ $unpaidDonation->id }}">
+      <input type="hidden" name="payment_status" value="1">
+        <div class="modal-content">
+          <h6 class="card-title">
+            You are about to confirm that the pledge of 
+            {{ $unpaidDonation['donor']['title'] }} {{ $unpaidDonation['donor']['name'] }} has been paid
+          </h6>
+
+        <p>Do you want to proceed ?</p>
+        </div>
+    <div class="progress collection">
+      <div id="preloader{{$unpaidDonation->id}}" class="indeterminate"  style="display:none; 
+      border:2px #ebebeb solid"></div>
+    </div>
+
+        <div class="modal-footer">
+      <button id="submitBtn{{$unpaidDonation->id}}" type="submit" class="modal-action waves-effect waves-green btn-large" >Yes, redeem pledge</button>
+          <a href="javascript:void(0)" class="btn-large btn-flat modal-close">No, Cancel</a>
+        </div>
+
+
+
+<script type="text/javascript"> 
+      // Preloader Script
+document.getElementById("submitBtn{{$unpaidDonation->id}}").addEventListener("click", function() {
+  var preloader = document.getElementById("preloader{{$unpaidDonation->id}}");
+  preloader.style.display = "block";
+});
+</script>
+    </div>
+</form>
+ 
 
         <!-- /Donation info ends -->
                 @endforeach
@@ -125,14 +160,15 @@ $pageTitle = 'Verified Donations';
                     <th>Phone</th>
                     <th>Event</th>
                     <th>Date</th>
-                    <th>Edit</th>
+                    <th>Redeem</th>
                   </tr>
                 </tfoot>
               </table>
               <div class="divider"></div>
               <div class="row">
-                <div class="mt-2 mr-4 center">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ sumVerifiedInsDonations() }}</span></div>
+                <div class="mt-2 mr-4 center">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ sumAllInstantPledges() }}</span></div>
               </div>
+            </div>
             </div>
           </div>
         </div>
