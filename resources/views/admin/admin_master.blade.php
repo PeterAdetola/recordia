@@ -48,11 +48,11 @@ $route = Route::current()->getName()
   <body class="vertical-layout vertical-menu-collapsible page-header-dark vertical-modern-menu preload-transitions 2-columns {{ ($route == 'dashboard')? 'menu-collapse' : '' }}  " data-open="click" data-menu="vertical-modern-menu" data-col="2-columns">
 
 
-    @include('admin.body.header')
+    @include('admin.component.header')
 
 
 
-    @include('admin.body.sidebar')
+    @include('admin.component.sidebar')
 
     <!-- BEGIN: Page Main-->
     
@@ -61,9 +61,9 @@ $route = Route::current()->getName()
 
     
     <!-- BEGIN: Footer-->
-    @include('admin.body.rightbar')
+    @include('admin.component.rightbar')
 
-   @include('admin.body.footer')
+   @include('admin.component.footer')
 
     <!-- END: Footer-->
      <script src="{{ asset('backend/assets/js/jquery.min.js') }}"></script> 

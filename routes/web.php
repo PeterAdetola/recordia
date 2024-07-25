@@ -7,6 +7,9 @@ use App\Http\Controllers\RegisteredRecordController;
 use App\Http\Controllers\YearController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\DonorController;
+use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 
 Route::get('/', function () {
     return view('index');
@@ -37,6 +41,31 @@ Route::middleware('auth')->group(function () {
 });
 
 
+// --------------| Permission Routes |----------------------------------------
+Route::controller(PermissionController::class)->group(function () {
+    Route::get('/manage/permission', 'managePermission')->name('manage.permission');
+});
+
+Route::resource('permission', PermissionController::class);
+Route::post('permission/{id}/delete', [PermissionController::class, 'destroy']);
+
+// --------------| Role Routes |----------------------------------------
+Route::controller(RoleController::class)->group(function () {
+    Route::get('/manage/role', 'manageRole')->name('manage.role');
+});
+
+Route::resource('role', RoleController::class);
+Route::post('role/{id}/delete', [RoleController::class, 'destroy']);
+
+// --------------| Module Routes |----------------------------------------
+Route::controller(ModuleController::class)->group(function () 
+{
+    Route::post('/save/module', 'SaveModule')->name('save.module');
+    Route::get('/view/module', 'ViewModules')->name('view.module');
+    Route::post('/update/module', 'UpdateModule')->name('update.module');
+    Route::post('/delete/module/{id}', 'DeleteModule')->name('delete.module');
+});
+
 /*
 |--------------------------------------------------------------------------
 | Configuration Page
@@ -44,7 +73,8 @@ Route::middleware('auth')->group(function () {
 |
 */
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+// Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/manage/year', [YearController::class, 'manageYear'])->name('manage.year');
 
 // --------------| Manage Financial year |----------------------------------------

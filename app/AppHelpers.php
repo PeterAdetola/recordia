@@ -53,6 +53,26 @@ if (!function_exists('getCurrentEventName')) {
     }
 }
 
+// Get Modules 
+if (!function_exists('getModules')) {
+    function getModules()
+    {
+     $modules = App\Models\Module::all()->sortBy('order');
+     
+     return $modules; 
+    }
+}
+
+// // Get Permission 
+// if (!function_exists('getModules')) {
+//     function getModules()
+//     {
+//      $modules = App\Models\Module::all()->sortBy('order');
+     
+//      return $modules; 
+//     }
+// }
+
 // Get donor donation event
 if (!function_exists('getDonorDonationEvent')) {
     function getDonorDonationEvent($id)

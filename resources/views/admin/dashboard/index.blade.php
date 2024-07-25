@@ -79,7 +79,7 @@
     <!-- Add Modal Here -->
     @include('admin.dashboard.modals.add-donor-form')
 
-      @role('admin')
+      {{--@role('admin')--}}
     <a class="modal-trigger" href="#add-expense-modal">
       <div class="col s12 m6 l4 card-width">
         <div class="card border-radius-6">
@@ -90,7 +90,7 @@
         </div>
       </div>
     </a>
-      @endrole
+      {{--@endrole--}}
 
     <!-- Add Modal Here -->
     @include('admin.dashboard.modals.add-expense-form')
