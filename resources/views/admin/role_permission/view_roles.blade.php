@@ -68,7 +68,8 @@ $pageTitle = 'View Roles';
     @foreach($roles as $role) 
           <tr>
              <td style="padding-left: 2em">{{ $role->name }}</td>
-             <td class="right-align"><a href="#edit_role-modal{{ $role->id }}" class="modal-trigger" ><span class="chip pink lighten-5 pink-text text-accent-2">Edit</span></a></td>
+             <td class="right-align"><a href="{{ route('assign.permission', $role->id) }}" class="modal-trigger" ><span class="chip blue lighten-3 white-text text-accent-2">Manage Permission</span></a></td>
+             <td class="right-align"><a href="#edit_role-modal{{ $role->id }}" class="modal-trigger" ><i class="material-icons  small-ico-bg blue-text">edit</i></a></td>
              <td class="center-align"><a href="#delete_role-modal{{ $role->id }}" class="modal-trigger"><i class="material-icons  small-ico-bg red-text">delete</i></a></td>
              <input type="hidden" name="order[]" value="{{ $role->id }}">
           </tr>

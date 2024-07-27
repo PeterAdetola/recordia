@@ -8,7 +8,7 @@ use App\Models\Module;
 
 class PermissionController extends Controller
 {
-    public function managePermission()
+    public function ViewPermissions()
     {
        
         $modules = Module::get();
@@ -19,19 +19,25 @@ class PermissionController extends Controller
     /**
      * Store Permission.
      */
-    public function store(Request $request)
+public function store(Request $request)
     {
-        $request->validate([
-            'name' => [
-                'required',
-                'string',
-                'unique:permissions,name'
-            ]
-        ]);
+        list($moduleId, $moduleName) = explode('-', $request->module_id);
+        $name = $request->name1.' '.$moduleName;
 
+        // $request->validate([
+        //     'name' => 'required|unique:permissions,name',
+        // ]);
+     if (Permission::where('name', $name)->exists()) {
+
+        $notification = array(
+            'message' => 'Permission already exists',
+        );
+
+        return redirect()->back()->with($notification);
+     }
         Permission::create([
-            'name' => $request->name,
-            'module_id' => $request->module_id,
+            'name' => $name,
+            'module_id' => $moduleId,
         ]);
 
         $notification = array(

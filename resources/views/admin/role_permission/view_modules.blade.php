@@ -38,6 +38,8 @@ $pageTitle = 'View Modules';
                 <ol class="breadcrumbs mb-0">
                   <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Admin Home</a>
                   </li>
+                  <li class="breadcrumb-item"><a href="{{ route('view.permissions') }}">View Permissions</a>
+                  </li>
                   <li class="breadcrumb-item active">{{ $pageTitle }}
                   </li>
                 </ol>
@@ -54,9 +56,8 @@ $pageTitle = 'View Modules';
 <div class="row"> 
   <div class="col s12 m12 l8 mb-10">    
          <div class="card subscriber-list-card">
-            <div class="card-content pb-1">
+            <div class="card-content pb-10">
                <h4 class="card-title mb-0">Modules</h4>
-            </div>
             <table class="subscription-table responsive-table highlight">
                <thead>
                   <tr>
@@ -85,6 +86,7 @@ $pageTitle = 'View Modules';
         @endif
                </tbody>
             </table>
+            </div>
          </div>
 
 

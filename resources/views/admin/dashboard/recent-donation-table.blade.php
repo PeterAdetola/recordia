@@ -13,6 +13,7 @@
             </div>
             <div class="col s12">
               <!-- <table id="data-table-row-grouping" class="display"> -->
+                <div class="divider mt-1"></div>
               <table id="multi-select" class="display">
                 <thead>
                   <tr>

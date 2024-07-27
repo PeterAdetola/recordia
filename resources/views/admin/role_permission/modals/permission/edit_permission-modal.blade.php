@@ -13,7 +13,20 @@
             @csrf
             @method('PUT')
       <div class="row" style="padding-left: 2em; padding-right: 2em;">
-        <div class="input-field">
+        <div class="input-field col s12 m6">
+  <select name="name1" class="select2 browser-default">
+    @php
+      $data = explode(' ',$permission->name);
+      $action = $data[0];
+    @endphp
+                  <option value="{{ $action }}">{{ $action }}</option>
+                    <option value="create">create</option>
+                    <option value="view">view</option>
+                    <option value="edit">edit</option>
+                    <option value="delete">delete</option>
+  </select>
+</div>
+        <div class="input-field col s12 m6">
   <select name="module_id" class="select2 browser-default">
     @php  
     $modules = getModules();
@@ -21,18 +34,14 @@
   @if (count($modules) > 0)
                   <option value="{{ $permission->module_id }}">{{ $permission->module->name }}</option>
   @foreach($modules as $module) 
-                    <option value="{{ $module->id }}">{{ $module->name }}</option>
+                    <option value="{{ $module->id }}-{{ $module->name }}">{{ $module->name }}</option>
   @endforeach
   @else
                     <option value="">No entry</option>
   @endif
   </select>
 </div>
-        <div class="input-field col s12">
-              <input id="module" name="name" type="text" value="{{ $permission->name }}" class="validate"  required />
-              <label for="heading">Permission</label>
-        </div>
-      </div>
+      </div><br/><br/><br/><br/>
 
       <div class="divider mb-2"></div>
       <div class="row">

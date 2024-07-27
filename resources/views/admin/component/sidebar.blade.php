@@ -139,14 +139,14 @@ $route = Route::current()->getName()
               </li>
 
               <li>
-                <a class="{{ ($route == 'manage.permission')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('manage.permission') }}"><i class="material-icons">radio_button_unchecked</i>
-                  <span data-i18n="Manage Event">Permissions</span>
+                <a class="{{ ($route == 'view.permissions')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('view.permissions') }}"><i class="material-icons">radio_button_unchecked</i>
+                  <span data-i18n="Permissions">Permissions</span>
                 </a>
               </li> 
 
               <li>
-                <a class="{{ ($route == 'manage.role')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('manage.role')}}"><i class="material-icons">radio_button_unchecked</i>
-                  <span data-i18n="Manage Event">Roles</span>
+                <a class="{{ ($route == 'view.roles')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('view.roles')}}"><i class="material-icons">radio_button_unchecked</i>
+                  <span data-i18n="Roles">Roles</span>
                 </a>
               </li>            
             </ul>

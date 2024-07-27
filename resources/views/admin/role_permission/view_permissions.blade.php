@@ -46,7 +46,7 @@ $pageTitle = 'View Permissions';
               <ul class="dropdown-content" id="dropdown1" tabindex="0">
                 <li tabindex="0"><a class="modal-trigger grey-text text-darken-2" href="#add_module-modal">Add Module</a></li>
                 <li class="divider" tabindex="-1"></li>
-                <li tabindex="0"><a class="grey-text text-darken-2" href="{{  route('view.module')}}">View Modules</a></li>
+                <li tabindex="0"><a class="grey-text text-darken-2" href="{{  route('view.modules')}}">View Modules</a></li>
               </ul>
               </div>
 

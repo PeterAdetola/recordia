@@ -12,27 +12,32 @@
     <form method="POST" action="{{ url('permission') }}">
             @csrf
       <div class="row" style="padding-left: 2em; padding-right: 2em;">
-        <div class="input-field">
+        <div class="input-field col s12 m6">
+  <select name="name1" class="select2 browser-default">
+                  <option value="">Choose Action</option>
+                    <option value="create">create</option>
+                    <option value="view">view</option>
+                    <option value="edit">edit</option>
+                    <option value="delete">delete</option>
+  </select>
+</div>
+        <div class="input-field col s12 m6">
   <select name="module_id" class="select2 browser-default">
     @php  
     $modules = getModules();
     @endphp
   @if (count($modules) > 0)
-                  <option value="">Choose Category</option>
+                  <option value="">Select Module</option>
   @foreach($modules as $module) 
-                    <option value="{{ $module->id }}">{{ $module->name }}</option>
+                    <option value="{{ $module->id }}-{{ $module->name }}">{{ $module->name }}</option>
   @endforeach
   @else
                     <option value="">No entry</option>
   @endif
   </select>
 </div>
-        <div class="input-field col s12">
-              <input id="module" name="name" type="text" class="validate"  required />
-              <label for="heading">Permission</label>
-        </div>
-      </div>
-
+      </div><br/><br/><br/><br/>
+<input type="hidden" id="full_name" name="name"/>
       <div class="divider mb-2"></div>
       <div class="row">
         <button  id="addPermissionBtn" type="submit" class="btn-large right">Save</button>
@@ -46,5 +51,13 @@
       var preloader = document.getElementById("add_permission-preloader");
       preloader.style.display = "block";
     });  
+
+    $(document).ready(function() {
+        $('form').submit(function() {
+            let name1 = $('input[name="name1"]').val();
+            let name2 = $('input[name="name2"]').val();
+            $('#full_name').val(name1 + ' ' + name2);
+        });
+    });
 </script>
 <!-- /End Modal -->

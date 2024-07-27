@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
 
 // --------------| Permission Routes |----------------------------------------
 Route::controller(PermissionController::class)->group(function () {
-    Route::get('/manage/permission', 'managePermission')->name('manage.permission');
+    Route::get('/view/permissions', 'ViewPermissions')->name('view.permissions');
 });
 
 Route::resource('permission', PermissionController::class);
@@ -51,17 +51,20 @@ Route::post('permission/{id}/delete', [PermissionController::class, 'destroy']);
 
 // --------------| Role Routes |----------------------------------------
 Route::controller(RoleController::class)->group(function () {
-    Route::get('/manage/role', 'manageRole')->name('manage.role');
+    Route::get('/view/roles', 'ViewRoles')->name('view.roles');
+    Route::get('/assign/permission/{id}', 'AssignPermission')->name('assign.permission');
 });
 
 Route::resource('role', RoleController::class);
 Route::post('role/{id}/delete', [RoleController::class, 'destroy']);
+// Route::post('role/{id}/update_permission', [RoleController::class, 'UpdatePermission']);
+Route::put('/role/{id}/update_permission', [RoleController::class, 'UpdatePermission'])->name('role.update_permission');
 
 // --------------| Module Routes |----------------------------------------
 Route::controller(ModuleController::class)->group(function () 
 {
     Route::post('/save/module', 'SaveModule')->name('save.module');
-    Route::get('/view/module', 'ViewModules')->name('view.module');
+    Route::get('/view/modules', 'ViewModules')->name('view.modules');
     Route::post('/update/module', 'UpdateModule')->name('update.module');
     Route::post('/delete/module/{id}', 'DeleteModule')->name('delete.module');
 });
