@@ -6,6 +6,22 @@
   @endsection
   @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/data-tables.css') }}">
+<style>
+    /* Add margin for footer address */
+@media (min-width: 992px) {
+  .description {
+    margin-top: -1.5em;
+  }
+}
+@media (max-width: 767px) {
+  .description {
+    margin-top: 1.5em;
+  }
+  .main-text{
+    font-size: 0.8em;
+  }
+}
+</style>
   @endsection
  @section('admin')
     <!-- BEGIN: Page Main-->
@@ -15,10 +31,10 @@
         <div class="breadcrumbs-dark pb-0 pt-4" id="breadcrumbs-wrapper">
           <!-- Search for small screen-->
           <div class="container">
-            <div class="row" style="margin-top: -1.5em;">
-              <div class="col s10 m6 l6">
-                <h5 class="breadcrumbs-title mt-0 mb-0"><span>
-                Financial overview/activities for the year {{ getCurrentYear() }}</span></h5>
+            <div class="row">
+              <div class="col s10 m6 l6 description">
+                <h5 class="breadcrumbs-title mt-0 mb-0">
+                  <span class="main-text">Financial overview/activities for the year {{ getCurrentYear() }}</span></h5>
                
                 <ol class="breadcrumbs mb-0">
                   <li class="breadcrumb-item">
@@ -48,7 +64,8 @@
     <div class="row">
 
       <a class="modal-trigger" href="#add-donation-modal">
-      <div class="col s12 m6 l4 card-width">
+      <!-- <div class="col s12 m6 l4 card-width"> -->
+      <div class="col s4 m4 l4 card-width">
         <div class="card border-radius-6">
           <div class="card-content center-align">
             <i class="material-icons green-text small-ico-bg mb-5">add_circle</i>
@@ -66,7 +83,7 @@
     @endif
 
       <a class="modal-trigger" href="#add-donor-modal">
-      <div class="col s12 m6 l4 card-width">
+      <div class="col s4 m4 l4 card-width">
         <div class="card border-radius-6">
           <div class="card-content center-align">
             <i class="material-icons blue-text small-ico-bg mb-5">person_add</i>
@@ -81,7 +98,7 @@
 
       {{--@role('admin')--}}
     <a class="modal-trigger" href="#add-expense-modal">
-      <div class="col s12 m6 l4 card-width">
+      <div class="col s4 m4 l4 card-width">
         <div class="card border-radius-6">
           <div class="card-content center-align">
             <i class="material-icons red-text small-ico-bg mb-5">add_circle</i>

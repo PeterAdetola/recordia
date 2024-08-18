@@ -11,8 +11,9 @@ class PermissionController extends Controller
     public function ViewPermissions()
     {
        
-        $modules = Module::get();
-        $permissions = Permission::with('module')->get();
+        // $modules = Module::get();
+        $modules = Module::whereHas('permissions')->with('permissions')->get();
+        $permissions = Permission::get();
         return view('admin.role_permission.view_permissions', compact('permissions', 'modules'));
     }
 
@@ -21,12 +22,12 @@ class PermissionController extends Controller
      */
 public function store(Request $request)
     {
-        list($moduleId, $moduleName) = explode('-', $request->module_id);
-        $name = $request->name1.' '.$moduleName;
 
-        // $request->validate([
-        //     'name' => 'required|unique:permissions,name',
-        // ]);
+        // dd($request->all());
+        // exit();
+        list($moduleId, $moduleName) = explode('-', $request->module_id);
+        $name = $request->name.' '.$moduleName;
+
      if (Permission::where('name', $name)->exists()) {
 
         $notification = array(
@@ -53,17 +54,25 @@ public function store(Request $request)
      */
     public function update(Request $request, Permission $permission)
     {
-        $request->validate([
-            'name' => [
-                'required',
-                'string',
-                'unique:permissions,name,'.$permission->id
-            ]
-        ]);
+
+        // dd($request->all());
+        // exit();
+        list($moduleId, $moduleName) = explode('-', $request->module_id);
+        $name = $request->name.' '.$moduleName;
+
+
+     if (Permission::where('name', $name)->exists()) {
+
+        $notification = array(
+            'message' => 'Permission already exists',
+        );
+
+        return redirect()->back()->with($notification);
+     }
 
         $permission->update([
-            'name' => $request->name,
-            'module_id' => $request->module_id,
+            'name' => $name,
+            'module_id' => $moduleId,
         ]);
 
         $notification = array(

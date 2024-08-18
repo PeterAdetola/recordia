@@ -71,17 +71,25 @@ $pageTitle = 'View Permissions';
                </thead>
                <tbody>
           
-  @if (count($permissions) > 0)
-    @foreach($permissions as $permission) 
+  @if (count($modules) > 0)
+    @foreach($modules as $module) 
           <tr>
-             <td style="padding-left: 2em">{{ $permission->name }}</td>
-             <td class="left-align">{{ $permission->module->name }}</td>
-             <td class="right-align"><a href="#edit_permission-modal{{ $permission->id }}" class="modal-trigger" ><span class="chip pink lighten-5 pink-text text-accent-2">Edit</span></a></td>
-             <td class="center-align"><a href="#delete_permission-modal{{ $permission->id }}" class="modal-trigger"><i class="material-icons  small-ico-bg red-text">delete</i></a></td>
-             <input type="hidden" name="order[]" value="{{ $permission->id }}">
-          </tr>
+             <td style="padding-left: 2em"><strong>{{ ucfirst($module->name) }}</strong></td>
+             <td class="left-align">
+              <span class="collection" style="padding: 1em; border-radius: 50px;">
+              @foreach ($module->permissions as $permission)
+               <a href="#edit_permission-modal{{ $permission->id }}" class="modal-trigger" ><span class="chip gradient-45deg-indigo-purple lighten-2 white-text text-accent-2">{{ $permission->name; }}
+             <input type="hidden" name="order[]" value="{{ $permission->id }}"></span></a>
+
+              
       @include('admin.role_permission.modals.permission.edit_permission-modal')
       @include('admin.role_permission.modals.permission.delete_permission-modal')
+              @endforeach
+            </span>
+             </td>
+            <!--  <td class="right-align"><a href="#edit_permission-modal{{ $permission->id }}" class="modal-trigger" ><span class="chip pink lighten-5 pink-text text-accent-2">Edit</span></a></td>
+             <td class="center-align"><a href="#delete_permission-modal{{ $permission->id }}" class="modal-trigger"><i class="material-icons  small-ico-bg red-text">delete</i></a></td> -->
+          </tr>
     @endforeach
         @else
           <tr>

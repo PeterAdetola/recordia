@@ -120,7 +120,7 @@ class RoleController extends Controller
         $role->syncPermissions($request->permission);
 
         $notification = array(
-            'message' => 'Permission added to role',
+            'message' => 'Permission Updated',
         );
 
         return redirect()->back()->with($notification);

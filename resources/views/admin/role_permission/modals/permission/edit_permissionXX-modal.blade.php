@@ -8,12 +8,12 @@
         <div id="edit_permission-modal{{ $permission->id }}-preloader" class="indeterminate"  style="display:none; 
         border:2px #ebebeb solid"></div>
       </div>
- <form method="POST" action="{{ url('permission/'.$permission->id) }}">
+  <form method="POST" action="{{ url('permission/'.$permission->id) }}">
             @csrf
             @method('PUT')
       <div class="row" style="padding-left: 2em; padding-right: 2em;">
         <div class="input-field col s12 m6">
-  <select name="name" class="select2 browser-default">
+  <select name="name1" class="select2 browser-default">
     @php
       $data = explode(' ',$permission->name);
       $action = $data[0];
@@ -31,16 +31,16 @@
     $modules = getModules();
     @endphp
   @if (count($modules) > 0)
-              <option value="{{ $permission->module_id }}-{{ $permission->module->name }}">{{ $permission->module->name }}</option>
+                  <option value="{{ $permission->module_id }}">{{ $permission->module->name }}</option>
   @foreach($modules as $module) 
-              <option value="{{ $module->id }}-{{ $module->name }}">{{ $module->name }}</option>
+                    <option value="{{ $module->id }}-{{ $module->name }}">{{ $module->name }}</option>
   @endforeach
   @else
-              <option value="">No entry</option>
+                    <option value="">No entry</option>
   @endif
   </select>
 </div>
-      </div><br/><br/><br/><br/>
+      </div><br/><br/><br/>
 
       <div class="divider mb-2"></div>
       <div class="row">
@@ -51,10 +51,7 @@
   </div>
 </div>
 
-
-
 <script>
-
     document.getElementById("addPermissionBtn{{ $permission->id }}").addEventListener("click", function() {
       var preloader = document.getElementById("edit_permission-modal{{ $permission->id }}-preloader");
       preloader.style.display = "block";

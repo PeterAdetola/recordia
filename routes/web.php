@@ -47,7 +47,7 @@ Route::controller(PermissionController::class)->group(function () {
 });
 
 Route::resource('permission', PermissionController::class);
-Route::post('permission/{id}/delete', [PermissionController::class, 'destroy']);
+Route::get('permission/{id}/delete', [PermissionController::class, 'destroy']);
 
 // --------------| Role Routes |----------------------------------------
 Route::controller(RoleController::class)->group(function () {

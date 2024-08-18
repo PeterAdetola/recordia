@@ -13,7 +13,7 @@
             @csrf
       <div class="row" style="padding-left: 2em; padding-right: 2em;">
         <div class="input-field col s12 m6">
-  <select name="name1" class="select2 browser-default">
+  <select name="name" class="select2 browser-default">
                   <option value="">Choose Action</option>
                     <option value="create">create</option>
                     <option value="view">view</option>
@@ -37,7 +37,6 @@
   </select>
 </div>
       </div><br/><br/><br/><br/>
-<input type="hidden" id="full_name" name="name"/>
       <div class="divider mb-2"></div>
       <div class="row">
         <button  id="addPermissionBtn" type="submit" class="btn-large right">Save</button>
@@ -52,12 +51,5 @@
       preloader.style.display = "block";
     });  
 
-    $(document).ready(function() {
-        $('form').submit(function() {
-            let name1 = $('input[name="name1"]').val();
-            let name2 = $('input[name="name2"]').val();
-            $('#full_name').val(name1 + ' ' + name2);
-        });
-    });
 </script>
 <!-- /End Modal -->
