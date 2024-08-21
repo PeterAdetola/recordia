@@ -23,6 +23,11 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
+
+        $this->renderable(function (\Illuminate\Http\Exceptions\NotFoundException $exception, $request) {
+            return response()->view('errors.404', [], 404);
+        });
+        
         $this->reportable(function (Throwable $e) {
             //
         });

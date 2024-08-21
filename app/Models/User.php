@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Models;
 
 use App\Traits\HasPermissionsTrait;
@@ -25,6 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'username',
         'email',
         'password',
+        'unique_id',
     ];
 
     /**
@@ -46,4 +48,32 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    
+
+    /**
+     * Boot the model and attach the event listener.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $user->unique_id = $user->generateUniqueId();
+        });
+
+        static::updating(function ($user) {
+            if ($user->isDirty('username')) {
+                $user->unique_id = $user->generateUniqueId();
+            }
+        });
+    }
+
+    public function generateUniqueId()
+    {
+        return substr(md5(uniqid($this->id . $this->username, true)), 0, 16);
+    }
 }
+

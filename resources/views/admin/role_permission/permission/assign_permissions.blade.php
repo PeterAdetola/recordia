@@ -48,7 +48,7 @@ $pageTitle = 'Assign Permissions';
           <div class="col s12 m12 l8 mb-10">
             <div class="card">
               <div class="card-content pb-2">
-                <h4 class="card-title mb-0">Assign permission for {{ $role->name }}</h4>
+                <h4 class="card-title mb-0"><span class="chip gradient-45deg-indigo-purple lighten-2 white-text text-accent-2">{{ ucfirst($role->name) }}</span></h4>
                 <div class="divider mt-2"></div>
 
                 <form method="POST" action="{{ url('role/'.$role->id.'/update_permission') }}">

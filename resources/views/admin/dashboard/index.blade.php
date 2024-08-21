@@ -65,7 +65,7 @@
 
       <a class="modal-trigger" href="#add-donation-modal">
       <!-- <div class="col s12 m6 l4 card-width"> -->
-      <div class="col s4 m4 l4 card-width">
+      <div class="col s12 m4 l4 card-width">
         <div class="card border-radius-6">
           <div class="card-content center-align">
             <i class="material-icons green-text small-ico-bg mb-5">add_circle</i>
@@ -83,7 +83,7 @@
     @endif
 
       <a class="modal-trigger" href="#add-donor-modal">
-      <div class="col s4 m4 l4 card-width">
+      <div class="col s6 m4 l4 card-width">
         <div class="card border-radius-6">
           <div class="card-content center-align">
             <i class="material-icons blue-text small-ico-bg mb-5">person_add</i>
@@ -98,7 +98,7 @@
 
       {{--@role('admin')--}}
     <a class="modal-trigger" href="#add-expense-modal">
-      <div class="col s4 m4 l4 card-width">
+      <div class="col s6 m4 l4 card-width">
         <div class="card border-radius-6">
           <div class="card-content center-align">
             <i class="material-icons red-text small-ico-bg mb-5">add_circle</i>

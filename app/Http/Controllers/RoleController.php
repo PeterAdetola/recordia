@@ -18,7 +18,7 @@ class RoleController extends Controller
     {
        
         $roles = Role::get();
-        return view('admin.role_permission.view_roles', compact('roles'));
+        return view('admin.role_permission.role.view_roles', compact('roles'));
     }
 
     /**
@@ -103,7 +103,7 @@ class RoleController extends Controller
                     ->pluck('permission_id', 'permission_id')
                     ->all();
 
-        return view('admin.role_permission.assign_permissions', compact('role', 'permissions', 'modules', 'rolePermissions' ));
+        return view('admin.role_permission.permission.assign_permissions', compact('role', 'permissions', 'modules', 'rolePermissions' ));
         
     }  //End Method
 

@@ -9,7 +9,7 @@
           <h4 class="card-title">Recent Records</h4>
           <div class="row">
             <div class="col s12">
-              <p>The data in this table contains the records of donations, pledges and expenses recorded so far, for instant and registered donors.</p>
+              <p>The data in this table contains the records of donations, pledges and expenses recorded of recent, for instant and registered donations.</p>
             </div>
             <div class="col s12">
               <!-- <table id="data-table-row-grouping" class="display"> -->

@@ -99,7 +99,8 @@ Route::controller(DonorController::class)->group(function () {
     Route::post('/save/donor', 'saveDonor')->name('save.donor');
     Route::get('/donor/donation/{id}', 'getDonorDonation')->name('donor.donation');
     Route::get('preview/donor/donation/{id}', 'prevDonorDonation')->name('preview.donor.donation');
-    Route::get('/current/donor/donation/{id}', 'getCurrentDonorDonation')->name('current.donor.donation');
+    Route::get('/donor/current/donation/{id}', 'getDonorCurrentDonation')->name('donor.current_donation');
+    Route::get('preview/donor/current/donation/{id}', 'prevDonorCurrentDonation')->name('preview.donor.current_donation');
     // Route::get('/get/donor/{id}', [DonorController::class, 'getDonor'])->name('get.donor');
     Route::get('/activate/donors', 'activateDonors')->name('activate.donors');
     Route::post('activate/donor', 'activateDonor')->name('activate.donor');

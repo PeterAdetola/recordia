@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use App\Models\Module;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
+
 
 class PermissionController extends Controller
 {
@@ -14,7 +17,7 @@ class PermissionController extends Controller
         // $modules = Module::get();
         $modules = Module::whereHas('permissions')->with('permissions')->get();
         $permissions = Permission::get();
-        return view('admin.role_permission.view_permissions', compact('permissions', 'modules'));
+        return view('admin.role_permission.permission.view_permissions', compact('permissions', 'modules'));
     }
 
     /**
@@ -25,9 +28,33 @@ public function store(Request $request)
 
         // dd($request->all());
         // exit();
+
+        //  $request->validate([
+        //     'name' => 'required',
+        //     'module_id' => 'required',
+        // ]);
+
+         $validator = Validator::make($request->all(), [
+        'name' => 'required',
+        'module_id' => 'required',
+    ]);
+
+         if ($validator->fails()) {
+         $notification = array(
+            'message' => 'Please check your inputs.',
+        );
+
+        return redirect()->back()->with($notification);
+
+        // return redirect()->back()
+        //                  ->withErrors($validator)
+        //                  ->with('notification', $notification);
+    }
+
         list($moduleId, $moduleName) = explode('-', $request->module_id);
         $name = $request->name.' '.$moduleName;
 
+       
      if (Permission::where('name', $name)->exists()) {
 
         $notification = array(

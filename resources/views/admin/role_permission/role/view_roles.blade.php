@@ -5,25 +5,6 @@
 $pageTitle = 'View Roles';
 @endphp
 
-@section('headScript')
-<script src="{{ asset('backend/assets/vendors/sortable/sortable.js') }}"></script>
-@endsection
-
-@section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/dropify/css/dropify.min.css') }}">
-@endsection
-
-    <style>
-      .embossed{
-        text-shadow: 2px 2px 2px white;
-      }
-      .border{
-        border: 1px #fafafa solid;
-      }
-      .collection{
-        background-color: #fafafa;
-      }
-    </style>
 
  <!-- BEGIN: Page Main-->
     <div id="main">
@@ -67,14 +48,14 @@ $pageTitle = 'View Roles';
   @if (count($roles) > 0)
     @foreach($roles as $role) 
           <tr>
-             <td style="padding-left: 2em">{{ $role->name }}</td>
-             <td class="right-align"><a href="{{ route('assign.permission', $role->id) }}" class="modal-trigger" ><span class="chip blue lighten-3 white-text text-accent-2">Manage Permission</span></a></td>
+             <td style="padding-left: 2em">{{ ucfirst($role->name) }}</td>
+             <td class="right-align"><a href="{{ route('assign.permission', $role->id) }}" class="modal-trigger" ><span class="chip gradient-45deg-indigo-purple lighten-2 white-text text-accent-2">Manage Permission</span></a></td>
              <td class="right-align"><a href="#edit_role-modal{{ $role->id }}" class="modal-trigger" ><i class="material-icons  small-ico-bg blue-text">edit</i></a></td>
              <td class="center-align"><a href="#delete_role-modal{{ $role->id }}" class="modal-trigger"><i class="material-icons  small-ico-bg red-text">delete</i></a></td>
              <input type="hidden" name="order[]" value="{{ $role->id }}">
           </tr>
-      @include('admin.role_permission.modals.role.edit_role-modal')
-      @include('admin.role_permission.modals.role.delete_role-modal')
+      @include('admin.role_permission.role.modals.edit_role-modal')
+      @include('admin.role_permission.role.modals.delete_role-modal')
     @endforeach
         @else
           <tr>
@@ -97,7 +78,7 @@ $pageTitle = 'View Roles';
   </div>
 
 
-     @include('admin.role_permission.modals.role.add_role-modal')
+     @include('admin.role_permission.role.modals.add_role-modal')
 
 </div>
 <!-- users view ends -->
@@ -108,12 +89,4 @@ $pageTitle = 'View Roles';
     <!-- END: Page Main-->
 
 
-
-
-
-@endsection
-@section('scripts')
-    <script src="{{ asset('backend/assets/vendors/dropify/js/dropify.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/scripts/form-file-uploads.js') }}"></script> 
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 @endsection

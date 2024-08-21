@@ -32,7 +32,7 @@ $pageTitle = 'Donor\'s Donations';
                 </ol>
               </div>
               <div class="col s2 m6 l6">
-                <a class="mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right"  data-position="left" data-tooltip="activate multiple donors" href="{{ route('preview.donor.donation', $donor->id) }}" ><i class="material-icons hide-on-med-and-up">playlist_add_check</i><i class="material-icons right">print</i>
+                <a class="mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right"  data-position="left" data-tooltip="activate multiple donors" href="{{ route('preview.donor.donation', $donor->id) }}" ><i class="material-icons hide-on-med-and-up">print</i><i class="material-icons right">print</i>
                 </a>
               </div>
             </div>
@@ -53,11 +53,14 @@ $pageTitle = 'Donor\'s Donations';
         <div class="card-content">
           <div class="row">
             <h4 class="card-title left ml-2">{{ $donor->title }} {{ $donor->name }}'s donations</h4>
-            <a href="{{ route('current.donor.donation', $donor->id) }}"><span class="right chip"><b style="color: maroon;">&nbsp;Current Donations <i class="material-icons right mt-6" style="font-size: 1.2em;">navigate_next</i></b></span></a>
+
+@if(count($donorEventDonations) > 0)
+<a href="{{ route('donor.current_donation', $donor->id) }}" class="right ml-2" style="display: flex; align-items: center; "><span class="chip mr-0" style="margin-top: 5px;">{{ getCurrentEventName() }}'s Donations</span><i class="small-ico-bg material-icons blue-text mb-0">arrow_forward</i></a>
+@endif
           </div>
           <div class="row">
             <div class="col s12">
-              <p>All donations made by {{ $donor->title }} {{ $donor->name }}</p>
+              <p>All donations made by {{ $donor->title }} {{ $donor->name }} for the year {{ getCurrentYear() }}</p>
             </div>
             <div class="col s12">
               <table id="data-table-row-grouping" class="display">
@@ -66,11 +69,11 @@ $pageTitle = 'Donor\'s Donations';
                     <th>Purpose</th>
                     <th>Amount (&#8358;)</th>
                     <th>Payment Status</th>
+                    <th>Redeem</th>
                     <th>Verification</th>
                     <th>Recorder</th>
                     <th>Date</th>
                     <th>Year</th>
-                    <th>Redeem</th>
                     <th>Event</th>
                   </tr>
                 </thead>
@@ -92,6 +95,16 @@ $pageTitle = 'Donor\'s Donations';
                       <td><span class="chip red-text">unpaid</span></td>
                     @endif
 
+                  @if($donorDonation->payment_status == 1)
+                    <td><a class="btn-floating mb-1 btn-flat waves-effect waves-light grey lighten-2">
+                    <i class="material-icons">call_made</i>
+                  </a></td>
+                  @else
+                    <td><a class="modal-trigger btn-floating mb-1 btn-flat waves-effect waves-light blue accent-2 white-text"  href="#{{ $donorDonation->id }}">
+                    <i class="material-icons">call_received</i>
+                  </a></td>
+                  @endif
+
                     @if($donorDonation->verification == 1)
                       <td><i class="material-icons green-text">check_box</i></td>
                     @else
@@ -103,16 +116,6 @@ $pageTitle = 'Donor\'s Donations';
                     <td>{{ formatDate($donorDonation->updated_at) }}</td>
 
                     <td>{{ $donorDonation->year }}</td>
-
-                  @if($donorDonation->payment_status == 1)
-                    <td><a class="btn-floating mb-1 btn-flat waves-effect waves-light grey lighten-2">
-                    <i class="material-icons">call_made</i>
-                  </a></td>
-                  @else
-                    <td><a class="modal-trigger btn-floating mb-1 btn-flat waves-effect waves-light blue accent-2 white-text"  href="#{{ $donorDonation->id }}">
-                    <i class="material-icons">call_received</i>
-                  </a></td>
-                  @endif
 
                     <td>{{ $donorDonation->event->name }}</td>
 
@@ -130,13 +133,13 @@ $pageTitle = 'Donor\'s Donations';
                 <tfoot>
                   <tr>
                     <th>Purpose</th>
-                    <th>Amount</th>
+                    <th>Amount (&#8358;)</th>
                     <th>Payment Status</th>
+                    <th>Redeem</th>
                     <th>Verification</th>
                     <th>Recorder</th>
                     <th>Date</th>
                     <th>Year</th>
-                    <th>Redeem</th>
                     <th>Event</th>
                   </tr>
                 </tfoot>

@@ -5,25 +5,6 @@
 $pageTitle = 'View Modules';
 @endphp
 
-@section('headScript')
-<script src="{{ asset('backend/assets/vendors/sortable/sortable.js') }}"></script>
-@endsection
-
-@section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/dropify/css/dropify.min.css') }}">
-@endsection
-
-    <style>
-      .embossed{
-        text-shadow: 2px 2px 2px white;
-      }
-      .border{
-        border: 1px #fafafa solid;
-      }
-      .collection{
-        background-color: #fafafa;
-      }
-    </style>
 
  <!-- BEGIN: Page Main-->
     <div id="main">
@@ -73,8 +54,8 @@ $pageTitle = 'View Modules';
              <td class="center-align"><a href="#delete_module-modal{{ $module->id }}" class="modal-trigger"><i class="material-icons  small-ico-bg red-text">delete</i></a></td>
              <input type="hidden" name="order[]" value="{{ $module->id }}">
           </tr>
-      @include('admin.role_permission.modals.module.edit_module-modal')
-      @include('admin.role_permission.modals.module.delete_module-modal')
+      @include('admin.role_permission.module.modals.edit_module-modal')
+      @include('admin.role_permission.module.modals.delete_module-modal')
     @endforeach
         @else
           <tr>
@@ -112,9 +93,4 @@ $pageTitle = 'View Modules';
 
 
 
-@endsection
-@section('scripts')
-    <script src="{{ asset('backend/assets/vendors/dropify/js/dropify.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/scripts/form-file-uploads.js') }}"></script> 
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 @endsection

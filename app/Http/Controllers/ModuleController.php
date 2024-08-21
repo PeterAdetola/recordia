@@ -16,7 +16,7 @@ class ModuleController extends Controller
 
         $modules = Module::all();
 
-        return view('admin.role_permission.view_modules', compact('modules'));
+        return view('admin.role_permission.module.view_modules', compact('modules'));
 
     } //End Method
     

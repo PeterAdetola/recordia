@@ -5,25 +5,6 @@
 $pageTitle = 'View Permissions';
 @endphp
 
-@section('headScript')
-<script src="{{ asset('backend/assets/vendors/sortable/sortable.js') }}"></script>
-@endsection
-
-@section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/dropify/css/dropify.min.css') }}">
-@endsection
-
-    <style>
-      .embossed{
-        text-shadow: 2px 2px 2px white;
-      }
-      .border{
-        border: 1px #fafafa solid;
-      }
-      .collection{
-        background-color: #fafafa;
-      }
-    </style>
 
  <!-- BEGIN: Page Main-->
     <div id="main">
@@ -59,7 +40,7 @@ $pageTitle = 'View Permissions';
           <div class="container">
             <!-- users view start -->
 <div class="row"> 
-  <div class="col s12 m12 l8 mb-10">    
+  <div class="col s12 m12 l10 mb-10">    
          <div class="card subscriber-list-card">
             <div class="card-content pb-1">
                <h4 class="card-title mb-0">Permissions</h4>
@@ -82,8 +63,8 @@ $pageTitle = 'View Permissions';
              <input type="hidden" name="order[]" value="{{ $permission->id }}"></span></a>
 
               
-      @include('admin.role_permission.modals.permission.edit_permission-modal')
-      @include('admin.role_permission.modals.permission.delete_permission-modal')
+      @include('admin.role_permission.permission.modals.edit_permission-modal')
+      @include('admin.role_permission.permission.modals.delete_permission-modal')
               @endforeach
             </span>
              </td>
@@ -105,7 +86,7 @@ $pageTitle = 'View Permissions';
 
 
  
-      @include('admin.role_permission.modals.module.add_module-modal')
+      @include('admin.role_permission.module.modals.add_module-modal')
 </div>
 
 
@@ -114,7 +95,7 @@ $pageTitle = 'View Permissions';
   </div>
 
 
-     @include('admin.role_permission.modals.permission.add_permission-modal')
+     @include('admin.role_permission.permission.modals.add_permission-modal')
 
 </div>
 <!-- users view ends -->
@@ -128,9 +109,4 @@ $pageTitle = 'View Permissions';
 
 
 
-@endsection
-@section('scripts')
-    <script src="{{ asset('backend/assets/vendors/dropify/js/dropify.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/scripts/form-file-uploads.js') }}"></script> 
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 @endsection

@@ -36,6 +36,7 @@ class DonorController extends Controller
     {
         $donor = Donor::where('id', $id)->first();
         $donorDonations = RegisteredRecord::with('event')->where('donor_id', $id)->orderBy('updated_at', 'DESC')->get();
+        $donorEventDonations = RegisteredRecord::with('event')->where('donor_id', $id)->where('year', '=', getCurrentYear())->where('event_id', '=', getCurrentEvent())->orderBy('updated_at', 'DESC')->get();
         $paidDonorDonations = formatAmount(RegisteredRecord::where('donor_id', $id)
                             ->where('payment_status', 1)->sum('amount'));
         $unpaidDonorDonations = formatAmount(RegisteredRecord::where('donor_id', $id)
@@ -43,7 +44,7 @@ class DonorController extends Controller
         $sumDonorDonations = formatAmount(RegisteredRecord::where('donor_id', $id)->sum('amount'));
 
         
-        return view('admin.configs.donor_donation', compact('donor', 'donorDonations', 'sumDonorDonations', 'paidDonorDonations', 'unpaidDonorDonations'));
+        return view('admin.configs.donor_donation', compact('donor', 'donorDonations', 'donorEventDonations', 'sumDonorDonations', 'paidDonorDonations', 'unpaidDonorDonations'));
     }
     /**
      * Get Donor's donations.
@@ -63,9 +64,9 @@ class DonorController extends Controller
     }
 
     /**
-     * Get Current Donor's donations.
+     * Get Donor's Current donations.
      */
-    public function getCurrentDonorDonation($id)
+    public function getDonorCurrentDonation($id)
     {
         $donor = Donor::where('id', $id)->first();
         $donorDonations = RegisteredRecord::with('event')->where('donor_id', $id)->where('year', '=', getCurrentYear())->where('event_id', '=', getCurrentEvent())->orderBy('updated_at', 'DESC')->get();
@@ -76,9 +77,27 @@ class DonorController extends Controller
         $sumDonorDonations = formatAmount(RegisteredRecord::where('donor_id', $id)->where('year', '=', getCurrentYear())->where('event_id', '=', getCurrentEvent())->sum('amount'));
 
         
-        return view('admin.configs.current_donor_donation', compact('donor', 'donorDonations', 'sumDonorDonations', 'paidDonorDonations', 'unpaidDonorDonations'));
+        return view('admin.configs.donor_current_donation', compact('donor', 'donorDonations', 'sumDonorDonations', 'paidDonorDonations', 'unpaidDonorDonations'));
     }
 
+
+    /**
+     * Get Donor's Current donations Preview.
+     */
+    public function prevDonorCurrentDonation($id)
+    {
+        $donor = Donor::where('id', $id)->first();
+        $donorDonations = RegisteredRecord::with('event')->where('donor_id', $id)->where('year', '=', getCurrentYear())->where('event_id', '=', getCurrentEvent())->orderBy('updated_at', 'DESC')->get();
+        $paidDonorDonations = formatAmount(RegisteredRecord::where('donor_id', $id)
+                            ->where('payment_status', 1)->where('year', '=', getCurrentYear())->where('event_id', '=', getCurrentEvent())->sum('amount'));
+        $unpaidDonorDonations = formatAmount(RegisteredRecord::where('donor_id', $id)
+                            ->where('payment_status', 0)->where('year', '=', getCurrentYear())->where('event_id', '=', getCurrentEvent())->sum('amount'));
+        $sumDonorDonations = formatAmount(RegisteredRecord::where('donor_id', $id)->where('year', '=', getCurrentYear())->where('event_id', '=', getCurrentEvent())->sum('amount'));
+
+        
+        return view('admin.configs.prev_donor_current_donation', compact('donor', 'donorDonations', 'sumDonorDonations', 'paidDonorDonations', 'unpaidDonorDonations'));
+    }
+    
     /**
      * Edit a Donor.
      */

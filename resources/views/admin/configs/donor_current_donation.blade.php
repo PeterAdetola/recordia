@@ -10,7 +10,7 @@
   @endsection
 
 @php
-$pageTitle = 'Current Donor\'s Donations';
+$pageTitle = "Donor's Donations for " . getCurrentEventName();
 @endphp
 
 
@@ -33,8 +33,12 @@ $pageTitle = 'Current Donor\'s Donations';
                   <li class="breadcrumb-item">
                     <a  href="{{ route('donor.donation', $donor->id) }}">Donor's Donations</a>
                   </li>
-                  <li class="breadcrumb-item active">{{ $pageTitle }}</li>
+                  <li class="breadcrumb-item active">{{ getCurrentEventName() }}</li>
                 </ol>
+              </div>
+              <div class="col s2 m6 l6">
+                <a class="mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right"  data-position="left" data-tooltip="activate multiple donors" href="{{ route('preview.donor.current_donation', $donor->id) }}" ><i class="material-icons hide-on-med-and-up">playlist_add_check</i><i class="material-icons right">print</i>
+                </a>
               </div>
             </div>
           </div>
@@ -57,7 +61,7 @@ $pageTitle = 'Current Donor\'s Donations';
           </div>
           <div class="row">
             <div class="col s12">
-              <p>All donations made by {{ $donor->title }} {{ $donor->name }} during {{getCurrentEventName()}} for the year {{getCurrentYear()}}</p>
+              <p>Donations made by {{ $donor->title }} {{ $donor->name }} during {{getCurrentEventName()}} for the year {{getCurrentYear()}}</p>
             </div>
             <div class="col s12">
               <table id="data-table-row-grouping" class="display">
@@ -66,11 +70,11 @@ $pageTitle = 'Current Donor\'s Donations';
                     <th>Purpose</th>
                     <th>Amount</th>
                     <th>Payment Status</th>
+                    <th>Redeem</th>
                     <th>Verification</th>
                     <th>Recorder</th>
                     <th>Date</th>
                     <th>Year</th>
-                    <th>Redeem</th>
                     <th>Event</th>
                   </tr>
                 </thead>
@@ -92,6 +96,16 @@ $pageTitle = 'Current Donor\'s Donations';
                       <td><span class="chip red-text">unpaid</span></td>
                     @endif
 
+                  @if($donorDonation->payment_status == 1)
+                    <td><a class="btn-floating mb-1 btn-flat waves-effect waves-light grey lighten-2">
+                    <i class="material-icons">call_made</i>
+                  </a></td>
+                  @else
+                    <td><a class="modal-trigger btn-floating mb-1 btn-flat waves-effect waves-light blue accent-2 white-text"  href="#{{ $donorDonation->id }}">
+                    <i class="material-icons">call_received</i>
+                  </a></td>
+                  @endif
+
                     @if($donorDonation->verification == 1)
                       <td><i class="material-icons green-text">check_box</i></td>
                     @else
@@ -103,16 +117,6 @@ $pageTitle = 'Current Donor\'s Donations';
                     <td>{{ formatDate($donorDonation->updated_at) }}</td>
 
                     <td>{{ $donorDonation->year }}</td>
-
-                  @if($donorDonation->payment_status == 1)
-                    <td><a class="btn-floating mb-1 btn-flat waves-effect waves-light grey lighten-2">
-                    <i class="material-icons">call_made</i>
-                  </a></td>
-                  @else
-                    <td><a class="modal-trigger btn-floating mb-1 btn-flat waves-effect waves-light blue accent-2 white-text"  href="#{{ $donorDonation->id }}">
-                    <i class="material-icons">call_received</i>
-                  </a></td>
-                  @endif
 
                     <td>{{ $donorDonation->event->name }}</td>
 
@@ -132,11 +136,11 @@ $pageTitle = 'Current Donor\'s Donations';
                     <th>Purpose</th>
                     <th>Amount</th>
                     <th>Payment Status</th>
+                    <th>Redeem</th>
                     <th>Verification</th>
                     <th>Recorder</th>
                     <th>Date</th>
                     <th>Year</th>
-                    <th>Redeem</th>
                     <th>Event</th>
                   </tr>
                 </tfoot>

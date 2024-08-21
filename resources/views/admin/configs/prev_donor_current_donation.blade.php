@@ -40,9 +40,10 @@
           
           <div class="divider mb-3 mt-3"></div>
           <!-- invoice address and contact -->
-          <div class="row invoice-info">
+          <div class="row ml-3 invoice-info">
               <!-- <h4 class="indigo-text center"></h4>  -->
-      <h6 class="card-title center">All donations made by {{ $donor->title }} {{ $donor->name }} for the year {{ getCurrentYear() }}</h6>           
+      <h6 class="card-title">Donations made by {{ $donor->title }} {{ $donor->name }}</h6>   
+              <p>For {{getCurrentEventName()}} in the year {{getCurrentYear()}}</p>          
           </div>
           <div class="divider mb-3 mt-3"></div>
           <!-- product details table-->
@@ -141,12 +142,9 @@
               <span class="text-nowrap">All Records</span>
             </a>
           </div>
-
-
         </div>
       </div>
-
-    <a href="{{ route('donor.donation', $donor->id) }}" class="right ml-2" style="display: flex; align-items: center; "><i class="small-ico-bg material-icons blue-text mb-0">arrow_back</i><span class="chip mr-0" style="margin-top: 5px;">Back to Donor's Donations</span></a>
+    <a href="{{ route('donor.current_donation', $donor->id) }}" class="right ml-2" style="display: flex; align-items: center; "><i class="small-ico-bg material-icons blue-text mb-0">arrow_back</i><span class="chip mr-0" style="margin-top: 5px;">Back to Event's Donations</span></a>
     </div>
   </div>
 </section>
