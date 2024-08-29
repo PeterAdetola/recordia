@@ -27,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'unique_id',
+        'status',
     ];
 
     /**
@@ -75,5 +76,23 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return substr(md5(uniqid($this->id . $this->username, true)), 0, 16);
     }
+
+
+    public function getInitialsAttribute() {
+
+          $name = $this->name;
+          
+          // Explode name on space
+          $parts = explode(' ', $name);
+
+          // Get first char of each part  
+          $initials = '';
+          foreach($parts as $part) {
+            $initials .= strtoupper(substr($part, 0, 1));
+          }
+
+          return $initials;
+
+        }
 }
 

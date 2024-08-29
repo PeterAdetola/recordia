@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:view role', ['only' => ['ViewRoles']]);
+        $this->middleware('permission:create role', ['only' => ['store']]);
+        $this->middleware('permission:create permission', ['only' => ['AssignPermission']]);
+        $this->middleware('permission:edit role', ['only' => ['update']]);
+        $this->middleware('permission:delete role', ['only' => ['destroy']]);
+    }
 
     /**
      * View Role.
@@ -34,8 +42,9 @@ class RoleController extends Controller
             ]
         ]);
 
+        $roleName = strtolower($request->name);
         Role::create([
-            'name' => $request->name,
+            'name' => $roleName,
             'module_id' => $request->module_id,
         ]);
 

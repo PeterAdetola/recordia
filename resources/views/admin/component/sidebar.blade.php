@@ -1,8 +1,8 @@
  <!-- BEGIN: SideNav -->
 @php
 
-$route = Route::current()->getName()
-
+$route = Route::current()->getName();
+$adminAccess = ['view user', 'view permission', 'view role'];
 @endphp  
     <aside class="sidenav-main nav-expanded nav-lock nav-collapsible sidenav-light sidenav-active-square">
       <div class="brand-sidebar">
@@ -50,11 +50,13 @@ $route = Route::current()->getName()
                   <span data-i18n="Pledges">Pledges</span>
                 </a>
               </li> 
+      {{--@can('view expense')--}}
               <li>
                 <a class="{{ ($route == 'get.expenses')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('get.expenses')}}"><i class="material-icons">radio_button_unchecked</i>
                   <span data-i18n="All Expenses">All Expenses</span>
                 </a>
-              </li>               
+              </li>   
+      {{--@endcan--}}
             </ul>
           </div>
         </li>
@@ -89,10 +91,11 @@ $route = Route::current()->getName()
             </ul>
           </div>
         </li>
+
+@role('chief-admin|admin')
         <li class="navigation-header"><a class="navigation-header-text">Settings</a><i class="navigation-header-icon material-icons">more_horiz</i>
         </li>
 
-        
         <li class="bold">
           <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">
           <i class="material-icons">settings</i>
@@ -111,19 +114,22 @@ $route = Route::current()->getName()
                   <span data-i18n="Manage Event">Manage Event</span>
                 </a>
               </li> 
-
-              <li>
-                <a class="{{ ($route == 'manage.donor')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('manage.donor') }}"><i class="material-icons">radio_button_unchecked</i>
-                  <span data-i18n="Manage Event">Manage Donor</span>
-                </a>
-              </li>            
+    <li>
+        @php
+            $donorLinks = ['manage.donor', 'donor.donation', 'donor.current_donation', 'preview.donor.donation', 'preview.donor.current_donation'];
+        @endphp
+        <a class="{{ in_array(Route::currentRouteName(), $donorLinks) ? 'active' : '' }} waves-effect waves-cyan" href="{{ route('manage.donor') }}">
+            <i class="material-icons">radio_button_unchecked</i>
+            <span data-i18n="Manage Event">Manage Donor</span>
+        </a>
+    </li>           
             </ul>
           </div>
         </li>
 
+@canany($adminAccess)
         <li class="navigation-header"><a class="navigation-header-text">Users & Permissions </a><i class="navigation-header-icon material-icons">more_horiz</i>
         </li>
-
         
         <li class="bold">
           <a class="collapsible-header waves-effect waves-cyan " href="JavaScript:void(0)">
@@ -132,27 +138,37 @@ $route = Route::current()->getName()
           </a>
           <div class="collapsible-body">
             <ul class="collapsible collapsible-sub" data-collapsible="accordion">
+      @can('view user')
               <li>
-                <a class="{{ ($route == 'manage.year')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('manage.year')}}"><i class="material-icons">radio_button_unchecked</i>
+                @php
+                $userLinks = ['view.users', 'view.user_details', 'edit.user'];
+                @endphp
+                <a class="{{ in_array(Route::currentRouteName(), $userLinks) ? 'active' : '' }} waves-effect waves-cyan" href="{{  route('view.users')}}"><i class="material-icons">radio_button_unchecked</i>
                   <span data-i18n="Manage Year">All Users</span>
                 </a>
               </li>
+      @endcan
 
+      @can('view permission')
               <li>
                 <a class="{{ ($route == 'view.permissions')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('view.permissions') }}"><i class="material-icons">radio_button_unchecked</i>
                   <span data-i18n="Permissions">Permissions</span>
                 </a>
               </li> 
+      @endcan
 
+      @can('view role')
               <li>
                 <a class="{{ ($route == 'view.roles')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('view.roles')}}"><i class="material-icons">radio_button_unchecked</i>
                   <span data-i18n="Roles">Roles</span>
                 </a>
-              </li>            
+              </li>
+      @endcan            
             </ul>
           </div>
         </li>
-        {{--@endrole--}}
+  @endrole
+  @endcan
       </ul>
       <!-- <div class="navigation-background"></div> -->
       <a class="sidenav-trigger btn-sidenav-toggle btn-floating btn-medium waves-effect waves-light hide-on-large-only" href="#" data-target="slide-out"><i class="material-icons">menu</i></a>

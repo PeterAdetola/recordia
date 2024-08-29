@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-           // $table->string('unique_id')->after('id');
+        Schema::table('instant_records', function (Blueprint $table) {
+            $table->softDeletes()->after('updated_at');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
+        Schema::table('instant_records', function (Blueprint $table) {
+            $table->dropSoftDeletes();
         });
     }
 };

@@ -3,22 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\InstantRecord;
 use App\Models\RegisteredRecord;
-use App\Models\User;
 
 class RegisteredRecordController extends Controller
 {
-
-
     /**
      * Get all registered records.
      */
-    public function getAllRegisteredRecords(RegisteredRecord $registeredRecord)
+    public function getAllRegisteredRecords()
     {
-
-        $registeredRecords = RegisteredRecord::orderBy('updated_at', 'DESC')->get()
-                                        ->where('year', '=', getCurrentYear());
+        $registeredRecords = $this->getRegisteredRecords();
 
         return view('admin.records.registered.registered_records', compact('registeredRecords'));
     }
@@ -28,59 +22,13 @@ class RegisteredRecordController extends Controller
      */
     public function saveRegDonation(Request $request)
     {
-        $request->validate([
-            'donor_id' => 'required',            
-            'amount' => 'required',
-            'purpose' => 'required',
-            'slip_no' => 'required',
-            'payment_mode' => 'required',
-        ],[
-            'donor_id.required' => 'Donor\'fullname and title is required',
-            'amount.required' => 'Amount donated is required',
-            'purpose.required' => 'Purpose of donation is required',
-            'slip_no.required' => 'Slip number is required',
-            'payment_mode.required' => 'Indicate the mode of payment',
-        ]);
+        $this->validateRequest($request);
 
+        $this->setRequestDefaults($request);
 
-    /**
-     * Cash     (payment_mode = 1)
-     * POS      (payment_mode = 2)
-     * Transfer (payment_mode = 3)
-     * Pledge   (payment_mode = 4)
-     */
-// Get Event
-    $request->recorder_id = getCurrentUser();
-    $request->event_id = getCurrentEvent();
-    $request->year = getCurrentYear();
+        $amount = $this->sanitizeAmount($request->amount);
 
-        switch ($request->payment_mode) {
-    case ($request->payment_mode == 1):        
-            $request->verification = 1;
-            $request->payment_status = 1;
-        break;
-    case ($request->payment_mode == 2):        
-            $request->verification = 1;
-            $request->payment_status = 1;
-        break;
-    case ($request->payment_mode == 3):        
-            $request->verification = 0;
-            $request->payment_status = 1;
-        break;
-    case ($request->payment_mode == 4):        
-            $request->verification = 0;
-            $request->payment_status = 0;
-        break;
-    default:        
-            $request->verification = 0;
-            $request->payment_status = 0;
-        }
-
-        // Sanitize amount to numbers only
-        $amount = filter_var($request->amount, FILTER_SANITIZE_NUMBER_INT);
-        $amount = intval($amount);
-
-      RegisteredRecord::create([
+        RegisteredRecord::create([
             'donor_id' => $request->donor_id,
             'recorder_id' => $request->recorder_id,
             'amount' => $amount,
@@ -93,11 +41,7 @@ class RegisteredRecordController extends Controller
             'year' => $request->year,
         ]);
 
-        $notification = array(
-            'message' => 'Donation saved'
-        );
-
-        return redirect()->route('dashboard')->with($notification);
+        return redirect()->route('dashboard')->with(['message' => 'Donation saved']);
     }
 
     /**
@@ -105,43 +49,18 @@ class RegisteredRecordController extends Controller
      */
     public function updateDonation(Request $request)
     {
-        $id = $request->id;
+        $this->setUpdateDefaults($request);
 
-        if (!isset($request->payment_status)){
-            $request->payment_mode = 4;
-            $request->payment_status = 0;
-            $request->verification = 0;
-        }
+        $amount = $this->sanitizeAmount($request->amount);
 
-        if (!isset($request->verification)){
-            $request->verification = 0;
-        }
+        RegisteredRecord::findOrFail($request->id)->update([
+            'purpose' => $request->purpose,
+            'amount' => $amount,
+            'payment_status' => $request->payment_status,
+            'verification' => $request->verification,
+        ]);
 
-        if ($request->payment_status == ''){
-            $request->payment_status = 0;
-        }
-
-        $amount = str_replace(",", "", $request->amount);
-        $amount = str_replace(".", "", $amount);
-
-
-        $amount = intval($amount);
-
-        // echo $amount;
-        // exit;
-
-        RegisteredRecord::findOrFail($id)->update([
-        'purpose' => $request->purpose,
-        'amount' => $amount,
-        'payment_status' => $request->payment_status,
-        'verification' => $request->verification,
-    ]);
-
-        $notification = array(
-            'message' => 'Donation Updated'
-        );
-
-        return redirect()->back()->with($notification);
+        return redirect()->back()->with(['message' => 'Donation Updated']);
     }
 
     /**
@@ -149,146 +68,81 @@ class RegisteredRecordController extends Controller
      */
     public function redeemDonorDonation(Request $request)
     {
-        $id = $request->id;
-
-        if (!isset($request->verification)){
-            $request->verification = 0;
-        }
-
-        RegisteredRecord::findOrFail($id)->update([
-        'verification' => $request->verification,
-        'payment_status' => $request->payment_status,
-    ]);
-
-        $notification = array(
-            'message' => 'Pledge redeemed'
-        );
-
-        return redirect()->back()->with($notification);
+        $this->updateVerification($request, 'Pledge redeemed');
     }
 
     /**
-     * Get all registered verified donation.
+     * Get all registered verified donations.
      */
-    public function getVerifiedDonations(RegisteredRecord $registeredRecord)
+    public function getVerifiedDonations()
     {
-
-        $verifiedDonations = RegisteredRecord::orderBy('updated_at', 'DESC')->get()
-                                        ->where('year', '=', getCurrentYear())
-                                        ->where('payment_status', '=', 1)
-                                        ->where('verification', '=', 1);
+        $verifiedDonations = $this->getDonations(['payment_status' => 1, 'verification' => 1]);
 
         return view('admin.records.registered.paid.verified_donations', compact('verifiedDonations'));
     }
 
     /**
-     * verified a donation.
+     * Verify a donation.
      */
     public function verifyADonation(Request $request)
     {
-
-        $id = $request->id;
-
-        $request->verification = 1;
-
-        RegisteredRecord::findOrFail($id)->update([
-        'verification' => $request->verification,
-    ]);
-
-        $notification = array(
-            'message' => 'Payment verified'
-        );
-
-        return redirect()->back()->with($notification);
+        $this->updateVerification($request, 'Payment verified', 1);
     }
 
     /**
-     * unverified a donation.
+     * Unverify a donation.
      */
     public function unverifyADonation(Request $request)
     {
-
-        $id = $request->id;
-
-        $request->verification = 0;
-
-        RegisteredRecord::findOrFail($id)->update([
-        'verification' => $request->verification,
-    ]);
-
-        $notification = array(
-            'message' => 'Payment unverified'
-        );
-
-        return redirect()->back()->with($notification);
+        $this->updateVerification($request, 'Payment unverified', 0);
     }
 
     /**
-     * Preview all registered verified donation.
+     * Preview all registered verified donations.
      */
-    public function prevVerifiedDonations(RegisteredRecord $registeredRecord)
+    public function prevVerifiedDonations()
     {
-
-        $verifiedDonations = RegisteredRecord::orderBy('updated_at', 'DESC')->get()
-                                        ->where('year', '=', getCurrentYear())
-                                        ->where('payment_status', '=', 1)
-                                        ->where('verification', '=', 1);
+        $verifiedDonations = $this->getDonations(['payment_status' => 1, 'verification' => 1]);
 
         return view('admin.records.registered.paid.prev_verified_donations', compact('verifiedDonations'));
     }
 
-
     /**
-     * Get all registered unverified donation.
+     * Get all registered unverified donations.
      */
-    public function getUnverifiedDonations(RegisteredRecord $registeredRecord)
+    public function getUnverifiedDonations()
     {
-
-        $unverifiedDonations = RegisteredRecord::orderBy('updated_at', 'DESC')->get()
-                                        ->where('year', '=', getCurrentYear())
-                                        ->where('payment_status', '=', 1)
-                                        ->where('verification', '=', 0);
-        // $recorder = User::all();
+        $unverifiedDonations = $this->getDonations(['payment_status' => 1, 'verification' => 0]);
 
         return view('admin.records.registered.paid.unverified_donations', compact('unverifiedDonations'));
     }
 
     /**
-     * Preview all registered unverified donation.
+     * Preview all registered unverified donations.
      */
-    public function prevUnverifiedDonations(RegisteredRecord $registeredRecord)
+    public function prevUnverifiedDonations()
     {
-
-        $unverifiedDonations = RegisteredRecord::orderBy('updated_at', 'DESC')->get()
-                                        ->where('year', '=', getCurrentYear())
-                                        ->where('payment_status', '=', 1)
-                                        ->where('verification', '=', 0);
+        $unverifiedDonations = $this->getDonations(['payment_status' => 1, 'verification' => 0]);
 
         return view('admin.records.registered.paid.prev_unverified_donations', compact('unverifiedDonations'));
     }
 
     /**
-     * Get all registered unpaid donation.
+     * Get all registered unpaid donations.
      */
-    public function getUnpaidDonations(RegisteredRecord $registeredRecord)
+    public function getUnpaidDonations()
     {
-
-        $unpaidDonations = RegisteredRecord::orderBy('updated_at', 'DESC')->get()
-                                        ->where('year', '=', getCurrentYear())
-                                        ->where('payment_status', '=', 0);
+        $unpaidDonations = $this->getDonations(['payment_status' => 0]);
 
         return view('admin.records.registered.unpaid.unpaid_donations', compact('unpaidDonations'));
     }
 
     /**
-     * Preview registered unpaid donation.
+     * Preview registered unpaid donations.
      */
-    public function prevUnpaidDonations(RegisteredRecord $registeredRecord)
+    public function prevUnpaidDonations()
     {
-
-        $unpaidDonations = RegisteredRecord::orderBy('updated_at', 'DESC')->get()
-                                        ->where('year', '=', getCurrentYear())
-                                        ->where('payment_status', '=', 0);
+        $unpaidDonations = $this->getDonations(['payment_status' => 0]);
 
         return view('admin.records.registered.unpaid.prev_unpaid_donations', compact('unpaidDonations'));
     }
@@ -296,12 +150,93 @@ class RegisteredRecordController extends Controller
     /**
      * Edit registered unpaid donations.
      */
-    public function editPledges(Request $request)
+    public function editPledges()
     {
-        $unpaidDonations = RegisteredRecord::orderBy('updated_at', 'DESC')->get()
-                                        ->where('year', '=', getCurrentYear())
-                                        ->where('payment_status', '=', 0);
+        $unpaidDonations = $this->getDonations(['payment_status' => 0]);
 
         return view('admin.records.registered.unpaid.edit_unpaid_donations', compact('unpaidDonations'));
+    }
+
+    /**
+     *
+     *
+     * Private methods
+     */
+
+    private function getRegisteredRecords()
+    {
+        return RegisteredRecord::where('year', getCurrentYear())
+            ->orderBy('updated_at', 'DESC')->get();
+    }
+
+    private function validateRequest(Request $request)
+    {
+        $request->validate([
+            'donor_id' => 'required',
+            'amount' => 'required',
+            'purpose' => 'required',
+            'slip_no' => 'required',
+            'payment_mode' => 'required',
+        ], [
+            'donor_id.required' => 'Donor\'s fullname and title is required',
+            'amount.required' => 'Amount donated is required',
+            'purpose.required' => 'Purpose of donation is required',
+            'slip_no.required' => 'Slip number is required',
+            'payment_mode.required' => 'Indicate the mode of payment',
+        ]);
+    }
+
+    private function setRequestDefaults(Request $request)
+    {
+        $request->merge([
+            'recorder_id' => getCurrentUser(),
+            'event_id' => getCurrentEvent(),
+            'year' => getCurrentYear(),
+            'verification' => $this->getVerificationStatus($request->payment_mode),
+            'payment_status' => $this->getPaymentStatus($request->payment_mode),
+        ]);
+    }
+
+    private function setUpdateDefaults(Request $request)
+    {
+        $request->merge([
+            'payment_mode' => $request->payment_mode ?? 4,
+            'payment_status' => $request->payment_status ?? 0,
+            'verification' => $request->verification ?? 0,
+        ]);
+    }
+
+    private function sanitizeAmount($amount)
+    {
+        return intval(preg_replace('/[^\d]/', '', $amount));
+    }
+
+    private function getDonations(array $conditions)
+    {
+        return RegisteredRecord::where('year', getCurrentYear())
+            ->where($conditions)
+            ->orderBy('updated_at', 'DESC')->get();
+    }
+
+    private function getVerificationStatus($payment_mode)
+    {
+        return in_array($payment_mode, [1, 2]) ? 1 : 0;
+    }
+
+    private function getPaymentStatus($payment_mode)
+    {
+        return in_array($payment_mode, [1, 2, 3]) ? 1 : 0;
+    }
+
+    private function updateVerification(Request $request, $message, $verification = null)
+    {
+        $verification = $verification ?? $request->verification ?? 0;
+
+        RegisteredRecord::findOrFail($request->id)->update([
+            'verification' => $verification,
+            'payment_status' => $request->payment_status ?? 0,
+        ]);
+
+        return redirect()->back()->with(['message' => $message]);
     }
 }

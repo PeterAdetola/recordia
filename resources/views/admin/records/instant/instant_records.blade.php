@@ -70,7 +70,7 @@ $pageTitle = 'Instant Records';
                 @foreach ($instantRecords as $instantRecord)  
                   <tr>
                     <td>{{ $instantRecord->name }}</td>
-                    <td  style="width: 10em;">{{ $instantRecord->purpose }}</td>
+                    <td style="width: 10em;">{{ $instantRecord->purpose }}</td>
                     <td>{{ formatAmount($instantRecord->amount) }}</td>
 
                     @if($instantRecord->payment_status == 1)
@@ -140,6 +140,5 @@ $pageTitle = 'Instant Records';
     <script src="{{ asset('backend/assets/vendors/data-tables/js/dataTables.select.min.js') }}"></script>
   @endsection
 @section('scripts')
-  <!-- <script src="{{ asset('backend/assets/js/plugins.js') }}"></script> -->
   <script src="{{ asset('backend/assets/js/scripts/data-tables.js') }}"></script>
 @endsection

@@ -5,8 +5,14 @@ $active_donors = getRegisteredDonors();
 <!-- Start Modal -->
 <div id="add-donation-modal" class="modal" style="padding:1em;">
     <div class="modal-content">
-      <h6 class="card-title" style="display:inline-block;">Add Donation for {{ getCurrentEventName() }}</h6>&nbsp;&nbsp;<span class="chip right">Registered Donation</span>
-
+      <div class="row">
+      <div class="col s12 m6">        
+        <h6 class="card-title">Add Donation</h6>
+      </div>
+      <div class="col s12 m6"> 
+      <span class="chip">{{ getCurrentEventName() }}</span>
+    </div>
+  </div>
       <div class="progress collection">
         <div id="preloader" class="indeterminate"  style="display:none; 
         border:2px #ebebeb solid"></div>
@@ -99,7 +105,7 @@ $active_donors = getRegisteredDonors();
                 </div>
         
       </div>
-    <div class="modal-footer">
+    <div class="modal-footer mb-5">
       <button id="submitBtn" type="submit" onclick="ShowPreloader()" class="modal-action waves-effect waves-green btn-large" >Add Donation</button>
       <a id="reload" href="javascript:void(0)" class="btn-large btn-flat modal-close">Cancel</a>
     </div>

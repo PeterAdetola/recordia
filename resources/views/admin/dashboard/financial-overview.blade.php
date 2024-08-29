@@ -1,5 +1,8 @@
 @php
 $sumOfAllExpenses = sumOfAllExpenses();
+$adminRoles = ['chief-admin', 'admin'];
+
+$displayDonationByEvent = config('displayDonation.display_donations_by_event');
 @endphp
       <div class="card">
           <div class="card-content">
@@ -13,15 +16,18 @@ $sumOfAllExpenses = sumOfAllExpenses();
                   </div>
                   <div class="col s5 m5 right-align mt-5">
                     <h5 class="mb-0 white-text" style="margin-left: -2.5em">&#8358;&nbsp;
-                        {{ getTotalPaidDonation() }}
-                    {{--@role('admin'){{ getTotalPaidDonation() }}@endrole--}}
-                    {{--@role('recorder'){{ sumAllInstantDonationsFR() }}@endrole--}}
-                  </h5>
+                        {{-- getTotalPaidDonation() --}}
+                    @hasanyrole($adminRoles)
+                      {{ getTotalPaidDonation() }}
+                    @else
+                      {{ sumAllInstantDonationsFR() }}
+                    @endhasanyrole
+                    </h5>
                     <p>Cash & Transfer</p>
                   </div>
                 </div>
               </div>
-            {{--@role('admin')--}}
+            @hasanyrole($adminRoles)
               <div class="col s12 m6 card-width">
                 <div class="card row gradient-45deg-blue-indigo gradient-shadow white-text padding-4 mt-5">
                   <div class="col s7 m7">
@@ -36,7 +42,7 @@ $sumOfAllExpenses = sumOfAllExpenses();
                   </div>
                 </div>
               </div>
-            {{--@endrole--}}
+           @endhasanyrole
               <div class="col s12 m6 card-width">
                 <div class="card row gradient-45deg-deep-orange-orange gradient-shadow white-text padding-4 mt-5">
                   <div class="col s7 m7">
@@ -45,15 +51,18 @@ $sumOfAllExpenses = sumOfAllExpenses();
                   </div>
                   <div class="col s5 m5 right-align mt-5">
                     <h5 class="mb-0 white-text" style="margin-left: -2.5em">&#8358;&nbsp;
+                        {{-- sumAllPledges() --}}
+                      @hasanyrole($adminRoles)
                         {{ sumAllPledges() }}
-                      {{--@role('admin'){{ sumAllPledges() }}@endrole--}}
-                      {{--@role('recorder'){{ sumAllInstantPledgesFR() }}@endrole--}}
+                      @else
+                        {{ sumAllInstantPledgesFR() }}
+                      @endhasanyrole
                     </h5>
                     <p class="no-margin">Unpaid Donations</p>
                   </div>
                 </div>
               </div>
-            {{--@role('admin')--}}
+            @hasanyrole($adminRoles)
               <div class="col s12 m6 card-width">
                 <div class="card row gradient-45deg-purple-deep-orange gradient-shadow white-text padding-4 mt-5">
                   <div class="col s7 m7">
@@ -61,16 +70,17 @@ $sumOfAllExpenses = sumOfAllExpenses();
                     <p>Expected Total</p>
                   </div>
                   <div class="col s5 m5 right-align mt-5">
-                    <h5 class="mb-0 white-text" style="margin-left: -2.5em">&#8358;&nbsp;
-                        {{ sumAllDonationsWithPledges() }}
-                    {{--@role('admin'){{ sumAllDonationsWithPledges() }}@endrole--}}
-                    {{--@role('recorder'){{ sumAllInstantDonationsWithPledgesFR() }}@endrole--}}
+                  <h5 class="mb-0 white-text" style="margin-left: -2.5em">&#8358;&nbsp;
+                        {{-- sumAllDonationsWithPledges() --}}
+                    @hasanyrole($adminRoles)
+                    {{ sumAllDonationsWithPledges() }}
+                    @endhasanyrole
                   </h5>
                     <p class="no-margin">Paid & Unpaid</p>
                   </div>
                 </div>
               </div>
-            {{--@endrole--}}
+            @endhasanyrole
             </div>
-            </div>
+          </div>
     </div>

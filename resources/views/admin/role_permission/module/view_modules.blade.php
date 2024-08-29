@@ -79,7 +79,7 @@ $pageTitle = 'View Modules';
   </div>
 
 
-     @include('admin.role_permission.modals.module.add_module-modal')
+     @include('admin.role_permission.module.modals.add_module-modal')
 
 </div>
 <!-- users view ends -->

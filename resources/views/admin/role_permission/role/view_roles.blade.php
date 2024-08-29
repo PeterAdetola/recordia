@@ -36,7 +36,7 @@ $pageTitle = 'View Roles';
   <div class="col s12 m12 l8 mb-10">    
          <div class="card subscriber-list-card">
             <div class="card-content pb-1">
-               <h4 class="card-title mb-0">Roles</h4>
+               <h4 class="chip gradient-45deg-indigo-purple white-text">Roles</h4>
             </div>
             <table class="subscription-table responsive-table highlight">
                <thead>
@@ -49,7 +49,10 @@ $pageTitle = 'View Roles';
     @foreach($roles as $role) 
           <tr>
              <td style="padding-left: 2em">{{ ucfirst($role->name) }}</td>
-             <td class="right-align"><a href="{{ route('assign.permission', $role->id) }}" class="modal-trigger" ><span class="chip gradient-45deg-indigo-purple lighten-2 white-text text-accent-2">Manage Permission</span></a></td>
+             <td class="right-align">
+
+<a href="{{ route('assign.permission', $role->id) }}" class="right ml-2" style="display: flex; align-items: center; "><span class="chip mr-0" style="margin-top: 5px;">Manage Permission</span><i class="small-ico-bg material-icons gradient-45deg-indigo-purple white-text mb-0">arrow_forward</i></a>
+            </td>
              <td class="right-align"><a href="#edit_role-modal{{ $role->id }}" class="modal-trigger" ><i class="material-icons  small-ico-bg blue-text">edit</i></a></td>
              <td class="center-align"><a href="#delete_role-modal{{ $role->id }}" class="modal-trigger"><i class="material-icons  small-ico-bg red-text">delete</i></a></td>
              <input type="hidden" name="order[]" value="{{ $role->id }}">

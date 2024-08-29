@@ -8,6 +8,7 @@
     <meta name="description" content="Pacmedia Creatives is an agency for business startup and solution proferin solution agency taking your ideal from imagination to reality">
     <meta name="keywords" content="balance, payments, expenses, accountind dashboard, analytic dashboard">
     <meta name="author" content="Pacmedia Creatives">
+    <title> Error 500 | Server Error</title>
     <link rel="apple-touch-icon" href="{{ asset('backend/assets/images/favicon/icon.png') }}">
     
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/assets/images/favicon/icon_bg.png') }}">
@@ -82,7 +83,7 @@
            <h1 class="card-title">Server Error</h1>
 <p>Sorry, there seem to be a glitch in the server.</p> 
 <div class="divider mb-4"></div>
-<a href="{{ route('dashboard') }}" class="ml-2 align-btn"><i class="small-ico-bg material-icons grey-text mb-0">arrow_back</i><span class="chip" style="margin-top: 5px;">Let's go back home</span></a>
+<a href="{{ route('dashboard') }}" class="ml-2 align-btn"><i class="dark-small-ico-bg material-icons grey-text mb-0">arrow_back</i><span class="chip" style="margin-top: 5px;">Let's go back home</span></a>
     </div>
   <div class="row center">Made with <span style="color:red">&#10084;</span> by Pacmedia Creatives</div>
 </div>

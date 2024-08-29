@@ -11,6 +11,21 @@ use Illuminate\Validation\ValidationException;
 
 class PermissionController extends Controller
 {
+    
+    /**
+     * Access.
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:view permission', ['only' => ['ViewPermissions']]);
+        $this->middleware('permission:create permission', ['only' => ['store']]);
+        $this->middleware('permission:edit permission', ['only' => ['update']]);
+        $this->middleware('permission:delete permission', ['only' => ['destroy']]);
+    }
+
+    /**
+     * View Permission.
+     */
     public function ViewPermissions()
     {
        
@@ -53,9 +68,10 @@ public function store(Request $request)
 
         list($moduleId, $moduleName) = explode('-', $request->module_id);
         $name = $request->name.' '.$moduleName;
-
+$existingPermission = Permission::where('name', $name)->where('guard_name', 'web')->first();
        
-     if (Permission::where('name', $name)->exists()) {
+     // if (Permission::where('name', $name)->exists()) {
+     if ($existingPermission) {
 
         $notification = array(
             'message' => 'Permission already exists',
@@ -63,6 +79,7 @@ public function store(Request $request)
 
         return redirect()->back()->with($notification);
      }
+        $name = strtolower($name);
         Permission::create([
             'name' => $name,
             'module_id' => $moduleId,

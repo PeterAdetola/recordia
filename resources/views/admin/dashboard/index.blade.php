@@ -1,4 +1,7 @@
  @extends('admin.admin_master')
+ @php
+$adminAccess = ['create donation', 'create donor', 'create expense'];
+ @endphp
   @section('vendor_styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/data-tables/css/jquery.dataTables.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css') }}">
@@ -48,6 +51,13 @@
                   </li>
                 </ol>
               </div>
+              @role('admin')
+              <div class="col s2 m6 l6">
+                <a class="modal-trigger mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right"  data-position="left" data-tooltip="activate multiple donors" style="margin-top: -10px" href="#config_overview-modal" ><i class="material-icons hide-on-med-and-up">settings</i><i class="material-icons right">settings</i>
+                </a>
+              </div>
+      @include('admin.dashboard.modals.config_overview-modal')
+              @endrole
 
             </div>
           </div>
@@ -65,7 +75,7 @@
 
       <a class="modal-trigger" href="#add-donation-modal">
       <!-- <div class="col s12 m6 l4 card-width"> -->
-      <div class="col s12 m4 l4 card-width">
+      <div class="col {{ auth()->user()->can('create expense') ? 's12 m6 l4' : 's12 m6' }} card-width">
         <div class="card border-radius-6">
           <div class="card-content center-align">
             <i class="material-icons green-text small-ico-bg mb-5">add_circle</i>
@@ -83,7 +93,7 @@
     @endif
 
       <a class="modal-trigger" href="#add-donor-modal">
-      <div class="col s6 m4 l4 card-width">
+      <div class="col {{ auth()->user()->can('create expense') ? 's6 m4 l4' : 's12 m6' }}  card-width">
         <div class="card border-radius-6">
           <div class="card-content center-align">
             <i class="material-icons blue-text small-ico-bg mb-5">person_add</i>
@@ -92,11 +102,9 @@
         </div>
       </div>
     </a>
-
-    <!-- Add Modal Here -->
     @include('admin.dashboard.modals.add-donor-form')
 
-      {{--@role('admin')--}}
+  @can('create expense')
     <a class="modal-trigger" href="#add-expense-modal">
       <div class="col s6 m4 l4 card-width">
         <div class="card border-radius-6">
@@ -107,10 +115,8 @@
         </div>
       </div>
     </a>
-      {{--@endrole--}}
-
-    <!-- Add Modal Here -->
     @include('admin.dashboard.modals.add-expense-form')
+  @endcan
 
       
     </div>

@@ -620,6 +620,7 @@ if (!function_exists('sumAllInstantDonationsFR')) {
     {
     $allRecords = App\Models\InstantRecord::all();
      $sumAllInstantDonationsFR = $allRecords->where('year', '=', getCurrentYear())
+                           ->where('event', '=', getCurrentEvent())
                            ->where('transaction', '=', 1)
                            ->where('payment_status', '=', 1)
                            ->where('recorder_id', '=', getCurrentUser());

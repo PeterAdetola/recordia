@@ -50,7 +50,8 @@ $pageTitle = 'Registered Donors';
       <div id="" class="card card-default scrollspy">
         <div class="card-content">
           <div class="row">
-            <h4 class="card-title left ml-2">{{ $pageTitle }}</h4>
+            <!-- <h4 class="card-title left ml-2">{{ $pageTitle }}</h4> -->
+            <h4 class="chip gradient-45deg-indigo-purple white-text ml-2">{{ $pageTitle }}</h4>
           </div>
           <div class="row">
             <div class="col s12">
@@ -102,11 +103,11 @@ $pageTitle = 'Registered Donors';
                     </td>
                   </tr>
 
-        <!-- Table Modal here -->
+                  <!-- Table Modal here -->
 
-    @include('admin.configs.modals.edit-donor-form') 
+                  @include('admin.configs.modals.edit-donor-form') 
 
-        <!-- /Donation info ends -->
+                <!-- /Donation info ends -->
                 @endforeach
                 </tbody>
 

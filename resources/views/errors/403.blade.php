@@ -8,7 +8,7 @@
     <meta name="description" content="Pacmedia Creatives is an agency for business startup and solution proferin solution agency taking your ideal from imagination to reality">
     <meta name="keywords" content="balance, payments, expenses, accountind dashboard, analytic dashboard">
     <meta name="author" content="Pacmedia Creatives">
-    <title> Webitor | Server Error</title>
+    <title> Error 403 | Access Denied</title>
     <link rel="apple-touch-icon" href="{{ asset('backend/assets/images/favicon/icon.png') }}">
     
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/assets/images/favicon/icon_bg.png') }}">
@@ -74,12 +74,12 @@
 		c-2.9-2.4-7.1-4.1-12.5-5.1c-5.4-1.1-12-1.6-20-1.7c-1.6-0.1-5.1-0.1-10.4-0.1h-11.9V40.9L295.2,41z"/>
 </g>
 </svg>
-      <
+
       </div>
-           <h1 class="card-title">Forbidden!!</h1>
+           <h1 class="card-title">Access Denied!!</h1>
 <p>Sorry,  Access to the requested resource is denied.</p> 
 <div class="divider mb-4"></div>
-<a href="{{ route('dashboard') }}" class="ml-2 align-btn"><i class="small-ico-bg material-icons grey-text mb-0">arrow_back</i><span class="chip" style="margin-top: 5px;">Let's go back home</span></a>
+<a href="{{ route('dashboard') }}" class="ml-2 align-btn"><i class="dark-small-ico-bg material-icons grey-text mb-0">arrow_back</i><span class="chip" style="margin-top: 5px;">Let's go back home</span></a>
     </div>
   <div class="row center">Made with <span style="color:red">&#10084;</span> by Pacmedia Creatives</div>
 </div>

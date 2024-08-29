@@ -33,10 +33,12 @@ $pageTitle = 'Verified Donations for the year '. getCurrentYear();
             </div>
           </div>
           <!-- logo and title -->
-          <div class="row mt-3 invoice-logo-title">
-            <div class="col m6 s12 display-flex invoice-logo mt-1 push-m6">
-              <img src="{{ asset('backend/assets/images/logo/recordia_bg_logo.png') }}" alt="logo" height="50" width="50">
+          <div class="row mt-3 invoice-logo-title d-flex">
+            <div class="col-md-6 col-12">
+                <img class="ml-5" src="{{ asset('backend/assets/images/logo/recordia_bg_logo.png') }}" alt="logo" height="50" width="50">
             </div>
+            <div class="col-md-6 col-12">
+                </div>
           </div>
           
           <div class="divider mb-3 mt-3"></div>

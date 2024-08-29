@@ -4,9 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Module;
+use Spatie\Permission\Models\Permission;
 
 class ModuleController extends Controller
 {
+    
+    /**
+     * Access.
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:view module', ['only' => ['ViewModules']]);
+        $this->middleware('permission:create module', ['only' => ['SaveModule']]);
+        $this->middleware('permission:edit module', ['only' => ['UpdateModule']]);
+        $this->middleware('permission:delete module', ['only' => ['DeleteModule']]);
+    }
 
     /**
      * View Modules.
@@ -36,6 +48,15 @@ class ModuleController extends Controller
         $max_no = Module::max('order');
         $order = $max_no + 1;
         $status = 1;
+       
+     if (Module::where('name', $request->name)->exists()) {
+
+        $notification = array(
+            'message' => 'Module already exists',
+        );
+
+        return redirect()->back()->with($notification);
+     }
 
             Module::insert([
                 'order' => $order,
@@ -76,6 +97,7 @@ class ModuleController extends Controller
      */
     public function DeleteModule($id)
     {
+        Permission::where('module_id', $id)->delete();
         
         $module = Module::findOrFail($id); 
 

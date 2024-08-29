@@ -55,14 +55,14 @@ $pageTitle = 'Donor\'s Donations';
             <h4 class="card-title left ml-2">{{ $donor->title }} {{ $donor->name }}'s donations</h4>
 
 @if(count($donorEventDonations) > 0)
-<a href="{{ route('donor.current_donation', $donor->id) }}" class="right ml-2" style="display: flex; align-items: center; "><span class="chip mr-0" style="margin-top: 5px;">{{ getCurrentEventName() }}'s Donations</span><i class="small-ico-bg material-icons blue-text mb-0">arrow_forward</i></a>
+<a href="{{ route('donor.current_donation', $donor->id) }}" class="right ml-2" style="display: flex; align-items: center; "><span class="chip mr-0" style="margin-top: 5px;">{{ getCurrentEventName() }}'s Donations</span><i class="small-ico-bg gradient-45deg-indigo-purple white-text material-icons mb-0">arrow_forward</i></a>
 @endif
           </div>
           <div class="row">
             <div class="col s12">
               <p>All donations made by {{ $donor->title }} {{ $donor->name }} for the year {{ getCurrentYear() }}</p>
             </div>
-            <div class="col s12">
+            <div class="">
               <table id="data-table-row-grouping" class="display">
                 <thead>
                   <tr>
@@ -70,9 +70,9 @@ $pageTitle = 'Donor\'s Donations';
                     <th>Amount (&#8358;)</th>
                     <th>Payment Status</th>
                     <th>Redeem</th>
-                    <th>Verification</th>
                     <th>Recorder</th>
                     <th>Date</th>
+                    <th>Verification</th>
                     <th>Year</th>
                     <th>Event</th>
                   </tr>
@@ -104,16 +104,16 @@ $pageTitle = 'Donor\'s Donations';
                     <i class="material-icons">call_received</i>
                   </a></td>
                   @endif
+                    
+                    <td>{{ $donorDonation['recorder']['name'] }}</td>
+
+                    <td>{{ formatDate($donorDonation->updated_at) }}</td>
 
                     @if($donorDonation->verification == 1)
                       <td><i class="material-icons green-text">check_box</i></td>
                     @else
                       <td><i class="material-icons grey-text">indeterminate_check_box</i></td>
                     @endif
-                    
-                    <td>{{ $donorDonation['recorder']['name'] }}</td>
-
-                    <td>{{ formatDate($donorDonation->updated_at) }}</td>
 
                     <td>{{ $donorDonation->year }}</td>
 
@@ -194,6 +194,5 @@ $pageTitle = 'Donor\'s Donations';
     <script src="{{ asset('backend/assets/vendors/data-tables/js/dataTables.select.min.js') }}"></script>
   @endsection
 @section('scripts')
-  <!-- <script src="{{ asset('backend/assets/js/plugins.js') }}"></script> -->
   <script src="{{ asset('backend/assets/js/scripts/data-tables.js') }}"></script>
 @endsection

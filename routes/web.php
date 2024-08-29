@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\AppHelpers;
 use App\Http\Controllers\InstantRecordController;
 use App\Http\Controllers\RegisteredRecordController;
 use App\Http\Controllers\YearController;
@@ -10,6 +9,10 @@ use App\Http\Controllers\DonorController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\SettingController;
+
+use App\AppHelpers;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +31,8 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::post('/update-donation-display-setting', [SettingController::class, 'update'])->name('updateDonationDisplaySetting');
+
 Route::post('login', [ 'as' => 'login', 'uses' => 'AuthenticatedSessionController@create']);
 
 Route::get('/dashboard', function () {
@@ -41,6 +46,9 @@ Route::middleware('auth')->group(function () {
 });
 
 
+
+
+Route::group(['middleware' => ['role:chief-admin|admin']], function() {
 // --------------| Permission Routes |----------------------------------------
 Route::controller(PermissionController::class)->group(function () {
     Route::get('/view/permissions', 'ViewPermissions')->name('view.permissions');
@@ -52,13 +60,28 @@ Route::get('permission/{id}/delete', [PermissionController::class, 'destroy']);
 // --------------| Role Routes |----------------------------------------
 Route::controller(RoleController::class)->group(function () {
     Route::get('/view/roles', 'ViewRoles')->name('view.roles');
+    // ->middleware('permission:view role');
     Route::get('/assign/permission/{id}', 'AssignPermission')->name('assign.permission');
 });
 
 Route::resource('role', RoleController::class);
-Route::post('role/{id}/delete', [RoleController::class, 'destroy']);
-// Route::post('role/{id}/update_permission', [RoleController::class, 'UpdatePermission']);
+Route::post('role/{id}/delete', [RoleController::class, 'destroy'])->middleware('permission:delete role')->middleware('permission:delete role');
 Route::put('/role/{id}/update_permission', [RoleController::class, 'UpdatePermission'])->name('role.update_permission');
+
+// --------------| Users |----------------------------------------
+Route::controller(UserController::class)->group(function () {
+    Route::get('/view/users', 'ViewUsers')->name('view.users');
+    Route::get('/view/user_details', 'ViewUserDetails')->name('view.user_details');
+    Route::get('/edit/user_permission/{id}', 'EditUserPermission')->name('edit.user_permission');
+});
+
+Route::resource('users', UserController::class);
+
+
+
+
+
+});
 
 // --------------| Module Routes |----------------------------------------
 Route::controller(ModuleController::class)->group(function () 
@@ -78,13 +101,13 @@ Route::controller(ModuleController::class)->group(function ()
 
 // Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['auth'])->group(function () {
-    Route::get('/manage/year', [YearController::class, 'manageYear'])->name('manage.year');
 
 // --------------| Manage Financial year |----------------------------------------
     Route::post('/save/year', [YearController::class, 'saveYear'])->name('save.year');
     Route::post('activate/year', [YearController::class, 'activateYear'])->name('activate.year');
     Route::get('edit/year/{id}', [YearController::class, 'editYear'])->name('edit.year');
     Route::post('update/year', [YearController::class, 'updateYear'])->name('update.year');
+    Route::get('/manage/year', [YearController::class, 'manageYear'])->name('manage.year');
 
     Route::get('/manage/event', [EventController::class, 'manageEvent'])->name('manage.event');
     Route::post('update/event', [EventController::class, 'updateEvent'])->name('update.event');
@@ -101,12 +124,11 @@ Route::controller(DonorController::class)->group(function () {
     Route::get('preview/donor/donation/{id}', 'prevDonorDonation')->name('preview.donor.donation');
     Route::get('/donor/current/donation/{id}', 'getDonorCurrentDonation')->name('donor.current_donation');
     Route::get('preview/donor/current/donation/{id}', 'prevDonorCurrentDonation')->name('preview.donor.current_donation');
-    // Route::get('/get/donor/{id}', [DonorController::class, 'getDonor'])->name('get.donor');
     Route::get('/activate/donors', 'activateDonors')->name('activate.donors');
     Route::post('activate/donor', 'activateDonor')->name('activate.donor');
-    Route::post('update/donor', 'updateDonor')->name('update.donor');
-    
+    Route::post('update/donor', 'updateDonor')->name('update.donor');    
     });
+
 });
 
 

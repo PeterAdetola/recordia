@@ -7,74 +7,39 @@ use App\Models\Event;
 
 class EventController extends Controller
 {
-
     /**
      * Get all events.
      */
-    public function manageEvent(Request $request)
+    public function manageEvent()
     {
-
         $tab = '';
-
         $events = Event::orderBy('updated_at', 'DESC')->get();
-
-        $activeEvent = Event::where('status', 1)->exists();
-        if($activeEvent){
-            $noEvent = 0;
-        } else {
-            $noEvent = 1;
-        }
+        $noEvent = Event::where('status', 1)->doesntExist() ? 1 : 0;
 
         return view('admin.configs.config_event', compact('tab', 'events', 'noEvent'));
     }
 
     /**
-     * Save event
+     * Save event.
      */
     public function saveEvent(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-        ],[
-            'name.required' => 'Donor\'fullname and title is required',
-        ]);
-        $activateClicked = isset($request->status);
+        $this->validateEvent($request);
+        $activateClicked = $request->filled('status');
 
-        if(!$activateClicked) {
-            $request->status = 0;
-            $feedback = 0; 
+        if ($activateClicked) {
+            Event::where('status', '=', 1)->update(['status' => 0]);
+            $request->status = 1;
         } else {
-        // Update all other rows' status to inactive
-        Event::where('status', '=', 1)->update(['status' => 0]);
-            $feedback = 1; 
+            $request->status = 0;
         }
 
-        $expiresAt = time() + 1; 
-        session(['tab' => $request->tab, 'expires_at' => $expiresAt]);
+        $this->setSessionTab($request->tab);
 
-      Event::create([
-            'name' => $request->name,
-            'status' => $request->status,
-        ]);
+        Event::create($request->only(['name', 'status']));
 
-    if($feedback == 0) {
-        $notification = array(
-            'message' => 'Event Created',
-            'eventMessageTitle' => 'Event is created!',
-            'eventMessage' => 'You can further activate the created event by clicking on the event of choice and click the activate button.'
-        );
-    } else {
-        $notification = array(
-            'message' => 'Event created and activated',
-            'eventMessageTitle' => getCurrentEventName().' is created and activated!',
-            'eventMessage' => 'All activities will be done to '.getCurrentEventName().'.'
-        );
+        return redirect()->back()->with($this->getSaveNotification($activateClicked));
     }
-
-        return redirect()->back()->with($notification);
-       
-    }
-       
 
     /**
      * Activate selected event.
@@ -84,110 +49,95 @@ class EventController extends Controller
         $selectedEventId = $request->input('status');
         $noEvent = $request->input('no_event');
 
-
-
-        $existing_events = Event::get();
-        $active_event = $existing_events->where('status', '=', '1');
-
-        if($noEvent){
-
-        // Create session with tab value
-        $expiresAt = time() + 1; 
-        session(['tab' => $request->tab, 'expires_at' => $expiresAt]);
-
-        // Update all other rows' status to inactive
-        Event::where('id', '!=', $selectedEventId)->update(['status' => 0]);
-           
-
-            $notification = array(
-                'message' => 'No event activated',
-                'eventMessageTitle' => getCurrentEventName().' is activated!',
-                'eventMessage' => 'All activities will be done to '.getCurrentEventName().'.'
-            );
-
-            return redirect()->route('manage.event')->with($notification);
-
-
-        } else {
-
-    if (count($active_event)){
-
-            foreach ($active_event as $active_event){
-
-        if ($active_event->id == $selectedEventId) {
-
-            $notification = array(
-                'message' => 'Nothing to activate'
-            );
-
-            return redirect()->route('manage.event')->with($notification);
-
-        } else {
-
-        // Create session with tab value
-        $expiresAt = time() + 1; 
-        session(['tab' => $request->tab, 'expires_at' => $expiresAt]);
-
-            // Update the selected row's status to active
-            Event::where('id', $selectedEventId)->update(['status' => 1]);
-
-            // Update all other rows' status to inactive
-            Event::where('id', '!=', $selectedEventId)->update(['status' => 0]);
-
-           
-
-            $notification = array(
-                'message' => 'Event activated',
-                'eventMessageTitle' => getCurrentEventName().' is activated!',
-                'eventMessage' => 'All activities will be done to '.getCurrentEventName().'.'
-            );
-
-            return redirect()->route('manage.event')->with($notification);
-
-                }
-
-            }
-
-    } else {
-        // Create session with tab value
-        $expiresAt = time() + 1; 
-        session(['tab' => $request->tab, 'expires_at' => $expiresAt]);
-
-            // Update the selected row's status to active
-            Event::where('id', $selectedEventId)->update(['status' => 1]);
-        
-            $notification = array(
-                'message' => 'Event activated',
-                'eventMessageTitle' => getCurrentEventName().' is activated!',
-                'eventMessage' => 'All activities will be done to '.getCurrentEventName().'.'
-            );
-
-            return redirect()->route('manage.event')->with($notification);
-
-            }
-
+        if ($noEvent) {
+            return $this->activateNoEvent($request);
         }
-    }
 
+        $this->setSessionTab($request->tab);
+
+        $activeEvent = Event::where('status', 1)->first();
+
+        if ($activeEvent && $activeEvent->id == $selectedEventId) {
+            return redirect()->route('manage.event')->with(['message' => 'Nothing to activate']);
+        }
+
+        $this->activateEventById($selectedEventId);
+
+        return redirect()->route('manage.event')->with($this->getActivationNotification());
+    }
 
     /**
      * Update event details.
      */
     public function updateEvent(Request $request)
     {
-        $id = $request->id; 
+        $this->setSessionTab($request->tab);
 
-        $expiresAt = time() + 1; 
-        session(['tab' => $request->tab, 'expires_at' => $expiresAt]);      
+        Event::findOrFail($request->id)->update(['name' => $request->name]);
 
-        Event::findOrFail($id)->update([
-        'name' => $request->name,
-    ]);
+        return redirect()->route('manage.event')->with(['message' => 'Event details updated']);
+    }
 
-        $notification = array(
-            'message' => 'Event details updated'
-        );
+    /**
+     *
+     *
+     * Private methods
+     */
 
-        return redirect()->route('manage.event')->with($notification);
+    private function validateEvent(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+        ], [
+            'name.required' => 'Event name is required',
+        ]);
+    }
+
+    private function setSessionTab($tab)
+    {
+        session(['tab' => $tab, 'expires_at' => time() + 1]);
+    }
+
+    private function getSaveNotification($activateClicked)
+    {
+        if ($activateClicked) {
+            return [
+                'message' => 'Event created and activated',
+                'eventMessageTitle' => getCurrentEventName() . ' is created and activated!',
+                'eventMessage' => 'All activities will be done to ' . getCurrentEventName() . '.',
+            ];
+        }
+
+        return [
+            'message' => 'Event Created',
+            'eventMessageTitle' => 'Event is created!',
+            'eventMessage' => 'You can further activate the created event by clicking on the event of choice and clicking the activate button.',
+        ];
+    }
+
+    private function activateNoEvent(Request $request)
+    {
+        $this->setSessionTab($request->tab);
+
+        return redirect()->route('manage.event')->with([
+            'message' => 'No event activated',
+            'eventMessageTitle' => getCurrentEventName() . ' is activated!',
+            'eventMessage' => 'All activities will be done to ' . getCurrentEventName() . '.',
+        ]);
+    }
+
+    private function activateEventById($selectedEventId)
+    {
+        Event::where('id', $selectedEventId)->update(['status' => 1]);
+        Event::where('id', '!=', $selectedEventId)->update(['status' => 0]);
+    }
+
+    private function getActivationNotification()
+    {
+        return [
+            'message' => 'Event activated',
+            'eventMessageTitle' => getCurrentEventName() . ' is activated!',
+            'eventMessage' => 'All activities will be done to ' . getCurrentEventName() . '.',
+        ];
     }
 }

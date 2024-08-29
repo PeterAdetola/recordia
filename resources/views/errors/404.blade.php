@@ -8,7 +8,7 @@
     <meta name="description" content="Pacmedia Creatives is an agency for business startup and solution proferin solution agency taking your ideal from imagination to reality">
     <meta name="keywords" content="balance, payments, expenses, accountind dashboard, analytic dashboard">
     <meta name="author" content="Pacmedia Creatives">
-    <title> Webitor | Page not found</title>
+    <title> Error 404 | Page not found</title>
     <link rel="apple-touch-icon" href="{{ asset('backend/assets/images/favicon/icon.png') }}">
     
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('backend/assets/images/favicon/icon_bg.png') }}">
@@ -74,7 +74,7 @@
            <h1 class="card-title">Page not found</h1>
 <p>Sorry, the page you are looking for cannot be found.</p> 
 <div class="divider mb-4"></div>
-<a  id="redirect-link" href="#" class="ml-2 align-btn"><i class="small-ico-bg material-icons grey-text mb-0">arrow_back</i><span class="chip" style="margin-top: 5px;">Let's go back home</span></a>
+<a  id="redirect-link" href="{{ url()->previous() }}" class="ml-2 align-btn"><i class="dark-small-ico-bg material-icons grey-text mb-0">arrow_back</i><span class="chip" style="margin-top: 5px;">Let's go back home</span></a>
     </div>
   <div class="row center">Made with <span style="color:red">&#10084;</span> by Pacmedia Creatives</div>
 </div>
@@ -95,18 +95,18 @@
     <!-- END THEME  JS-->
     <!-- BEGIN PAGE LEVEL JS-->
     <!-- END PAGE LEVEL JS-->
-     <script>
+     <!-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             var referrer = document.referrer;
             var link = document.getElementById('redirect-link');
 
             if (referrer.includes('/admin')) {
-                link.href = '{{ route('dashboard') }}';
+                link.href = '{{ url()->previous() }}';
             } else {
                 link.href = '{{ url('/') }}';
             }
         });
-    </script>
+    </script> -->
     <script type='text/javascript'>
       function ShowPreloader() {
         document.getElementById('preloader').style.display = "block";
