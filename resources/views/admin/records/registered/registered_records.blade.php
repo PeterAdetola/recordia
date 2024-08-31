@@ -9,9 +9,14 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/data-tables.css') }}">
   @endsection
 
-@php
+<?php
 $pageTitle = 'Registered Records';
-@endphp
+$isRecorder = auth()->user()->hasRole('recorder');
+
+if($isRecorder){
+  $registeredRecords = $registeredRecords->where('recorder_id', '=', getCurrentUser());
+}
+?>
 
 
     <!-- BEGIN: Page Main-->

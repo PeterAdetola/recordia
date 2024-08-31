@@ -1,9 +1,33 @@
-@php
-$sumOfAllExpenses = sumOfAllExpenses();
+<?php
 $adminRoles = ['chief-admin', 'admin'];
+$notByEvent = $displayEventDonation === 0 || getCurrentEvent() == 'No event';
 
-$displayDonationByEvent = config('displayDonation.display_donations_by_event');
-@endphp
+$displayEventDonation = checkDonationDisplay()->first()->display_donations_by_event;
+
+
+if(isAdmin()){
+
+  if($notByEvent) {
+    $sumTotalPaidDonation       = sumTotalPaidDonation();
+    $sumAvailableFund           = sumAvailableFund();
+    $sumTotalPledges            = sumAllPledges();
+    $sumAllDonationsWithPledges = sumAllDonationsWithPledges();
+
+  } else {
+
+    $sumTotalPaidDonation       = sumTotalPaidEventDonation();
+    $sumAvailableFund           = sumAvailableEventFund();
+    $sumTotalPledges            = sumAllEventPledges();
+    $sumAllDonationsWithPledges = sumAllEventDonationsWithPledges();
+  }
+
+} else {
+
+    $sumTotalPaidDonation = sumTotalPaidEventDonationFR();
+    $sumTotalPledges      = sumAllEventPledgesFR();
+}
+ 
+?>
       <div class="card">
           <div class="card-content">
                 
@@ -16,12 +40,7 @@ $displayDonationByEvent = config('displayDonation.display_donations_by_event');
                   </div>
                   <div class="col s5 m5 right-align mt-5">
                     <h5 class="mb-0 white-text" style="margin-left: -2.5em">&#8358;&nbsp;
-                        {{-- getTotalPaidDonation() --}}
-                    @hasanyrole($adminRoles)
-                      {{ getTotalPaidDonation() }}
-                    @else
-                      {{ sumAllInstantDonationsFR() }}
-                    @endhasanyrole
+                    {{ $sumTotalPaidDonation }}
                     </h5>
                     <p>Cash & Transfer</p>
                   </div>
@@ -36,7 +55,7 @@ $displayDonationByEvent = config('displayDonation.display_donations_by_event');
                   </div>
                   <div class="col s5 m5 right-align mt-5">
                     <h5 class="mb-0 white-text" style="margin-left: -2.5em">&#8358;&nbsp;
-                    {{ sumAvailableFund() }}
+                    {{ $sumAvailableFund }}
                     </h5>
                     <p class="no-margin">Verified & Available</p>
                   </div>
@@ -51,12 +70,7 @@ $displayDonationByEvent = config('displayDonation.display_donations_by_event');
                   </div>
                   <div class="col s5 m5 right-align mt-5">
                     <h5 class="mb-0 white-text" style="margin-left: -2.5em">&#8358;&nbsp;
-                        {{-- sumAllPledges() --}}
-                      @hasanyrole($adminRoles)
-                        {{ sumAllPledges() }}
-                      @else
-                        {{ sumAllInstantPledgesFR() }}
-                      @endhasanyrole
+                      {{ $sumTotalPledges }}
                     </h5>
                     <p class="no-margin">Unpaid Donations</p>
                   </div>
@@ -71,10 +85,7 @@ $displayDonationByEvent = config('displayDonation.display_donations_by_event');
                   </div>
                   <div class="col s5 m5 right-align mt-5">
                   <h5 class="mb-0 white-text" style="margin-left: -2.5em">&#8358;&nbsp;
-                        {{-- sumAllDonationsWithPledges() --}}
-                    @hasanyrole($adminRoles)
-                    {{ sumAllDonationsWithPledges() }}
-                    @endhasanyrole
+                     {{ $sumAllDonationsWithPledges }}
                   </h5>
                     <p class="no-margin">Paid & Unpaid</p>
                   </div>

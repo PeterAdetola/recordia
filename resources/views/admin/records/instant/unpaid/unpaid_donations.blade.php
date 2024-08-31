@@ -11,9 +11,13 @@
 
   @endsection
 
-@php
-$pageTitle = 'Unpaid Donations';
-@endphp
+<?php
+$pageTitle = 'Unpaid Donations';$isRecorder = auth()->user()->hasRole('recorder');
+
+if($isRecorder){
+  $unpaidDonations = $unpaidDonations->where('recorder_id', '=', getCurrentUser());
+}
+?>
 
 
     <!-- BEGIN: Page Main-->
@@ -33,6 +37,7 @@ $pageTitle = 'Unpaid Donations';
                   </li>
                 </ol>
               </div>
+              @if(isAdmin())
               <div class="col s2 m6 l6"><a class="btn dropdown-settings waves-effect waves-light breadcrumbs-btn right" href="#!" data-target="dropdown1"><i class="material-icons hide-on-med-and-up">settings</i><i class="material-icons right">arrow_drop_down</i></a>
               <ul class="dropdown-content" id="dropdown1" tabindex="0">
                 <li tabindex="0"><a class="grey-text text-darken-2" href="{{ route('instant.edit.pledges') }}">Redeem Pledges</a></li>
@@ -40,6 +45,7 @@ $pageTitle = 'Unpaid Donations';
                 <li tabindex="0"><a class="grey-text text-darken-2" href="{{  route('instant.prev_unpaid.donations')}}">Print</a></li>
               </ul>
               </div>
+              @endif
             </div>
           </div>
         </div>
@@ -57,7 +63,7 @@ $pageTitle = 'Unpaid Donations';
           <h4 class="card-title">Unpaid Donations</h4>
           <div class="row">
             <div class="col s12">
-              <p>The data in this table contains the records of pledges so far, not for registered donors.</p>
+              <p>The data in this table contains the records of pledges so far, for unregistered donors.</p>
             </div>
             <div class="col s12">
               <table id="data-table-row-grouping" class="display">
@@ -168,7 +174,9 @@ document.getElementById("submitBtn{{$unpaidDonation->id}}").addEventListener("cl
               </table>
               <div class="divider"></div>
               <div class="row">
+                @if(isAdmin())
                 <div class="mt-2 mr-4 center">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ sumAllInstantPledges() }}</span></div>
+                @endif
               </div>
             </div>
             </div>

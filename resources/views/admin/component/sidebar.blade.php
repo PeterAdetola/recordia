@@ -50,13 +50,13 @@ $adminAccess = ['view user', 'view permission', 'view role'];
                   <span data-i18n="Pledges">Pledges</span>
                 </a>
               </li> 
-      {{--@can('view expense')--}}
+      @can('view expense')
               <li>
                 <a class="{{ ($route == 'get.expenses')? 'active' : '' }} waves-effect waves-cyan" href="{{  route('get.expenses')}}"><i class="material-icons">radio_button_unchecked</i>
                   <span data-i18n="All Expenses">All Expenses</span>
                 </a>
               </li>   
-      {{--@endcan--}}
+      @endcan
             </ul>
           </div>
         </li>

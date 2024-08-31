@@ -11,9 +11,14 @@
 
   @endsection
 
-@php
+<?php
 $pageTitle = 'Verified Donations';
-@endphp
+$isRecorder = auth()->user()->hasRole('recorder');
+
+if($isRecorder){
+  $verifiedDonations = $verifiedDonations->where('recorder_id', '=', getCurrentUser());
+}
+?>
 
 
     <!-- BEGIN: Page Main-->
@@ -52,7 +57,7 @@ $pageTitle = 'Verified Donations';
           <h4 class="card-title">Verified Donations</h4>
           <div class="row">
             <div class="col s12">
-              <p>The data in this table contains the records of confirmed donations, not for registered donors.</p>
+              <p>The data in this table contains the records of confirmed donations, for registered donors.</p>
             </div>
             <div class="col s12">
               <table id="data-table-row-grouping" class="display">
@@ -131,7 +136,9 @@ $pageTitle = 'Verified Donations';
               </table>
               <div class="divider"></div>
               <div class="row">
+                @if(isAdmin())
                 <div class="mt-2 mr-4 center">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ sumVerifiedRegDonations() }}</span></div>
+                @endif
               </div>
             </div>
           </div>

@@ -7,6 +7,17 @@ use App\Models\Event;
 
 class EventController extends Controller
 {
+    
+    /**
+     * Access.
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:view event', ['only' => ['manageEvent']]);
+        $this->middleware('permission:create event', ['only' => ['saveEvent', 'activateEvent']]);
+        $this->middleware('permission:edit event', ['only' => ['updateEvent']]);
+        // $this->middleware('permission:delete year', ['only' => ['destroy']]);
+    }
     /**
      * Get all events.
      */
@@ -43,17 +54,25 @@ class EventController extends Controller
 
     /**
      * Activate selected event.
-     */
-    public function activateEvent(Request $request)
+     */   
+
+   public function activateEvent(Request $request)
     {
         $selectedEventId = $request->input('status');
         $noEvent = $request->input('no_event');
 
-        if ($noEvent) {
-            return $this->activateNoEvent($request);
-        }
-
         $this->setSessionTab($request->tab);
+
+        if ($noEvent) {
+            // Deactivate all events
+            Event::where('status', 1)->update(['status' => 0]);
+
+            return redirect()->route('manage.event')->with([
+                'message' => 'No event activated',
+                'eventMessageTitle' => 'No event is currently active!',
+                'eventMessage' => 'All events have been deactivated.',
+            ]);
+        }
 
         $activeEvent = Event::where('status', 1)->first();
 

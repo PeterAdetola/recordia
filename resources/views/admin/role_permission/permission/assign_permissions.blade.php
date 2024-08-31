@@ -49,10 +49,7 @@ $pageTitle = 'Assign Permissions';
             <div class="card">
               <div class="card-content pb-2">
                 <h4 class="card-title mb-0"><span class="chip gradient-45deg-indigo-purple lighten-2 white-text text-accent-2">{{ ucfirst($role->name) }}</span></h4>
-                
-                    <div class="progress collection">
-                      <div id="assign_permission-preloader" class="indeterminate" style="display:none; border:2px #ebebeb solid"></div>
-                    </div>
+                <div class="divider"></div>
 
                 <form method="POST" action="{{ url('role/'.$role->id.'/update_permission') }}">
                   @csrf
@@ -94,6 +91,9 @@ $pageTitle = 'Assign Permissions';
                     </tbody>
                   </table>
 
+                    <div class="progress collection" style="margin-top: -4px;" >
+                      <div id="assign_permission-preloader" class="indeterminate" style="display:none; border:2px #ebebeb solid"></div>
+                    </div>
                   <div class="row mt-2">
                   <button id="assignPermissionBtn" type="submit" class="btn-large right mr-3">Save</button>
                   </div>

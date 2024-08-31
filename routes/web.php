@@ -10,7 +10,7 @@ use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\SettingController;
+use App\Http\Controllers\SettingsController;
 
 use App\AppHelpers;
 use Illuminate\Support\Facades\Route;
@@ -31,7 +31,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::post('/update-donation-display-setting', [SettingController::class, 'update'])->name('updateDonationDisplaySetting');
+Route::post('/update-donation-display-setting', [SettingsController::class, 'update'])->name('updateDonationDisplaySetting');
 
 Route::post('login', [ 'as' => 'login', 'uses' => 'AuthenticatedSessionController@create']);
 

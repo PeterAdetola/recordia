@@ -14,7 +14,7 @@ class DonorController extends Controller
     public function manageDonor()
     {
         $donors = Donor::orderBy('updated_at', 'DESC')->get();
-        $donorDonations = RegisteredRecord::get();
+        $donorDonations = RegisteredRecord::all();
 
         return view('admin.configs.config_donor', compact('donors', 'donorDonations'));
     }
@@ -24,7 +24,7 @@ class DonorController extends Controller
      */
     public function activateDonors(Request $request)
     {
-        // Implementation needed
+        // Implementation here
     }
 
     /**
@@ -32,31 +32,56 @@ class DonorController extends Controller
      */
     public function getDonorDonation($id)
     {
-        return $this->donorDonationView($id, 'admin.configs.donor_donation');
+        $donor = Donor::findOrFail($id);
+        $donorDonations = $this->getDonorRecords($id);
+        $donorEventDonations = $this->getDonorRecords($id, true);
+        $paidDonorDonations = $this->formatDonations($id, 1);
+        $unpaidDonorDonations = $this->formatDonations($id, 0);
+        $sumDonorDonations = $this->formatDonations($id);
+
+        return view('admin.configs.donor_donation', compact('donor', 'donorDonations', 'donorEventDonations', 'sumDonorDonations', 'paidDonorDonations', 'unpaidDonorDonations'));
     }
 
     /**
-     * Preview Donor's donations.
+     * Get Donor's previous donations.
      */
     public function prevDonorDonation($id)
     {
-        return $this->donorDonationView($id, 'admin.configs.prev_donor_donation');
+        $donor = Donor::findOrFail($id);
+        $donorDonations = $this->getDonorRecords($id);
+        $paidDonorDonations = $this->formatDonations($id, 1);
+        $unpaidDonorDonations = $this->formatDonations($id, 0);
+        $sumDonorDonations = $this->formatDonations($id);
+
+        return view('admin.configs.prev_donor_donation', compact('donor', 'donorDonations', 'sumDonorDonations', 'paidDonorDonations', 'unpaidDonorDonations'));
     }
 
     /**
-     * Get Donor's Current donations.
+     * Get Donor's current donations.
      */
     public function getDonorCurrentDonation($id)
     {
-        return $this->donorCurrentDonationView($id, 'admin.configs.donor_current_donation');
+        $donor = Donor::findOrFail($id);
+        $donorDonations = $this->getDonorRecords($id, true);
+        $paidDonorDonations = $this->formatDonations($id, 1, true);
+        $unpaidDonorDonations = $this->formatDonations($id, 0, true);
+        $sumDonorDonations = $this->formatDonations($id, null, true);
+
+        return view('admin.configs.donor_current_donation', compact('donor', 'donorDonations', 'sumDonorDonations', 'paidDonorDonations', 'unpaidDonorDonations'));
     }
 
     /**
-     * Preview Donor's Current donations.
+     * Get Donor's current donations preview.
      */
     public function prevDonorCurrentDonation($id)
     {
-        return $this->donorCurrentDonationView($id, 'admin.configs.prev_donor_current_donation');
+        $donor = Donor::findOrFail($id);
+        $donorDonations = $this->getDonorRecords($id, true);
+        $paidDonorDonations = $this->formatDonations($id, 1, true);
+        $unpaidDonorDonations = $this->formatDonations($id, 0, true);
+        $sumDonorDonations = $this->formatDonations($id, null, true);
+
+        return view('admin.configs.prev_donor_current_donation', compact('donor', 'donorDonations', 'sumDonorDonations', 'paidDonorDonations', 'unpaidDonorDonations'));
     }
 
     /**
@@ -64,9 +89,10 @@ class DonorController extends Controller
      */
     public function updateDonor(Request $request)
     {
-        $request->status = isset($request->status) ? 1 : 0;
+        $id = $request->id;
+        $status = $request->has('status') ? 1 : 0;
 
-        Donor::findOrFail($request->id)->update($request->only(['title', 'name', 'username', 'phone', 'status']));
+        Donor::findOrFail($id)->update($request->only('title', 'name', 'username', 'phone') + ['status' => $status]);
 
         return redirect()->back()->with(['message' => 'Donor Updated']);
     }
@@ -75,110 +101,6 @@ class DonorController extends Controller
      * Save donor.
      */
     public function saveDonor(Request $request)
-    {
-        $this->validateDonor($request);
-
-        $request->status = isset($request->status) ? 1 : 0;
-
-        if ($this->donorExists($request)) {
-            return redirect()->back()->with(['message' => 'Donor already exists']);
-        }
-
-        Donor::create($request->only(['title', 'name', 'username', 'phone', 'status']));
-
-        return redirect()->back()->with(['message' => 'Donor saved']);
-    }
-
-    /**
-     *
-     *
-     * Private methods
-     */
-
-    private function donorDonationView($id, $view)
-    {
-        $donor = $this->getDonor($id);
-        $donorDonations = $this->getDonorDonations($id);
-        $donorEventDonations = $this->getDonorEventDonations($id);
-        $paidDonorDonations = $this->getPaidDonorDonations($id);
-        $unpaidDonorDonations = $this->getUnpaidDonorDonations($id);
-        $sumDonorDonations = $this->getSumDonorDonations($id);
-
-        return view($view, compact(
-            'donor', 'donorDonations', 'donorEventDonations',
-            'sumDonorDonations', 'paidDonorDonations', 'unpaidDonorDonations'
-        ));
-    }
-
-    private function donorCurrentDonationView($id, $view)
-    {
-        $donor = $this->getDonor($id);
-        $donorDonations = $this->getDonorEventDonations($id);
-        $paidDonorDonations = $this->getPaidDonorDonations($id, true);
-        $unpaidDonorDonations = $this->getUnpaidDonorDonations($id, true);
-        $sumDonorDonations = $this->getSumDonorDonations($id, true);
-
-        return view($view, compact(
-            'donor', 'donorDonations', 'sumDonorDonations',
-            'paidDonorDonations', 'unpaidDonorDonations'
-        ));
-    }
-
-    private function getDonor($id)
-    {
-        return Donor::findOrFail($id);
-    }
-
-    private function getDonorDonations($id)
-    {
-        return RegisteredRecord::with('event')->where('donor_id', $id)
-            ->orderBy('updated_at', 'DESC')->get();
-    }
-
-    private function getDonorEventDonations($id)
-    {
-        return RegisteredRecord::with('event')->where('donor_id', $id)
-            ->where('year', getCurrentYear())
-            ->where('event_id', getCurrentEvent())
-            ->orderBy('updated_at', 'DESC')->get();
-    }
-
-    private function getPaidDonorDonations($id, $current = false)
-    {
-        $query = RegisteredRecord::where('donor_id', $id)
-            ->where('payment_status', 1);
-
-        if ($current) {
-            $query->where('year', getCurrentYear())->where('event_id', getCurrentEvent());
-        }
-
-        return formatAmount($query->sum('amount'));
-    }
-
-    private function getUnpaidDonorDonations($id, $current = false)
-    {
-        $query = RegisteredRecord::where('donor_id', $id)
-            ->where('payment_status', 0);
-
-        if ($current) {
-            $query->where('year', getCurrentYear())->where('event_id', getCurrentEvent());
-        }
-
-        return formatAmount($query->sum('amount'));
-    }
-
-    private function getSumDonorDonations($id, $current = false)
-    {
-        $query = RegisteredRecord::where('donor_id', $id);
-
-        if ($current) {
-            $query->where('year', getCurrentYear())->where('event_id', getCurrentEvent());
-        }
-
-        return formatAmount($query->sum('amount'));
-    }
-
-    private function validateDonor(Request $request)
     {
         $request->validate([
             'title' => 'required',
@@ -191,12 +113,51 @@ class DonorController extends Controller
             'username.required' => 'Donor\'s username is required',
             'phone.required' => 'Phone number of the donor is required',
         ]);
+
+        $status = $request->has('status') ? 1 : 0;
+
+        if (Donor::where('username', $request->username)->exists()) {
+            return redirect()->back()->with(['message' => 'Username already exists']);
+        }
+
+        if (Donor::where('phone', $request->phone)->exists()) {
+            return redirect()->back()->with(['message' => 'Phone number already exists']);
+        }
+
+        Donor::create($request->only('title', 'name', 'username', 'phone') + ['status' => $status]);
+
+        return redirect()->back()->with(['message' => 'Donor saved']);
     }
 
-    private function donorExists(Request $request)
+    /**
+     * Helper function to get donor records.
+     */
+    private function getDonorRecords($id, $current = false)
     {
-        return Donor::where('username', $request->username)
-            ->orWhere('phone', $request->phone)
-            ->exists();
+        $query = RegisteredRecord::with('event')->where('donor_id', $id);
+
+        if ($current) {
+            $query->where('year', getCurrentYear())->where('event_id', getCurrentEvent());
+        }
+
+        return $query->orderBy('updated_at', 'DESC')->get();
+    }
+
+    /**
+     * Helper function to format donations.
+     */
+    private function formatDonations($id, $status = null, $current = false)
+    {
+        $query = RegisteredRecord::where('donor_id', $id);
+
+        if (!is_null($status)) {
+            $query->where('payment_status', $status);
+        }
+
+        if ($current) {
+            $query->where('year', getCurrentYear())->where('event_id', getCurrentEvent());
+        }
+
+        return formatAmount($query->sum('amount'));
     }
 }

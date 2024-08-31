@@ -3,6 +3,15 @@ use Illuminate\Support\Facades\Auth;
 
 
 // Get user's id
+if (!function_exists('isAdmin')) {
+    function isAdmin()
+    {
+    $isAdmin = auth()->user()->hasAnyRole(['cheif-admin', 'admin']);     
+     return $isAdmin;
+    }
+}
+
+// Get user's id
 if (!function_exists('getCurrentUser')) {
     function getCurrentUser()
     {
@@ -352,8 +361,8 @@ if (!function_exists('sumAllPaidRegDonations')) {
 
 // Sum instant and registered donation excluding pledges 
 // -----------------------------------------
-if (!function_exists('getTotalPaidDonation')) {
-    function getTotalPaidDonation()
+if (!function_exists('sumTotalPaidDonation')) {
+    function sumTotalPaidDonation()
     {
     $allRegRecords = App\Models\RegisteredRecord::all();
      $allPaidRegRecords = $allRegRecords->where('year', '=', getCurrentYear())
@@ -373,6 +382,68 @@ if (!function_exists('getTotalPaidDonation')) {
         $amt = $totalPaidDonations;
         $totalPaidDonations = formatAmount($amt);
      return $totalPaidDonations;
+    }
+}
+
+// Sum registered donation for event excluding pledges 
+// -----------------------------------------
+if (!function_exists('sumTotalPaidEventDonation')) {
+    function sumTotalPaidEventDonation()
+    {
+    $data = App\Models\RegisteredRecord::all();
+     $data = $data->where('year', '=', getCurrentYear())
+                        ->where('event_id', '=', getCurrentEvent())
+                        ->where('payment_status', '=', 1);
+// Sum Amount
+        $totalPaidEventDonations = $data->sum('amount');
+
+    // $allInsRecords = App\Models\InstantRecord::all();
+    //  $allPaidInsDonation = $allInsRecords->where('year', '=', getCurrentYear())
+    //                        ->where('transaction', '=', 1)
+    //                        ->where('payment_status', '=', 1);
+// Sum Amount
+        // $totalPaidEventDonation = $totalPaidEventDonation->sum('amount');
+
+    // $totalPaidDonations = $totalPaidRegDonation + $totalPaidInsDonation;
+// Format Amount
+        $amt = $totalPaidEventDonations;
+        $totalPaidEventDonations = formatAmount($amt);
+     return $totalPaidEventDonations;
+    }
+}
+// Sum registered donation for current event excluding pledges for recorders
+// -----------------------------------------
+if (!function_exists('sumTotalPaidEventDonationFR')) {
+    function sumTotalPaidEventDonationFR()
+    {
+    $data = App\Models\RegisteredRecord::all();
+     $data = $data->where('year', '=', getCurrentYear())
+                        ->where('event_id', '=', getCurrentEvent())
+                        ->where('payment_status', '=', 1)
+                        ->where('recorder_id', '=', getCurrentUser());
+// Sum Amount
+        $totalPaidEventDonationFR = $data->sum('amount');
+// Format Amount
+        $amt = $totalPaidEventDonationFR;
+        $totalPaidEventDonationFR = formatAmount($amt);
+     return $totalPaidEventDonationFR;
+    }
+}
+// Sum instant donation excluding pledges for recorders
+// -----------------------------------------
+if (!function_exists('sumTotalPaidInsDonationFR')) {
+    function sumTotalPaidInsDonationFR()
+    {
+    $data = App\Models\InstantRecord::all();
+     $data = $data->where('year', '=', getCurrentYear())
+                        ->where('payment_status', '=', 1)
+                        ->where('recorder_id', '=', getCurrentUser());
+// Sum Amount
+        $totalPaidInsDonations = $data->sum('amount');
+// Format Amount
+        $amt = $totalPaidInsDonations;
+        $totalPaidInsDonations = formatAmount($amt);
+     return $totalPaidInsDonations;
     }
 }
 
@@ -425,6 +496,38 @@ if (!function_exists('sumAvailableFund')) {
         $amt = $totalAvailableFund;
         $totalAvailableFund = formatAmount($amt);
      return $totalAvailableFund;
+
+    }
+}
+
+// Get the total of available fund for event donations
+// -----------------------------------------
+if (!function_exists('sumAvailableEventFund')) {
+    function sumAvailableEventFund()
+    {
+//     $allInsRecords = App\Models\InstantRecord::all();
+//     $availableInsFund = $allInsRecords->where('year', '=', getCurrentYear())
+//                            ->where('transaction', '=', 1)
+//                            ->where('payment_status', '=', 1)
+//                            ->where('verification', '=', 1);
+// // Sum Amount
+    // $totalAvailableInsFund = $availableInsFund->sum('amount');
+
+    $data = App\Models\RegisteredRecord::all();
+    $data = $data->where('year', '=', getCurrentYear())
+                        ->where('event_id', '=', getCurrentEvent())
+                        ->where('payment_status', '=', 1)
+                        ->where('verification', '=', 1);
+
+// Sum Amount
+    $totalAvailableEventFund = $data->sum('amount');
+
+// $totalAvailableFund = $totalAvailableInsFund + $totalAvailableRegFund;    
+
+// Format Amount
+        $amt = $totalAvailableEventFund;
+        $totalAvailableEventFund = formatAmount($amt);
+     return $totalAvailableEventFund;
 
     }
 }
@@ -502,6 +605,29 @@ if (!function_exists('sumAllDonationsWithPledges')) {
         $amt = $totalDonationsWithPledges;
         $totalDonationsWithPledges = formatAmount($amt);
      return $totalDonationsWithPledges;
+
+    }
+}
+
+// Get the total of all event donation including pledges
+// -----------------------------------------
+if (!function_exists('sumAllEventDonationsWithPledges')) {
+    function sumAllEventDonationsWithPledges()
+    {
+    // $data = App\Models\InstantRecord::all();
+    // $allInsDonationsWithPledges = $allInsRecords->where('year', '=', getCurrentYear())
+    //                        ->where('transaction', '=', 1);
+    $data = App\Models\RegisteredRecord::all();
+    $data = $data->where('year', '=', getCurrentYear())->where('event_id', '=', getCurrentEvent());
+// Sum Amount
+        // $allInsDonationsWithPledges = $allInsDonationsWithPledges->sum('amount');
+        $allEventDonationsWithPledges = $data->sum('amount');
+
+        // $totalDonationsWithPledges = $allInsDonationsWithPledges + $allRegDonationsWithPledges;
+// Format Amount
+        $amt = $allEventDonationsWithPledges;
+        $totalEventDonationsWithPledges = formatAmount($amt);
+     return $totalEventDonationsWithPledges;
 
     }
 }
@@ -587,6 +713,74 @@ if (!function_exists('sumAllPledges')) {
     }
 }
 
+// Get the total of event pledges
+// -----------------------------------------
+if (!function_exists('sumAllEventPledges')) {
+    function sumAllEventPledges()
+    {
+    // $allInsRecords = App\Models\InstantRecord::all();
+    // $sumAllInsPledges = $allInsRecords->where('year', '=', getCurrentYear())
+    //                        ->where('transaction', '=', 1)
+    //                        ->where('payment_status', '=', 0)
+    //                        ->where('verification', '=', 0);
+    $data = App\Models\RegisteredRecord::all();
+    $data = $data->where('year', '=', getCurrentYear())
+                    ->where('event_id', '=', getCurrentEvent())
+                    ->where('payment_status', '=', 0)
+                    ->where('verification', '=', 0);
+// Sum Amount
+        // $totalInsPledges = $sumAllInsPledges->sum('amount');
+        $totalEventPledges = $data->sum('amount');
+        // $totalPledges = $totalEventPledges;
+// Format Amount
+        $amt = $totalEventPledges;
+        $totalEventPledges = formatAmount($amt);
+     return $totalEventPledges;
+
+    }
+}
+
+// Get the total of event pledges for recorders
+// -----------------------------------------
+if (!function_exists('sumAllEventPledgesFR')) {
+    function sumAllEventPledgesFR()
+    {
+    $data = App\Models\RegisteredRecord::all();
+    $data = $data->where('year', '=', getCurrentYear())
+                 ->where('event_id', '=', getCurrentEvent())
+                 ->where('payment_status', '=', 0)
+                 ->where('verification', '=', 0)
+                 ->where('recorder_id', '=', getCurrentUser());
+    // $totalEventPledges = $data;
+        $totalEventPledges = $data->sum('amount');
+    // Format Amount
+        $amt = $totalEventPledges;
+        $totalEventPledges = formatAmount($amt);
+     return $totalEventPledges;
+
+    }
+}
+
+// Get the total of instant pledges for recorders
+// -----------------------------------------
+if (!function_exists('sumAllInsPledgesFR')) {
+    function sumAllInsPledgesFR()
+    {
+    $data = App\Models\InstantRecord::all();
+    $data = $data->where('year', '=', getCurrentYear())
+                 ->where('payment_status', '=', 0)
+                 ->where('verification', '=', 0)
+                 ->where('recorder_id', '=', getCurrentUser());
+    // $totalInsPledges = $data;
+        $totalInsPledges = $data->sum('amount');
+    // Format Amount
+        $amt = $totalInsPledges;
+        $totalInsPledges = formatAmount($amt);
+     return $totalInsPledges;
+
+    }
+}
+
 
 
 
@@ -620,7 +814,7 @@ if (!function_exists('sumAllInstantDonationsFR')) {
     {
     $allRecords = App\Models\InstantRecord::all();
      $sumAllInstantDonationsFR = $allRecords->where('year', '=', getCurrentYear())
-                           ->where('event', '=', getCurrentEvent())
+                           ->where('event_id', '=', getCurrentEvent())
                            ->where('transaction', '=', 1)
                            ->where('payment_status', '=', 1)
                            ->where('recorder_id', '=', getCurrentUser());
@@ -651,6 +845,18 @@ if (!function_exists('sumAllInstantPledgesFR')) {
         $amt = $sumAllInstantPledgesFR;
         $sumAllInstantPledgesFR = formatAmount($amt);
      return $sumAllInstantPledgesFR;
+
+    }
+}
+
+// Check the donation display settings
+// -----------------------------------------
+if (!function_exists('checkDonationDisplay')) {
+    function checkDonationDisplay()
+    {
+    $donationDisplay = App\Models\Setting::get()->where('id', '=', 1);
+
+     return $donationDisplay;
 
     }
 }

@@ -9,9 +9,16 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/data-tables.css') }}">
   @endsection
 
-@php
+<?php
+
 $pageTitle = 'Instant Records';
-@endphp
+$isRecorder = auth()->user()->hasRole('recorder');
+
+if($isRecorder){
+  $instantRecords = $instantRecords->where('recorder_id', '=', getCurrentUser());
+}
+
+?>
 
 
     <!-- BEGIN: Page Main-->

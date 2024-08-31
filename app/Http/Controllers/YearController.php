@@ -7,6 +7,17 @@ use App\Models\YearRecord;
 
 class YearController extends Controller
 {
+    
+    /**
+     * Access.
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:view year', ['only' => ['manageYear']]);
+        $this->middleware('permission:create year', ['only' => ['saveYear', 'activateYear']]);
+        $this->middleware('permission:edit year', ['only' => ['updateYear']]);
+        // $this->middleware('permission:delete year', ['only' => ['destroy']]);
+    }
     /**
      * Path to create year, event, and more.
      */

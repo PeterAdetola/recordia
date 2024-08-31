@@ -11,9 +11,14 @@
 
   @endsection
 
-@php
+<?php
 $pageTitle = 'Unpaid Donations';
-@endphp
+$isRecorder = auth()->user()->hasRole('recorder');
+
+if($isRecorder){
+  $unpaidDonations = $unpaidDonations->where('recorder_id', '=', getCurrentUser());
+}
+?>
 
 
     <!-- BEGIN: Page Main-->
@@ -33,6 +38,7 @@ $pageTitle = 'Unpaid Donations';
                   </li>
                 </ol>
               </div>
+              @if(isAdmin())
               <div class="col s2 m6 l6"><a class="btn dropdown-settings waves-effect waves-light breadcrumbs-btn right" href="#!" data-target="dropdown1"><i class="material-icons hide-on-med-and-up">settings</i><i class="material-icons right">arrow_drop_down</i></a>
               <ul class="dropdown-content" id="dropdown1" tabindex="0">
                 <li tabindex="0"><a class="grey-text text-darken-2" href="{{ route('registered.edit.pledges') }}">Redeem Pledges</a></li>
@@ -40,6 +46,7 @@ $pageTitle = 'Unpaid Donations';
                 <li tabindex="0"><a class="grey-text text-darken-2" href="{{  route('registered.prev_unpaid.donations')}}">Print</a></li>
               </ul>
               </div>
+              @endif
             </div>
           </div>
         </div>
@@ -166,7 +173,9 @@ document.getElementById("submitBtn{{$unpaidDonation->id}}").addEventListener("cl
               </table>
               <div class="divider"></div>
               <div class="row">
+                @if(isAdmin())
                 <div class="mt-2 mr-4 center">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ sumAllInstantPledges() }}</span></div>
+                @endif
               </div>
             </div>
             </div>

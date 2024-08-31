@@ -8,6 +8,14 @@ use App\Models\User;
 
 class InstantRecordController extends Controller
 {
+    
+    /**
+     * Access.
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:view expense', ['only' => ['getExpenses', 'saveExpense', 'prevExpenses']]);
+    }
     /**
      * Save donation.
      */

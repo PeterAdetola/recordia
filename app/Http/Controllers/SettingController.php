@@ -7,6 +7,14 @@ use Illuminate\Support\Facades\File;
 
 class SettingController extends Controller
 {
+    
+    /**
+     * Access.
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:edit event', ['only' => ['update']]);
+    }
     public function update(Request $request)
     {
         $displayByEvent = $request->has('display_by_event');
@@ -22,7 +30,7 @@ class SettingController extends Controller
         $notification = array(
             'message' => 'Setting updated successfully!',
         );
-\Log::info(session()->all());
+
         return redirect()->back()->with($notification);
     }
 

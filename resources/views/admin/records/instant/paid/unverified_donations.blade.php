@@ -11,9 +11,15 @@
 
   @endsection
 
-@php
+<?php
 $pageTitle = 'Unverified Donations';
-@endphp
+
+$isRecorder = auth()->user()->hasRole('recorder');
+
+if($isRecorder){
+  $unverifiedDonations = $unverifiedDonations->where('recorder_id', '=', getCurrentUser());
+}
+?>
 
 
     <!-- BEGIN: Page Main-->
@@ -33,8 +39,10 @@ $pageTitle = 'Unverified Donations';
                   </li>
                 </ol>
               </div>
+              @if(isAdmin())
               <div class="col s2 m6 l6"><a class=" mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right" href="{{  route('instant.prev_unverified.donations')}}" ><i class="material-icons hide-on-med-and-up">print</i><i class="material-icons right">print</i></a>
               </div>
+              @endif
             </div>
           </div>
         </div>
@@ -52,7 +60,7 @@ $pageTitle = 'Unverified Donations';
           <h4 class="card-title">Unverified Donations</h4>
           <div class="row">
             <div class="col s12">
-              <p>The data in this table contains the records of unconfirmed donations, not for registered donors.</p>
+              <p>The data in this table contains the records of unconfirmed donations, for unregistered donors.</p>
             </div>
             <div class="col s12">
               <table id="data-table-row-grouping" class="display">
@@ -160,7 +168,9 @@ document.getElementById("submitBtn{{$unverifiedDonation->id}}").addEventListener
               </table>
               <div class="divider"></div>
               <div class="row">
+                @if(isAdmin())
                 <div class="mt-2 mr-4 center">Total&nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: 800;">&#8358;&nbsp;&nbsp;{{ sumUnverifiedInsDonations() }}</span></div>
+                @endif
               </div>
             </div>
           </div>

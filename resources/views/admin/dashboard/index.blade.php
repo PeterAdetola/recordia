@@ -1,6 +1,13 @@
  @extends('admin.admin_master')
  @php
 $adminAccess = ['create donation', 'create donor', 'create expense'];
+
+$displayEventDonation = checkDonationDisplay()->first()->display_donations_by_event;
+
+$noEvent = $displayEventDonation === 0 || getCurrentEvent() === 'No event';
+
+  
+
  @endphp
   @section('vendor_styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/vendors/data-tables/css/jquery.dataTables.min.css') }}">
@@ -35,13 +42,16 @@ $adminAccess = ['create donation', 'create donor', 'create expense'];
           <!-- Search for small screen-->
           <div class="container">
             <div class="row">
-              <div class="col s10 m6 l6 description">
+              <div class="col s10 m6 l8 description">
                 <h5 class="breadcrumbs-title mt-0 mb-0">
-                  <span class="main-text">Financial overview/activities for the year {{ getCurrentYear() }}</span></h5>
+                  <span class="main-text">Financial overview/activities for {{ $noEvent ? 'the year '.getCurrentYear() : getCurrentEventName().'-'.getCurrentYear() }}</span></h5>
                
                 <ol class="breadcrumbs mb-0">
                   <li class="breadcrumb-item">
+                    @role('admin')
                     <a href="{{ route('manage.event') }}"><span class="chip white-text indigo darken-4">Event</span>
+                      @else<span class="chip white-text indigo darken-4">Event</span>
+                    @endrole
                     </a>
                       @if (getCurrentEvent() == 'No event')
                       <span class="chip indigo-text darken-4 white">No event</span>
@@ -52,7 +62,7 @@ $adminAccess = ['create donation', 'create donor', 'create expense'];
                 </ol>
               </div>
               @role('admin')
-              <div class="col s2 m6 l6">
+              <div class="col s2 m6 l4">
                 <a class="modal-trigger mb-2 btn-floating btn-flat waves-effect waves-light breadcrumbs-btn right"  data-position="left" data-tooltip="activate multiple donors" style="margin-top: -10px" href="#config_overview-modal" ><i class="material-icons hide-on-med-and-up">settings</i><i class="material-icons right">settings</i>
                 </a>
               </div>

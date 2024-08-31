@@ -50,7 +50,7 @@ $pageTitle = 'Unpaid Donations';
           <h4 class="card-title">Unpaid Donations</h4>
           <div class="row">
             <div class="col s12">
-              <p>The data in this table contains the records of pledges so far, not for registered donors.</p>
+              <p>The data in this table contains the records of pledges so far, for unregistered donors.</p>
             </div>
             <div class="col s12">
           <form id="redeemPledges" method="POST" action="{{ route('instant.redeem_pledges') }}">
