@@ -9970,7 +9970,7 @@ nav.display-none.search-sm .nav-wrapper form .input-field i
     font-size: .75rem;
     line-height: 1.7;
 
-    float: right;
+/*    float: right;*/
 }
 
 #activity .widget-timeline li .timeline-title

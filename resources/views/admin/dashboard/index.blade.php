@@ -16,6 +16,7 @@ $noEvent = $displayEventDonation === 0 || getCurrentEvent() === 'No event';
   @endsection
   @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/assets/css/pages/data-tables.css') }}">
+    
 <style>
     /* Add margin for footer address */
 @media (min-width: 992px) {

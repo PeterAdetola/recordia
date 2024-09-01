@@ -1,5 +1,75 @@
 <?php
 use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\Models\Activity;
+use App\Models\User;
+use App\Models\Donor;
+use Carbon\Carbon;
+
+
+//format time
+function formatTime($createdAt) {
+    $actTime = Carbon::parse($createdAt);
+    $minutesDiff = Carbon::now()->diffInMinutes($actTime);
+
+    if ($minutesDiff < 1) {
+        $actTime = 'now';
+    } elseif ($minutesDiff < 60) {
+        $actTime = $minutesDiff . ' minutes ago';
+    } elseif ($minutesDiff < 1440) {
+        $actTime = 'Today';
+    } else {
+        $actTime = 'Yesterday';
+    }
+
+    return $actTime;
+}
+
+//Get activity details
+function getActivityLogDetails(Activity $activity)
+{
+    $user = User::find($activity->causer_id);
+    $donor = Donor::find($activity->properties['attributes']['donor_id']);
+   
+    $actTime = formatTime($activity->created_at);
+
+    return [
+        'userName' => $user->name ?? 'Unknown User',
+        'donorName' => $donor->name ?? 'Unknown Donor',
+        'amount' => $activity->properties['attributes']['amount'],
+        'actTime' => $actTime,
+        'paymentMode' => match($activity->properties['attributes']['payment_mode']) {
+            1 => 'by cash',
+            2 => 'by POS',
+            3 => 'through bank transfer',
+            default => 'through pledge',
+        },
+        'paymentStatus' => match($activity->properties['attributes']['payment_status'] ?? null) {
+            0 => 'pledge',
+            default => 'donation',
+        },
+    ];
+}
+
+// Log activities
+if (!function_exists('logActivity')) {
+    function logActivity()
+    {
+        $activities = Activity::latest()->get();
+
+        if ($activities->isEmpty()) {
+            return []; // Return an empty array if no activities are found
+        }
+
+        $activityDetails = [];
+
+        foreach ($activities as $activity) {
+            $activityDetails[] = getActivityLogDetails($activity);
+        }
+
+        return $activityDetails;
+    }
+}
+
 
 
 // Get user's id

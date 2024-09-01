@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\RegisteredRecord;
+// use Spatie\Activitylog\Models\Activity;
+// use Spatie\Activitylog\Facades\LogActivity;
 
 class RegisteredRecordController extends Controller
 {
@@ -40,6 +42,18 @@ class RegisteredRecordController extends Controller
             'event_id' => $request->event_id,
             'year' => $request->year,
         ]);
+
+
+        // activity()
+        //     ->performedOn($donation)
+        //     ->causedBy(auth()->user())
+        //     ->withProperties(['customProperty' => 'value'])
+        //     ->log('added a donation');
+
+            // activity()
+            //     ->causedBy(auth()->user())
+            //     ->performedOn(new RegisteredRecord())
+            //     ->log("{$request->user()->name} added a donation at " . now()->format('H:i'));
 
         return redirect()->route('dashboard')->with(['message' => 'Donation saved']);
     }
